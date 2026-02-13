@@ -43,7 +43,7 @@ body::before { content: ''; position: fixed; inset: 0; background-image: url("da
 .hero-chess-bg { position: absolute; inset: 0; opacity: 0.025; background-image: repeating-conic-gradient(var(--cream) 0% 25%, transparent 0% 50%); background-size: 80px 80px; transform: perspective(800px) rotateX(55deg) translateY(-20%); transform-origin: center top; mask-image: radial-gradient(ellipse at center 30%, black 10%, transparent 70%); }
 .hero-content { position: relative; z-index: 2; max-width: 800px; padding: 2rem; animation: fadeInUp 1s ease-out; }
 @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-.hero-logo { width: 160px; height: 160px; object-fit: contain; margin: 0 auto 2rem; box-shadow: 0 8px 40px rgba(0,0,0,0.4), 0 0 80px rgba(30,48,84,0.15); animation: fadeInUp 1s ease-out 0.1s both; }
+.hero-logo { width: 200px; height: 200px; object-fit: contain; margin: 0 auto 2rem; display: block; animation: fadeInUp 1s ease-out 0.1s both; }
 .hero-badge { display: inline-block; font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream-dim); border: 1px solid var(--navy-light); padding: 6px 20px; border-radius: 2px; margin-bottom: 2rem; animation: fadeInUp 1s ease-out 0.2s both; }
 .hero h1 { font-family: var(--font-display); font-size: clamp(3rem, 8vw, 6rem); font-weight: 900; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 0.5rem; animation: fadeInUp 1s ease-out 0.3s both; }
 .hero h1 .accent { color: var(--accent-blue); }
@@ -198,6 +198,6 @@ section { position: relative; z-index: 1; padding: 6rem 2rem; }
   .event-item { flex-direction: column; }
   .event-date-block { flex-direction: row; gap: 1rem; border-right: none; border-bottom: 2px solid var(--navy-light); min-width: auto; padding: 1rem 1.5rem; }
   .hero h1 { font-size: 2.5rem; }
-  .hero-logo { width: 120px; height: 120px; }
+  .hero-logo { width: 150px; height: 150px; }
   .footer-inner { flex-direction: column; gap: 0.75rem; }
 }

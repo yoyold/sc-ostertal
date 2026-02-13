@@ -293,7 +293,15 @@ window.SCO = (function () {
     }
 
     // ---- Minimal chess engine for PGN replay ----
-    const PIECES = { K:'♔', Q:'♕', R:'♖', B:'♗', N:'♘', P:'♙', k:'♚', q:'♛', r:'♜', b:'♝', n:'♞', p:'♟' };
+    const WK_BASE = 'https://upload.wikimedia.org/wikipedia/commons/';
+    const PIECE_SVG = {
+      wK: WK_BASE+'4/42/Chess_klt45.svg', wQ: WK_BASE+'1/15/Chess_qlt45.svg',
+      wR: WK_BASE+'7/72/Chess_rlt45.svg', wB: WK_BASE+'b/b1/Chess_blt45.svg',
+      wN: WK_BASE+'7/70/Chess_nlt45.svg', wP: WK_BASE+'4/45/Chess_plt45.svg',
+      bK: WK_BASE+'f/f0/Chess_kdt45.svg', bQ: WK_BASE+'4/47/Chess_qdt45.svg',
+      bR: WK_BASE+'f/ff/Chess_rdt45.svg', bB: WK_BASE+'9/98/Chess_bdt45.svg',
+      bN: WK_BASE+'e/ef/Chess_ndt45.svg', bP: WK_BASE+'c/c7/Chess_pdt45.svg'
+    };
     const INIT_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR';
 
     function fenToBoard(fen) {
@@ -433,8 +441,8 @@ window.SCO = (function () {
             bg = isLight ? lightHl : darkHl;
           }
           const piece = board[r][c];
-          const sym = piece ? PIECES[piece.color==='w'?piece.type:piece.type.toLowerCase()] : '';
-          html += `<div style="width:clamp(36px,8vw,56px);height:clamp(36px,8vw,56px);background:${bg};display:flex;align-items:center;justify-content:center;font-size:clamp(24px,5.5vw,38px);line-height:1;user-select:none;">${sym}</div>`;
+          const sym = piece ? `<img src="${PIECE_SVG[piece.color+piece.type]}" alt="" style="width:85%;height:85%;pointer-events:none;">` : '';
+          html += `<div style="width:clamp(36px,8vw,56px);height:clamp(36px,8vw,56px);background:${bg};display:flex;align-items:center;justify-content:center;user-select:none;">${sym}</div>`;
         }
       }
       // File labels
