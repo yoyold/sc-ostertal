@@ -22,7 +22,7 @@ const admin = (function () {
       const res = await fetch(url, {
         ...opts,
         headers: {
-          'Authorization': `Bearer ${state.token}`,
+          'Authorization': `token ${state.token}`,
           'Accept': 'application/vnd.github.v3+json',
           'Content-Type': 'application/json',
           ...opts.headers
@@ -122,8 +122,12 @@ const admin = (function () {
   function renderAll() {
     renderNewsList();
     renderEventsList();
+    renderTournamentsList();
     renderTeamsList();
+    renderPGNList();
+    renderContactsList();
     renderClubForm();
+    renderImpressumForm();
   }
 
   function renderNewsList() {
@@ -449,7 +453,288 @@ const admin = (function () {
     await saveAndRefresh('Vereinsinfo aktualisiert');
   }
 
+  // ===== Tournaments =====
+
+  function renderTournamentsList() {
+    const current = state.content.tournaments?.current || [];
+    const archive = state.content.tournaments?.archive || [];
+
+    const elC = document.getElementById('current-tournaments-list');
+    elC.innerHTML = current.length === 0
+      ? '<p style="color:var(--text-muted);padding:1rem 0;">Keine aktuellen Turniere.</p>'
+      : current.map(t => `
+        <div class="item-card">
+          <div class="item-info">
+            <h3>${esc(t.name)}</h3>
+            <div class="meta">${esc(t.date_range)} · ${esc(t.type)}</div>
+            <div class="preview">${t.standings?.length || 0} Platzierungen eingetragen</div>
+          </div>
+          <div class="item-actions">
+            <button class="btn btn-ghost btn-sm" onclick="admin.openTournamentEditor('current','${t.id}')">Bearbeiten</button>
+            <button class="btn btn-danger btn-sm" onclick="admin.deleteTournament('current','${t.id}')">Löschen</button>
+          </div>
+        </div>`).join('');
+
+    const elA = document.getElementById('archive-tournaments-list');
+    elA.innerHTML = archive.length === 0
+      ? '<p style="color:var(--text-muted);padding:1rem 0;">Kein Archiv vorhanden.</p>'
+      : archive.map(t => `
+        <div class="item-card">
+          <div class="item-info">
+            <h3>${esc(t.name)}</h3>
+            <div class="meta">${esc(t.date_range)} · ${esc(t.winner || '–')}</div>
+          </div>
+          <div class="item-actions">
+            <button class="btn btn-ghost btn-sm" onclick="admin.openTournamentEditor('archive','${t.id}')">Bearbeiten</button>
+            <button class="btn btn-danger btn-sm" onclick="admin.deleteTournament('archive','${t.id}')">Löschen</button>
+          </div>
+        </div>`).join('');
+  }
+
+  function openTournamentEditor(section, id) {
+    if (!state.content.tournaments) state.content.tournaments = { current: [], archive: [] };
+    const list = state.content.tournaments[section] || [];
+    const item = id ? list.find(t => t.id === id) : null;
+    const isNew = !item;
+
+    const standingsText = item?.standings?.map(s => `${s.rank}. ${s.player} – ${s.points}`).join('\n') || '';
+
+    openModal(`
+      <div class="modal-header">
+        <h3>${isNew ? 'Neues Turnier' : 'Turnier bearbeiten'}</h3>
+        <button class="modal-close" onclick="admin.closeModal()">✕</button>
+      </div>
+      <div class="form-group"><label>Name</label><input type="text" id="ed-t-name" value="${esc(item?.name || '')}"></div>
+      <div class="form-row">
+        <div class="form-group"><label>Format</label><input type="text" id="ed-t-type" value="${esc(item?.type || '')}" placeholder="Schweizer System, 7 Runden"></div>
+        <div class="form-group"><label>Zeitraum</label><input type="text" id="ed-t-daterange" value="${esc(item?.date_range || '')}" placeholder="März – Mai 2026"></div>
+      </div>
+      ${section === 'archive' ? `<div class="form-group"><label>Sieger</label><input type="text" id="ed-t-winner" value="${esc(item?.winner || '')}" placeholder="Max Mustermann (6.5/7)"></div>` : ''}
+      <div class="form-group"><label>Platzierungen (eine pro Zeile: "1. Name – 6.5/7")</label><textarea id="ed-t-standings" rows="8" placeholder="1. Max Mustermann – 6.5/7&#10;2. Anna Beispiel – 5.5/7">${standingsText}</textarea></div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost btn-sm" onclick="admin.closeModal()">Abbrechen</button>
+        <button class="btn btn-primary btn-sm" onclick="admin.saveTournament('${section}','${id || ''}')">Speichern</button>
+      </div>
+    `);
+  }
+
+  async function saveTournament(section, id) {
+    const name = document.getElementById('ed-t-name').value.trim();
+    const type = document.getElementById('ed-t-type').value.trim();
+    const date_range = document.getElementById('ed-t-daterange').value.trim();
+    const winner = document.getElementById('ed-t-winner')?.value.trim() || '';
+    const standingsRaw = document.getElementById('ed-t-standings').value.trim();
+
+    if (!name) { toast('Bitte Namen eingeben.', 'error'); return; }
+
+    const standings = standingsRaw.split('\n').filter(Boolean).map((line, i) => {
+      const match = line.match(/^(\d+)\.\s*(.+?)\s*[–-]\s*(.+)$/);
+      if (match) return { rank: parseInt(match[1]), player: match[2].trim(), points: match[3].trim(), games: 0 };
+      return { rank: i + 1, player: line, points: '', games: 0 };
+    });
+
+    if (!state.content.tournaments) state.content.tournaments = { current: [], archive: [] };
+    if (!state.content.tournaments[section]) state.content.tournaments[section] = [];
+
+    const entry = { id: id || Date.now().toString(), name, type, date_range, winner, standings };
+    if (id) {
+      const idx = state.content.tournaments[section].findIndex(t => t.id === id);
+      if (idx >= 0) state.content.tournaments[section][idx] = entry;
+    } else {
+      state.content.tournaments[section].push(entry);
+    }
+
+    await saveAndRefresh('Turnier: ' + name);
+    closeModal();
+  }
+
+  async function deleteTournament(section, id) {
+    if (!confirm('Dieses Turnier wirklich löschen?')) return;
+    state.content.tournaments[section] = (state.content.tournaments[section] || []).filter(t => t.id !== id);
+    await saveAndRefresh('Turnier gelöscht');
+  }
+
+  // ===== PGN Games =====
+
+  function renderPGNList() {
+    const el = document.getElementById('pgn-list');
+    const games = state.content.pgn_games || [];
+
+    el.innerHTML = games.length === 0
+      ? '<p style="color:var(--text-muted);padding:2rem 0;">Keine Partien vorhanden.</p>'
+      : games.map(g => `
+        <div class="item-card">
+          <div class="item-info">
+            <h3>${esc(g.title)}</h3>
+            <div class="meta">${esc(g.white)} vs. ${esc(g.black)} · ${esc(g.result)} · ${esc(g.date)}</div>
+          </div>
+          <div class="item-actions">
+            <button class="btn btn-ghost btn-sm" onclick="admin.openPGNEditor('${g.id}')">Bearbeiten</button>
+            <button class="btn btn-danger btn-sm" onclick="admin.deletePGN('${g.id}')">Löschen</button>
+          </div>
+        </div>`).join('');
+  }
+
+  function openPGNEditor(id) {
+    const item = id ? (state.content.pgn_games || []).find(g => g.id === id) : null;
+    const isNew = !item;
+
+    openModal(`
+      <div class="modal-header">
+        <h3>${isNew ? 'Neue Partie' : 'Partie bearbeiten'}</h3>
+        <button class="modal-close" onclick="admin.closeModal()">✕</button>
+      </div>
+      <div class="form-group"><label>Titel</label><input type="text" id="ed-pgn-title" value="${esc(item?.title || '')}" placeholder="Becker – Schmidt, Vereinsmeisterschaft 2026"></div>
+      <div class="form-row">
+        <div class="form-group"><label>Weiß</label><input type="text" id="ed-pgn-white" value="${esc(item?.white || '')}"></div>
+        <div class="form-group"><label>Schwarz</label><input type="text" id="ed-pgn-black" value="${esc(item?.black || '')}"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Ergebnis</label><input type="text" id="ed-pgn-result" value="${esc(item?.result || '')}" placeholder="1-0 / 0-1 / 1/2-1/2"></div>
+        <div class="form-group"><label>Datum</label><input type="date" id="ed-pgn-date" value="${item?.date || ''}"></div>
+      </div>
+      <div class="form-group"><label>PGN-Notation</label><textarea id="ed-pgn-pgn" rows="6" style="font-family:var(--font-mono);font-size:0.85rem;">${esc(item?.pgn || '')}</textarea></div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost btn-sm" onclick="admin.closeModal()">Abbrechen</button>
+        <button class="btn btn-primary btn-sm" onclick="admin.savePGN('${id || ''}')">Speichern</button>
+      </div>
+    `);
+  }
+
+  async function savePGN(id) {
+    const title = document.getElementById('ed-pgn-title').value.trim();
+    const white = document.getElementById('ed-pgn-white').value.trim();
+    const black = document.getElementById('ed-pgn-black').value.trim();
+    const result = document.getElementById('ed-pgn-result').value.trim();
+    const date = document.getElementById('ed-pgn-date').value;
+    const pgn = document.getElementById('ed-pgn-pgn').value.trim();
+
+    if (!title || !pgn) { toast('Bitte Titel und PGN ausfüllen.', 'error'); return; }
+
+    if (!state.content.pgn_games) state.content.pgn_games = [];
+
+    const entry = { id: id || Date.now().toString(), title, white, black, result, date, pgn };
+    if (id) {
+      const idx = state.content.pgn_games.findIndex(g => g.id === id);
+      if (idx >= 0) state.content.pgn_games[idx] = entry;
+    } else {
+      state.content.pgn_games.push(entry);
+    }
+
+    await saveAndRefresh('Partie: ' + title);
+    closeModal();
+  }
+
+  async function deletePGN(id) {
+    if (!confirm('Diese Partie wirklich löschen?')) return;
+    state.content.pgn_games = (state.content.pgn_games || []).filter(g => g.id !== id);
+    await saveAndRefresh('Partie gelöscht');
+  }
+
+  // ===== Contacts =====
+
+  function renderContactsList() {
+    const el = document.getElementById('contacts-list');
+    const contacts = state.content.contacts || [];
+
+    el.innerHTML = contacts.length === 0
+      ? '<p style="color:var(--text-muted);padding:2rem 0;">Keine Kontakte eingetragen.</p>'
+      : contacts.map(c => `
+        <div class="item-card">
+          <div class="item-info">
+            <h3>${esc(c.name)}</h3>
+            <div class="meta">${esc(c.role)}${c.email ? ' · ' + esc(c.email) : ''}${c.phone ? ' · ' + esc(c.phone) : ''}</div>
+          </div>
+          <div class="item-actions">
+            <button class="btn btn-ghost btn-sm" onclick="admin.openContactEditor('${c.id}')">Bearbeiten</button>
+            <button class="btn btn-danger btn-sm" onclick="admin.deleteContact('${c.id}')">Löschen</button>
+          </div>
+        </div>`).join('');
+  }
+
+  function openContactEditor(id) {
+    const item = id ? (state.content.contacts || []).find(c => c.id === id) : null;
+    const isNew = !item;
+
+    openModal(`
+      <div class="modal-header">
+        <h3>${isNew ? 'Neuer Kontakt' : 'Kontakt bearbeiten'}</h3>
+        <button class="modal-close" onclick="admin.closeModal()">✕</button>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Name</label><input type="text" id="ed-c-name" value="${esc(item?.name || '')}"></div>
+        <div class="form-group"><label>Funktion</label><input type="text" id="ed-c-role" value="${esc(item?.role || '')}" placeholder="1. Vorsitzender"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>E-Mail</label><input type="email" id="ed-c-email" value="${esc(item?.email || '')}"></div>
+        <div class="form-group"><label>Telefon</label><input type="tel" id="ed-c-phone" value="${esc(item?.phone || '')}"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost btn-sm" onclick="admin.closeModal()">Abbrechen</button>
+        <button class="btn btn-primary btn-sm" onclick="admin.saveContact('${id || ''}')">Speichern</button>
+      </div>
+    `);
+  }
+
+  async function saveContact(id) {
+    const name = document.getElementById('ed-c-name').value.trim();
+    const role = document.getElementById('ed-c-role').value.trim();
+    const email = document.getElementById('ed-c-email').value.trim();
+    const phone = document.getElementById('ed-c-phone').value.trim();
+
+    if (!name || !role) { toast('Bitte Name und Funktion ausfüllen.', 'error'); return; }
+
+    if (!state.content.contacts) state.content.contacts = [];
+
+    const entry = { id: id || Date.now().toString(), name, role, email, phone };
+    if (id) {
+      const idx = state.content.contacts.findIndex(c => c.id === id);
+      if (idx >= 0) state.content.contacts[idx] = entry;
+    } else {
+      state.content.contacts.push(entry);
+    }
+
+    await saveAndRefresh('Kontakt: ' + name);
+    closeModal();
+  }
+
+  async function deleteContact(id) {
+    if (!confirm('Diesen Kontakt wirklich löschen?')) return;
+    state.content.contacts = (state.content.contacts || []).filter(c => c.id !== id);
+    await saveAndRefresh('Kontakt gelöscht');
+  }
+
+  // ===== Impressum =====
+
+  function renderImpressumForm() {
+    const imp = state.content.impressum || {};
+    document.getElementById('impressum-form').innerHTML = `
+      <div class="form-group"><label>Vereinsname</label><input type="text" id="imp-verein" value="${esc(imp.verein || '')}"></div>
+      <div class="form-group"><label>Adresse</label><input type="text" id="imp-address" value="${esc(imp.address || '')}"></div>
+      <div class="form-group"><label>E-Mail</label><input type="email" id="imp-email" value="${esc(imp.email || '')}"></div>
+      <div class="form-group"><label>Verantwortlicher</label><input type="text" id="imp-responsible" value="${esc(imp.responsible || '')}" placeholder="Max Mustermann (1. Vorsitzender)"></div>
+      <div class="form-group"><label>Vereinsregister (optional)</label><input type="text" id="imp-register" value="${esc(imp.register || '')}" placeholder="VR 12345 Amtsgericht Saarbrücken"></div>
+      <div class="form-group"><label>Zusätzlicher Text (optional)</label><textarea id="imp-extra" rows="4">${esc(imp.extra || '')}</textarea></div>
+      <div style="margin-top:1.5rem;">
+        <button class="btn btn-primary" style="width:auto;" onclick="admin.saveImpressum()">Impressum speichern</button>
+      </div>
+    `;
+  }
+
+  async function saveImpressum() {
+    state.content.impressum = {
+      verein: document.getElementById('imp-verein').value.trim(),
+      address: document.getElementById('imp-address').value.trim(),
+      email: document.getElementById('imp-email').value.trim(),
+      responsible: document.getElementById('imp-responsible').value.trim(),
+      register: document.getElementById('imp-register').value.trim(),
+      extra: document.getElementById('imp-extra').value.trim()
+    };
+    await saveAndRefresh('Impressum aktualisiert');
+  }
+
   // ===== Save & Refresh =====
+
 
   async function saveAndRefresh(commitMsg) {
     try {
@@ -506,8 +791,22 @@ const admin = (function () {
       toast('Erfolgreich verbunden!', 'success');
     } catch (err) {
       console.error('Login error:', err);
-      toast('Anmeldung fehlgeschlagen: ' + err.message, 'error');
-      document.getElementById('status-dot').className = 'status-dot offline';
+      const errMsg = err.message.includes('404') ? 'Repository nicht gefunden. Bitte "user/repo" Format prüfen.' :
+                     err.message.includes('401') ? 'Token ungültig oder abgelaufen. Bitte Token prüfen.' :
+                     err.message.includes('403') ? 'Keine Berechtigung. Token benötigt "repo"-Berechtigung.' :
+                     'Fehler: ' + err.message;
+      toast(errMsg, 'error');
+      // Also show error in login form
+      let errEl = document.getElementById('login-error');
+      if (!errEl) {
+        errEl = document.createElement('div');
+        errEl.id = 'login-error';
+        errEl.style.cssText = 'color:#c45c5c;font-size:0.85rem;margin-top:0.75rem;padding:10px 14px;background:rgba(196,92,92,0.1);border:1px solid rgba(196,92,92,0.25);border-radius:6px;';
+        document.getElementById('login-btn').after(errEl);
+      }
+      errEl.textContent = errMsg;
+      state.token = null;
+      state.repo = null;
     } finally {
       btn.disabled = false;
       btn.textContent = 'Anmelden';
@@ -558,10 +857,20 @@ const admin = (function () {
     openEventEditor,
     saveEvent,
     deleteEvent,
+    openTournamentEditor,
+    saveTournament,
+    deleteTournament,
     openTeamEditor,
     saveTeam,
     deleteTeam,
+    openPGNEditor,
+    savePGN,
+    deletePGN,
+    openContactEditor,
+    saveContact,
+    deleteContact,
     saveClubInfo,
+    saveImpressum,
     closeModal
   };
 
