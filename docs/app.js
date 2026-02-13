@@ -1,208 +1,179 @@
-/* ===== SC Ostertal – Main Site JavaScript ===== */
+/* ===== SC Ostertal – Main Application ===== */
 
-// ── Content Loading ──
-async function loadContent() {
-  try {
-    const res = await fetch('content.json?t=' + Date.now());
-    const data = await res.json();
-    renderNews(data.neuigkeiten || []);
-    renderTermine(data.termine || []);
-    renderTeams(data.mannschaften || []);
-    renderKontakt(data);
-    renderHero(data);
-  } catch (e) {
-    console.error('Fehler beim Laden der Inhalte:', e);
+(function () {
+  'use strict';
+
+  const MONTHS_DE = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
+
+  function formatDate(dateStr) {
+    const d = new Date(dateStr);
+    return d.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
   }
-}
 
-// ── Hero ──
-function renderHero(data) {
-  const desc = document.getElementById('heroDescription');
-  if (desc && data.ueber_uns) {
-    desc.textContent = data.ueber_uns;
+  function parseDate(dateStr) {
+    const d = new Date(dateStr);
+    return {
+      day: d.getDate(),
+      month: MONTHS_DE[d.getMonth()],
+      year: d.getFullYear()
+    };
   }
-}
 
-// ── News ──
-function renderNews(news) {
-  const grid = document.getElementById('newsGrid');
-  if (!grid) return;
-  const sorted = [...news].sort((a, b) => new Date(b.datum) - new Date(a.datum));
-  grid.innerHTML = sorted.map(n => `
-    <article class="news-card animate-on-scroll">
-      <div class="news-meta">
-        <span class="news-date">${formatDate(n.datum)}</span>
-        <span class="news-author">${escHtml(n.autor)}</span>
-      </div>
-      <h3>${escHtml(n.titel)}</h3>
-      <p>${escHtml(n.inhalt)}</p>
-    </article>
-  `).join('');
-  observeAnimations();
-}
+  // ===== Render Functions =====
 
-// ── Termine ──
-function renderTermine(termine) {
-  const list = document.getElementById('termineList');
-  if (!list) return;
-  const now = new Date();
-  const upcoming = [...termine]
-    .filter(t => new Date(t.datum) >= new Date(now.toISOString().split('T')[0]))
-    .sort((a, b) => new Date(a.datum) - new Date(b.datum));
+  function renderNews(news) {
+    const container = document.getElementById('news-container');
+    if (!news || news.length === 0) {
+      container.innerHTML = '<p style="color:var(--text-muted)">Keine Neuigkeiten vorhanden.</p>';
+      return;
+    }
 
-  list.innerHTML = (upcoming.length ? upcoming : termine.slice(0, 4)).map(t => {
-    const d = new Date(t.datum + 'T00:00:00');
-    const tag = d.getDate();
-    const monat = d.toLocaleDateString('de-DE', { month: 'short' }).toUpperCase();
-    return `
-      <div class="termin-item animate-on-scroll">
-        <div class="termin-datum">
-          <div class="termin-tag">${tag}</div>
-          <div class="termin-monat">${monat}</div>
+    // Sort by date descending
+    const sorted = [...news].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    container.innerHTML = sorted.map(item => `
+      <article class="news-card fade-in">
+        <div class="news-meta">
+          <span class="news-date">${formatDate(item.date)}</span>
+          ${item.author ? `<span class="news-author">${item.author}</span>` : ''}
         </div>
-        <div class="termin-info">
-          <h4>${escHtml(t.titel)}</h4>
-          <div class="termin-details">${escHtml(t.ort)} · ${escHtml(t.beschreibung)}</div>
-        </div>
-        <div class="termin-zeit">${escHtml(t.zeit)} Uhr</div>
-      </div>
-    `;
-  }).join('');
-  observeAnimations();
-}
+        <h3>${item.title}</h3>
+        <p>${item.content}</p>
+      </article>
+    `).join('');
+  }
 
-// ── Mannschaften ──
-function renderTeams(teams) {
-  const grid = document.getElementById('teamsGrid');
-  if (!grid) return;
-  grid.innerHTML = teams.map(t => `
-    <div class="team-card animate-on-scroll">
-      <div class="team-header">
-        <h3>${escHtml(t.name)}</h3>
-        <div class="team-liga">${escHtml(t.liga)}</div>
-      </div>
-      <div class="team-body">
-        <div class="team-kapitaen">Kapitän: ${escHtml(t.kapitaen)}</div>
-        <ul class="team-spieler">
-          ${t.spieler.map(s => `<li>${escHtml(s)}</li>`).join('')}
+  function renderEvents(events) {
+    const container = document.getElementById('events-container');
+    if (!events || events.length === 0) {
+      container.innerHTML = '<p style="color:var(--text-muted)">Keine anstehenden Termine.</p>';
+      return;
+    }
+
+    // Sort by date ascending, filter future events
+    const now = new Date();
+    now.setHours(0, 0, 0, 0);
+    const upcoming = [...events]
+      .filter(e => new Date(e.date) >= now)
+      .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+    const toRender = upcoming.length > 0 ? upcoming : events.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    container.innerHTML = toRender.map(item => {
+      const d = parseDate(item.date);
+      return `
+        <div class="event-item fade-in">
+          <div class="event-date-block">
+            <div class="event-day">${d.day}</div>
+            <div class="event-month">${d.month} ${d.year}</div>
+            ${item.time ? `<div class="event-time-badge">${item.time} Uhr</div>` : ''}
+          </div>
+          <div class="event-details">
+            <h3>${item.title}</h3>
+            <p>${item.description}</p>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function renderTeams(teams) {
+    const container = document.getElementById('teams-container');
+    if (!teams || teams.length === 0) {
+      container.innerHTML = '<p style="color:var(--text-muted)">Keine Mannschaften eingetragen.</p>';
+      return;
+    }
+
+    container.innerHTML = teams.map(team => `
+      <div class="team-card fade-in">
+        <div class="team-header">
+          <h3>${team.name}</h3>
+          <span class="team-league">${team.league}</span>
+        </div>
+        <ul class="team-players">
+          ${team.players.map(p => `<li>${p}</li>`).join('')}
         </ul>
       </div>
-    </div>
-  `).join('');
-  observeAnimations();
-}
-
-// ── Kontakt ──
-function renderKontakt(data) {
-  const adresse = document.getElementById('kontaktAdresse');
-  const training = document.getElementById('kontaktTraining');
-  const email = document.getElementById('kontaktEmail');
-  if (adresse && data.adresse) adresse.textContent = data.adresse;
-  if (training && data.trainingszeiten) training.textContent = data.trainingszeiten;
-  if (email && data.email) {
-    email.textContent = data.email;
-    email.href = 'mailto:' + data.email;
+    `).join('');
   }
-}
 
-// ── Chessboard Deco ──
-function renderChessboard() {
-  const board = document.getElementById('chessboard');
-  if (!board) return;
-  // Starting position pieces (unicode)
-  const pieces = [
-    ['♜','♞','♝','♛','♚','♝','♞','♜'],
-    ['♟','♟','♟','♟','♟','♟','♟','♟'],
-    ['' ,'' ,'' ,'' ,'' ,'' ,'' ,'' ],
-    ['' ,'' ,'' ,'' ,'' ,'' ,'' ,'' ],
-    ['' ,'' ,'' ,'' ,'' ,'' ,'' ,'' ],
-    ['' ,'' ,'' ,'' ,'' ,'' ,'' ,'' ],
-    ['♙','♙','♙','♙','♙','♙','♙','♙'],
-    ['♖','♘','♗','♕','♔','♗','♘','♖'],
-  ];
-  for (let r = 0; r < 8; r++) {
-    for (let c = 0; c < 8; c++) {
-      const sq = document.createElement('div');
-      sq.className = 'sq ' + ((r + c) % 2 === 0 ? 'light' : 'dark');
-      sq.textContent = pieces[r][c];
-      board.appendChild(sq);
+  function renderClubInfo(club) {
+    if (!club) return;
+
+    const motto = document.getElementById('hero-motto');
+    if (motto && club.motto) motto.textContent = club.motto;
+
+    const about = document.getElementById('about-text');
+    if (about && club.about) about.textContent = club.about;
+
+    const training = document.getElementById('info-training');
+    if (training && club.training) training.textContent = club.training;
+
+    const address = document.getElementById('info-address');
+    if (address && club.address) address.textContent = club.address;
+
+    const email = document.getElementById('info-email');
+    if (email && club.email) email.innerHTML = `<a href="mailto:${club.email}">${club.email}</a>`;
+
+    const founded = document.getElementById('info-founded');
+    if (founded && club.founded) founded.textContent = club.founded;
+  }
+
+  // ===== Load Content =====
+
+  async function loadContent() {
+    try {
+      const response = await fetch('content.json');
+      if (!response.ok) throw new Error('Content not found');
+      const data = await response.json();
+
+      renderClubInfo(data.club);
+      renderNews(data.news);
+      renderEvents(data.events);
+      renderTeams(data.teams);
+
+      // Trigger scroll animations after rendering
+      requestAnimationFrame(initScrollAnimations);
+    } catch (err) {
+      console.error('Error loading content:', err);
+      document.querySelectorAll('.loading-spinner').forEach(el => {
+        el.innerHTML = '<p style="color:var(--text-muted)">Inhalte konnten nicht geladen werden.</p>';
+      });
     }
   }
-}
 
-// ── Navigation ──
-function toggleNav() {
-  document.getElementById('mainNav').classList.toggle('open');
-}
+  // ===== Scroll Animations =====
 
-// Close mobile nav on link click
-document.querySelectorAll('#mainNav a').forEach(a => {
-  a.addEventListener('click', () => {
-    document.getElementById('mainNav').classList.remove('open');
-  });
-});
-
-// Header scroll effect
-let lastScroll = 0;
-window.addEventListener('scroll', () => {
-  const header = document.getElementById('header');
-  if (window.scrollY > 50) {
-    header.classList.add('scrolled');
-  } else {
-    header.classList.remove('scrolled');
-  }
-});
-
-// ── Scroll Animations ──
-function observeAnimations() {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => {
+  function initScrollAnimations() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
           entry.target.classList.add('visible');
-        }, i * 80);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-  document.querySelectorAll('.animate-on-scroll:not(.visible)').forEach(el => {
-    observer.observe(el);
-  });
-}
-
-// ── Contact Form (placeholder, since GH Pages has no backend) ──
-function sendContact() {
-  const name = document.getElementById('cfName').value.trim();
-  const email = document.getElementById('cfEmail').value.trim();
-  const msg = document.getElementById('cfMessage').value.trim();
-
-  if (!name || !email || !msg) {
-    alert('Bitte fülle alle Felder aus.');
-    return;
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
   }
 
-  // Open mail client as fallback for static hosting
-  const subject = encodeURIComponent('Kontakt über Webseite – ' + name);
-  const body = encodeURIComponent(`Name: ${name}\nE-Mail: ${email}\n\n${msg}`);
-  window.location.href = `mailto:info@sc-ostertal.de?subject=${subject}&body=${body}`;
-}
+  // ===== Mobile Nav =====
 
-// ── Helpers ──
-function formatDate(dateStr) {
-  const d = new Date(dateStr + 'T00:00:00');
-  return d.toLocaleDateString('de-DE', { day: '2-digit', month: 'long', year: 'numeric' });
-}
+  document.addEventListener('click', (e) => {
+    const navLinks = document.querySelector('.nav-links');
+    if (navLinks.classList.contains('open') && !e.target.closest('.nav-inner')) {
+      navLinks.classList.remove('open');
+    }
+    // Close on link click
+    if (e.target.closest('.nav-links a')) {
+      navLinks.classList.remove('open');
+    }
+  });
 
-function escHtml(str) {
-  const div = document.createElement('div');
-  div.textContent = str || '';
-  return div.innerHTML;
-}
+  // ===== Footer Year =====
+  document.getElementById('footer-year').textContent = new Date().getFullYear();
 
-// ── Init ──
-document.addEventListener('DOMContentLoaded', () => {
-  renderChessboard();
+  // ===== Init =====
   loadContent();
-  observeAnimations();
-});
+
+})();

@@ -5,224 +5,100 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin – SC Ostertal</title>
   <link rel="stylesheet" href="css/admin.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>♔</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%23c9a54e'/><text x='50%25' y='56%25' text-anchor='middle' dominant-baseline='middle' font-size='20' font-weight='900' font-family='serif' fill='%230c0e12'>♞</text></svg>">
 </head>
 <body>
 
   <!-- ===== Login Screen ===== -->
-  <div class="login-screen" id="loginScreen">
+  <div id="login-screen" class="login-screen">
     <div class="login-card">
-      <h1>SC <span>Ostertal</span></h1>
-      <p class="login-subtitle">Admin-Bereich</p>
+      <div class="logo">♞</div>
+      <h2>SC Ostertal Admin</h2>
+      <p>Melde dich mit deinem GitHub-Token an, um Inhalte zu bearbeiten.</p>
 
-      <div class="login-error" id="loginError"></div>
-
       <div class="form-group">
-        <label for="ghOwner">GitHub Benutzername</label>
-        <input type="text" id="ghOwner" placeholder="z.B. mein-username">
+        <label>GitHub Repository (user/repo)</label>
+        <input type="text" id="login-repo" placeholder="z.B. meinname/sc-ostertal" autocomplete="off">
       </div>
       <div class="form-group">
-        <label for="ghRepo">Repository-Name</label>
-        <input type="text" id="ghRepo" placeholder="z.B. sc-ostertal" value="sc-ostertal">
+        <label>GitHub Personal Access Token</label>
+        <input type="password" id="login-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off">
       </div>
-      <div class="form-group">
-        <label for="ghToken">Personal Access Token</label>
-        <input type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxx">
-        <p class="help-text">
-          Erstelle einen Token unter <strong>GitHub → Settings → Developer settings → Personal access tokens → Fine-grained tokens</strong>. 
-          Der Token braucht <strong>Contents: Read and Write</strong> Berechtigung für das Repository.
-        </p>
+      <button class="btn btn-primary" id="login-btn" onclick="admin.login()">Anmelden</button>
+      <div class="help-text">
+        Du benötigst einen <a href="https://github.com/settings/tokens/new" target="_blank">Personal Access Token</a> mit <strong>repo</strong>-Berechtigung.<br>
+        Die Zugangsdaten werden nur lokal im Browser gespeichert.
       </div>
-      <div class="form-group">
-        <label for="ghBranch">Branch (optional)</label>
-        <input type="text" id="ghBranch" placeholder="main" value="main">
-      </div>
-
-      <button class="login-btn" onclick="adminLogin()">Anmelden</button>
     </div>
   </div>
 
-  <!-- ===== Admin Layout ===== -->
-  <div class="admin-layout" id="adminLayout">
-    <!-- Sidebar -->
-    <aside class="admin-sidebar">
-      <div class="admin-logo">
-        <h2>SC <span>Ostertal</span></h2>
-        <p>Adminbereich</p>
+  <!-- ===== Admin Dashboard ===== -->
+  <div id="admin-app" style="display:none;">
+    <div class="admin-topbar">
+      <div class="admin-topbar-inner">
+        <div class="admin-topbar-left">
+          <h1><span class="icon">♞</span> Verwaltung</h1>
+          <a href="index.html">← Zur Webseite</a>
+        </div>
+        <div class="admin-topbar-right">
+          <span class="status-dot" id="status-dot"></span>
+          <span id="repo-name" style="font-family:var(--font-mono);font-size:0.8rem;color:var(--text-muted);"></span>
+          <button class="btn btn-ghost btn-sm" onclick="admin.logout()">Abmelden</button>
+        </div>
       </div>
-      <ul class="admin-nav">
-        <li><a href="#" class="active" data-panel="dashboard" onclick="showPanel('dashboard')"><span class="nav-icon">📊</span> Dashboard</a></li>
-        <li><a href="#" data-panel="news" onclick="showPanel('news')"><span class="nav-icon">📰</span> Neuigkeiten</a></li>
-        <li><a href="#" data-panel="events" onclick="showPanel('events')"><span class="nav-icon">📅</span> Termine</a></li>
-        <li><a href="#" data-panel="teams" onclick="showPanel('teams')"><span class="nav-icon">👥</span> Mannschaften</a></li>
-        <li><a href="#" data-panel="settings" onclick="showPanel('settings')"><span class="nav-icon">⚙️</span> Allgemein</a></li>
-      </ul>
-      <div class="admin-sidebar-footer">
-        <a href="index.html">← Zurück zur Webseite</a>
-      </div>
-    </aside>
+    </div>
 
-    <!-- Main Content -->
     <main class="admin-main">
-
-      <!-- ── Dashboard ── -->
-      <div class="admin-panel active" id="panel-dashboard">
-        <div class="admin-topbar">
-          <h1>Dashboard</h1>
-        </div>
-        <div class="admin-info">
-          Willkommen im Admin-Bereich! Hier kannst du Neuigkeiten, Termine, Mannschaften und allgemeine Vereinsinfos direkt bearbeiten. Änderungen werden als Commit in dein GitHub-Repository geschrieben und sind sofort auf der Webseite sichtbar.
-        </div>
-        <div id="dashboardStats" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin-top:1.5rem;">
-        </div>
+      <div class="admin-tabs">
+        <button class="admin-tab active" data-tab="news">Aktuelles</button>
+        <button class="admin-tab" data-tab="events">Termine</button>
+        <button class="admin-tab" data-tab="teams">Mannschaften</button>
+        <button class="admin-tab" data-tab="club">Vereinsinfo</button>
       </div>
 
-      <!-- ── Neuigkeiten ── -->
-      <div class="admin-panel" id="panel-news">
-        <div class="admin-topbar">
-          <h1>Neuigkeiten</h1>
-          <button class="btn btn-add" onclick="showNewsForm()">+ Neuer Beitrag</button>
+      <!-- ===== News Panel ===== -->
+      <div class="tab-panel active" id="panel-news">
+        <div class="panel-header">
+          <h2>Neuigkeiten</h2>
+          <button class="btn btn-sm btn-success" onclick="admin.openNewsEditor()">+ Neuer Beitrag</button>
         </div>
-        <div id="newsFormArea" style="display:none;margin-bottom:2rem;">
-          <div class="admin-form">
-            <input type="hidden" id="newsEditId">
-            <div class="form-group">
-              <label for="newsTitel">Titel</label>
-              <input type="text" id="newsTitel" placeholder="Überschrift des Beitrags">
-            </div>
-            <div class="form-group">
-              <label for="newsDatum">Datum</label>
-              <input type="date" id="newsDatum">
-            </div>
-            <div class="form-group">
-              <label for="newsAutor">Autor</label>
-              <input type="text" id="newsAutor" placeholder="z.B. Vorstand">
-            </div>
-            <div class="form-group">
-              <label for="newsInhalt">Inhalt</label>
-              <textarea id="newsInhalt" placeholder="Text des Beitrags..."></textarea>
-            </div>
-            <div class="form-actions">
-              <button class="btn btn-save" onclick="saveNews()">Speichern & Veröffentlichen</button>
-              <button class="btn btn-cancel" onclick="hideNewsForm()">Abbrechen</button>
-            </div>
-          </div>
-        </div>
-        <div class="admin-list" id="newsList"></div>
+        <div class="item-list" id="news-list"></div>
       </div>
 
-      <!-- ── Termine ── -->
-      <div class="admin-panel" id="panel-events">
-        <div class="admin-topbar">
-          <h1>Termine</h1>
-          <button class="btn btn-add" onclick="showEventForm()">+ Neuer Termin</button>
+      <!-- ===== Events Panel ===== -->
+      <div class="tab-panel" id="panel-events">
+        <div class="panel-header">
+          <h2>Termine</h2>
+          <button class="btn btn-sm btn-success" onclick="admin.openEventEditor()">+ Neuer Termin</button>
         </div>
-        <div id="eventFormArea" style="display:none;margin-bottom:2rem;">
-          <div class="admin-form">
-            <input type="hidden" id="eventEditId">
-            <div class="form-group">
-              <label for="eventTitel">Titel</label>
-              <input type="text" id="eventTitel" placeholder="Name des Termins">
-            </div>
-            <div class="form-group">
-              <label for="eventDatum">Datum</label>
-              <input type="date" id="eventDatum">
-            </div>
-            <div class="form-group">
-              <label for="eventZeit">Uhrzeit</label>
-              <input type="time" id="eventZeit">
-            </div>
-            <div class="form-group">
-              <label for="eventOrt">Ort</label>
-              <input type="text" id="eventOrt" placeholder="z.B. Vereinsheim">
-            </div>
-            <div class="form-group">
-              <label for="eventBeschreibung">Beschreibung</label>
-              <textarea id="eventBeschreibung" placeholder="Details zum Termin..."></textarea>
-            </div>
-            <div class="form-actions">
-              <button class="btn btn-save" onclick="saveEvent()">Speichern</button>
-              <button class="btn btn-cancel" onclick="hideEventForm()">Abbrechen</button>
-            </div>
-          </div>
-        </div>
-        <div class="admin-list" id="eventsList"></div>
+        <div class="item-list" id="events-list"></div>
       </div>
 
-      <!-- ── Mannschaften ── -->
-      <div class="admin-panel" id="panel-teams">
-        <div class="admin-topbar">
-          <h1>Mannschaften</h1>
-          <button class="btn btn-add" onclick="showTeamForm()">+ Neue Mannschaft</button>
+      <!-- ===== Teams Panel ===== -->
+      <div class="tab-panel" id="panel-teams">
+        <div class="panel-header">
+          <h2>Mannschaften</h2>
+          <button class="btn btn-sm btn-success" onclick="admin.openTeamEditor()">+ Neue Mannschaft</button>
         </div>
-        <div id="teamFormArea" style="display:none;margin-bottom:2rem;">
-          <div class="admin-form">
-            <input type="hidden" id="teamEditId">
-            <div class="form-group">
-              <label for="teamName">Mannschaftsname</label>
-              <input type="text" id="teamName" placeholder="z.B. 1. Mannschaft">
-            </div>
-            <div class="form-group">
-              <label for="teamLiga">Liga</label>
-              <input type="text" id="teamLiga" placeholder="z.B. Saarlandliga">
-            </div>
-            <div class="form-group">
-              <label for="teamKapitaen">Kapitän / Betreuer</label>
-              <input type="text" id="teamKapitaen" placeholder="Name">
-            </div>
-            <div class="form-group">
-              <label for="teamSpieler">Spieler (einer pro Zeile)</label>
-              <textarea id="teamSpieler" placeholder="Thomas Müller (Brett 1)&#10;Stefan Weber (Brett 2)&#10;..."></textarea>
-            </div>
-            <div class="form-actions">
-              <button class="btn btn-save" onclick="saveTeam()">Speichern</button>
-              <button class="btn btn-cancel" onclick="hideTeamForm()">Abbrechen</button>
-            </div>
-          </div>
-        </div>
-        <div class="admin-list" id="teamsList"></div>
+        <div class="item-list" id="teams-list"></div>
       </div>
 
-      <!-- ── Allgemeine Einstellungen ── -->
-      <div class="admin-panel" id="panel-settings">
-        <div class="admin-topbar">
-          <h1>Allgemeine Infos</h1>
+      <!-- ===== Club Info Panel ===== -->
+      <div class="tab-panel" id="panel-club">
+        <div class="panel-header">
+          <h2>Vereinsinfo bearbeiten</h2>
         </div>
-        <div class="admin-form">
-          <div class="form-group">
-            <label for="setSlogan">Vereinsslogan</label>
-            <input type="text" id="setSlogan">
-          </div>
-          <div class="form-group">
-            <label for="setUeber">Über uns (Kurztext für die Startseite)</label>
-            <textarea id="setUeber" rows="4"></textarea>
-          </div>
-          <div class="form-group">
-            <label for="setTraining">Trainingszeiten</label>
-            <input type="text" id="setTraining">
-          </div>
-          <div class="form-group">
-            <label for="setAdresse">Adresse</label>
-            <textarea id="setAdresse" rows="3"></textarea>
-          </div>
-          <div class="form-group">
-            <label for="setEmail">E-Mail</label>
-            <input type="email" id="setEmail">
-          </div>
-          <div class="form-group">
-            <label for="setTelefon">Telefon (optional)</label>
-            <input type="text" id="setTelefon">
-          </div>
-          <div class="form-actions">
-            <button class="btn btn-save" onclick="saveSettings()">Änderungen speichern</button>
-          </div>
-        </div>
+        <div id="club-form"></div>
       </div>
-
     </main>
   </div>
 
-  <!-- Toast -->
+  <!-- ===== Modal ===== -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal" id="modal-content"></div>
+  </div>
+
+  <!-- ===== Toast ===== -->
   <div class="toast" id="toast"></div>
 
   <script src="js/admin.js"></script>

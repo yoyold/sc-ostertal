@@ -1,89 +1,69 @@
 {
-  "vereinsname": "SC Ostertal",
-  "slogan": "Tradition & Strategie seit 1972",
-  "ueber_uns": "Der Schachclub Ostertal ist seit über 50 Jahren eine feste Größe im saarländischen Schach. Ob Anfänger oder erfahrener Turnierspieler – bei uns ist jeder willkommen, der Freude am königlichen Spiel hat. Wir bieten regelmäßiges Training, Mannschaftskämpfe in verschiedenen Ligen und ein aktives Vereinsleben.",
-  "trainingszeiten": "Jeden Freitag ab 19:00 Uhr im Vereinsheim",
-  "adresse": "Vereinsheim SC Ostertal\nHauptstraße 42\n66606 St. Wendel-Ostertal",
-  "email": "info@sc-ostertal.de",
-  "telefon": "",
-  "neuigkeiten": [
+  "club": {
+    "name": "SC Ostertal",
+    "motto": "Tradition. Strategie. Gemeinschaft.",
+    "about": "Der Schachclub Ostertal wurde 1978 gegründet und ist seitdem ein fester Bestandteil des kulturellen Lebens im Ostertal. Mit über 60 aktiven Mitgliedern bieten wir Spielern aller Stärken ein Zuhause – vom Anfänger bis zum erfahrenen Turnierspieler. Unsere Mannschaften nehmen regelmäßig an der Saarlandliga und den Bezirksligen teil.",
+    "training": "Jeden Freitag ab 19:00 Uhr im Vereinsheim",
+    "address": "Vereinsheim SC Ostertal, Hauptstraße 42, 66606 St. Wendel",
+    "email": "info@sc-ostertal.de",
+    "founded": "1978"
+  },
+  "news": [
     {
       "id": "1",
-      "titel": "Saisonstart 2026 – Neue Saison, neue Ziele!",
-      "datum": "2026-02-10",
-      "inhalt": "Die neue Saison der Saarlandliga steht vor der Tür! Unser Team hat sich in der Vorbereitung gut geschlagen und wir blicken optimistisch auf die kommenden Runden. Der erste Mannschaftskampf findet am 1. März auswärts statt.",
-      "autor": "Vorstand"
+      "title": "Saisonstart 2026: Mannschaftsaufstellungen stehen fest",
+      "date": "2026-02-10",
+      "content": "Die neue Saison steht vor der Tür! Unsere Mannschaftsführer haben die Aufstellungen für die kommende Runde finalisiert. Die erste Mannschaft tritt wieder in der Saarlandliga an, die zweite Mannschaft kämpft in der Bezirksliga um den Aufstieg. Alle Spieler sind herzlich eingeladen, am kommenden Freitag zur Saisonbesprechung zu erscheinen.",
+      "author": "Vorstand"
     },
     {
       "id": "2",
-      "titel": "Jugendtraining erweitert",
-      "datum": "2026-01-15",
-      "inhalt": "Ab sofort bieten wir jeden Mittwoch von 17:00 bis 18:30 Uhr ein zusätzliches Jugendtraining an. Unser Jugendwart Michael betreut die jungen Talente mit viel Engagement. Neue Teilnehmer sind jederzeit willkommen!",
-      "autor": "Jugendabteilung"
+      "title": "Jugendtraining ab sofort jeden Mittwoch",
+      "date": "2026-01-28",
+      "content": "Großartige Neuigkeiten für unsere jüngsten Mitglieder! Ab sofort findet jeden Mittwoch von 17:00 bis 18:30 Uhr ein spezielles Jugendtraining statt. Unter der Leitung von FM Thomas Müller werden Taktik, Eröffnungen und Endspiele trainiert. Neue Gesichter sind jederzeit willkommen – bringt eure Freunde mit!",
+      "author": "Jugendwart"
     },
     {
       "id": "3",
-      "titel": "Vereinsmeisterschaft 2025 – Ergebnisse",
-      "datum": "2025-12-20",
-      "inhalt": "Die Vereinsmeisterschaft 2025 ist Geschichte! Nach spannenden 7 Runden setzte sich Thomas Müller mit 6 aus 7 Punkten souverän durch. Herzlichen Glückwunsch! Die vollständige Tabelle hängt im Vereinsheim aus.",
-      "autor": "Turnierleitung"
+      "title": "Vereinsmeisterschaft 2025: Ergebnisse",
+      "date": "2025-12-15",
+      "content": "Die Vereinsmeisterschaft 2025 ist Geschichte! Nach spannenden 7 Runden im Schweizer System setzte sich Michael Becker souverän mit 6,5 aus 7 Punkten durch. Den zweiten Platz sicherte sich Anna Schmidt mit 5,5 Punkten, gefolgt von Peter Wagner mit 5 Punkten. Herzlichen Glückwunsch an alle Teilnehmer!",
+      "author": "Turnierleitung"
     }
   ],
-  "termine": [
+  "events": [
     {
       "id": "1",
-      "titel": "Mannschaftskampf Runde 5",
-      "datum": "2026-03-01",
-      "zeit": "14:00",
-      "ort": "Auswärts – SC Neunkirchen",
-      "beschreibung": "Saarlandliga, 5. Runde"
+      "title": "Saisonbesprechung",
+      "date": "2026-02-21",
+      "time": "19:00",
+      "description": "Besprechung der Mannschaftsaufstellungen und des Saisonplans."
     },
     {
       "id": "2",
-      "titel": "Blitzturnier",
-      "datum": "2026-03-15",
-      "zeit": "18:00",
-      "ort": "Vereinsheim",
-      "beschreibung": "Offenes Blitzturnier, 5 Min. + 3 Sek., Startgeld 5€"
+      "title": "Blitzturnier März",
+      "date": "2026-03-14",
+      "time": "18:00",
+      "description": "Offenes Blitzturnier mit 5+3 Bedenkzeit. Startgeld: 5€."
     },
     {
       "id": "3",
-      "titel": "Jugend-Schnellschachturnier",
-      "datum": "2026-04-05",
-      "zeit": "10:00",
-      "ort": "Vereinsheim",
-      "beschreibung": "Für alle Jugendlichen bis U18, 15 Min. pro Spieler"
-    },
-    {
-      "id": "4",
-      "titel": "Mitgliederversammlung",
-      "datum": "2026-04-20",
-      "zeit": "19:00",
-      "ort": "Vereinsheim",
-      "beschreibung": "Jahreshauptversammlung mit Vorstandswahlen"
+      "title": "Ostertal Open 2026",
+      "date": "2026-04-18",
+      "time": "09:00",
+      "description": "Unser jährliches offenes Turnier. 7 Runden, 90min + 30s/Zug."
     }
   ],
-  "mannschaften": [
+  "teams": [
     {
-      "id": "1",
       "name": "1. Mannschaft",
-      "liga": "Saarlandliga",
-      "spieler": ["Thomas Müller (Brett 1)", "Stefan Weber (Brett 2)", "Klaus Fischer (Brett 3)", "Hans Becker (Brett 4)", "Peter Schneider (Brett 5)", "Jörg Hoffmann (Brett 6)", "Markus Wagner (Brett 7)", "Ralf Klein (Brett 8)"],
-      "kapitaen": "Thomas Müller"
+      "league": "Saarlandliga",
+      "players": ["FM Thomas Müller (Br. 1)", "Michael Becker (Br. 2)", "Anna Schmidt (Br. 3)", "Peter Wagner (Br. 4)", "Klaus Hoffmann (Br. 5)", "Stefan Braun (Br. 6)", "Maria Schneider (Br. 7)", "Jürgen Klein (Br. 8)"]
     },
     {
-      "id": "2",
       "name": "2. Mannschaft",
-      "liga": "Bezirksliga",
-      "spieler": ["Frank Braun (Brett 1)", "Michael Schmitt (Brett 2)", "Andreas Kiefer (Brett 3)", "Dieter Wolf (Brett 4)"],
-      "kapitaen": "Frank Braun"
-    },
-    {
-      "id": "3",
-      "name": "Jugendmannschaft",
-      "liga": "Jugendliga Saar",
-      "spieler": ["Lukas Müller (Brett 1)", "Emma Weber (Brett 2)", "Tim Fischer (Brett 3)", "Sophie Becker (Brett 4)"],
-      "kapitaen": "Michael Schmitt (Betreuer)"
+      "league": "Bezirksliga",
+      "players": ["Robert Fischer (Br. 1)", "Eva Neumann (Br. 2)", "Hans Weber (Br. 3)", "Sabine Lang (Br. 4)", "Markus Scholz (Br. 5)", "Christine Bauer (Br. 6)", "Wolfgang Kraus (Br. 7)", "Lisa Vogel (Br. 8)"]
     }
   ]
 }
