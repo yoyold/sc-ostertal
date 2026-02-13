@@ -5,24 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin – SC Ostertal</title>
   <link rel="stylesheet" href="css/admin.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%23c9a54e'/><text x='50%25' y='56%25' text-anchor='middle' dominant-baseline='middle' font-size='20' font-weight='900' font-family='serif' fill='%230c0e12'>♞</text></svg>">
 </head>
 <body>
-
-  <!-- ===== Login Screen ===== -->
   <div id="login-screen" class="login-screen">
     <div class="login-card">
-      <div class="logo">♞</div>
+      <div class="logo"><img src="img/logo.png" alt="Logo" style="width:80px;height:80px;object-fit:contain;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.4))"></div>
       <h2>SC Ostertal Admin</h2>
       <p>Melde dich mit deinem GitHub-Token an, um Inhalte zu bearbeiten.</p>
-
       <div class="form-group">
         <label>GitHub Repository (user/repo)</label>
-        <input type="text" id="login-repo" placeholder="z.B. meinname/sc-ostertal" autocomplete="off">
+        <input type="text" id="login-repo" placeholder="z.B. meinname/sc-ostertal">
       </div>
       <div class="form-group">
         <label>GitHub Personal Access Token</label>
-        <input type="password" id="login-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off">
+        <input type="password" id="login-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
       </div>
       <button class="btn btn-primary" id="login-btn" onclick="admin.login()">Anmelden</button>
       <div class="help-text">
@@ -31,13 +27,11 @@
       </div>
     </div>
   </div>
-
-  <!-- ===== Admin Dashboard ===== -->
   <div id="admin-app" style="display:none;">
     <div class="admin-topbar">
       <div class="admin-topbar-inner">
         <div class="admin-topbar-left">
-          <h1><span class="icon">♞</span> Verwaltung</h1>
+          <h1><img src="img/logo.png" alt="" style="width:32px;height:32px;object-fit:contain;vertical-align:middle;margin-right:8px">Verwaltung</h1>
           <a href="index.html">← Zur Webseite</a>
         </div>
         <div class="admin-topbar-right">
@@ -47,7 +41,6 @@
         </div>
       </div>
     </div>
-
     <main class="admin-main">
       <div class="admin-tabs">
         <button class="admin-tab active" data-tab="news">Aktuelles</button>
@@ -55,52 +48,26 @@
         <button class="admin-tab" data-tab="teams">Mannschaften</button>
         <button class="admin-tab" data-tab="club">Vereinsinfo</button>
       </div>
-
-      <!-- ===== News Panel ===== -->
       <div class="tab-panel active" id="panel-news">
-        <div class="panel-header">
-          <h2>Neuigkeiten</h2>
-          <button class="btn btn-sm btn-success" onclick="admin.openNewsEditor()">+ Neuer Beitrag</button>
-        </div>
+        <div class="panel-header"><h2>Neuigkeiten</h2><button class="btn btn-sm btn-success" onclick="admin.openNewsEditor()">+ Neuer Beitrag</button></div>
         <div class="item-list" id="news-list"></div>
       </div>
-
-      <!-- ===== Events Panel ===== -->
       <div class="tab-panel" id="panel-events">
-        <div class="panel-header">
-          <h2>Termine</h2>
-          <button class="btn btn-sm btn-success" onclick="admin.openEventEditor()">+ Neuer Termin</button>
-        </div>
+        <div class="panel-header"><h2>Termine</h2><button class="btn btn-sm btn-success" onclick="admin.openEventEditor()">+ Neuer Termin</button></div>
         <div class="item-list" id="events-list"></div>
       </div>
-
-      <!-- ===== Teams Panel ===== -->
       <div class="tab-panel" id="panel-teams">
-        <div class="panel-header">
-          <h2>Mannschaften</h2>
-          <button class="btn btn-sm btn-success" onclick="admin.openTeamEditor()">+ Neue Mannschaft</button>
-        </div>
+        <div class="panel-header"><h2>Mannschaften</h2><button class="btn btn-sm btn-success" onclick="admin.openTeamEditor()">+ Neue Mannschaft</button></div>
         <div class="item-list" id="teams-list"></div>
       </div>
-
-      <!-- ===== Club Info Panel ===== -->
       <div class="tab-panel" id="panel-club">
-        <div class="panel-header">
-          <h2>Vereinsinfo bearbeiten</h2>
-        </div>
+        <div class="panel-header"><h2>Vereinsinfo bearbeiten</h2></div>
         <div id="club-form"></div>
       </div>
     </main>
   </div>
-
-  <!-- ===== Modal ===== -->
-  <div class="modal-overlay" id="modal-overlay">
-    <div class="modal" id="modal-content"></div>
-  </div>
-
-  <!-- ===== Toast ===== -->
+  <div class="modal-overlay" id="modal-overlay"><div class="modal" id="modal-content"></div></div>
   <div class="toast" id="toast"></div>
-
   <script src="js/admin.js"></script>
 </body>
 </html>
