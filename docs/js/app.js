@@ -364,12 +364,14 @@ window.SCO = (function () {
 
       const positions = [cloneBoard(fenToBoard(INIT_FEN))];
       const moveLabels = [];
+      const moveSquares = [null]; // from/to for each position; index 0 = start = null
       let board = cloneBoard(positions[0]);
       let turn = 'w';
 
       for (const tok of tokens) {
         let t = tok.replace(/[+#]/g,'');
         const nb = cloneBoard(board);
+        let fromR, fromC, toR, toC;
 
         // Castling
         if (t==='O-O-O'||t==='O-O') {
@@ -379,8 +381,10 @@ window.SCO = (function () {
           nb[r][isQ?0:7]=null;
           nb[r][isQ?2:6]={type:'K',color:turn};
           nb[r][isQ?3:5]={type:'R',color:turn};
+          fromR=r; fromC=4; toR=r; toC=isQ?2:6;
           positions.push(cloneBoard(nb));
           moveLabels.push(tok);
+          moveSquares.push({fr:fromR,fc:fromC,tr:toR,tc:toC});
           board = nb; turn = turn==='w'?'b':'w';
           continue;
         }
@@ -408,49 +412,77 @@ window.SCO = (function () {
 
         const from = findPiece(nb, pieceType, turn, fromFile, fromRank, targetRank, targetFile);
         if (from) {
-          // En passant capture
           if (pieceType==='P' && from[1]!==targetFile && !nb[targetRank][targetFile]) {
             nb[from[0]][targetFile] = null;
           }
           nb[from[0]][from[1]] = null;
           nb[targetRank][targetFile] = { type: promo||pieceType, color: turn };
+          fromR=from[0]; fromC=from[1]; toR=targetRank; toC=targetFile;
+        } else {
+          fromR=0; fromC=0; toR=targetRank; toC=targetFile;
         }
 
         positions.push(cloneBoard(nb));
         moveLabels.push(tok);
+        moveSquares.push({fr:fromR,fc:fromC,tr:toR,tc:toC});
         board = nb; turn = turn==='w'?'b':'w';
       }
 
-      return { positions, moveLabels };
+      return { positions, moveLabels, moveSquares };
     }
 
-    function renderBoard(board, lastMove) {
+    const SQ = 64; // square size in px
+
+    function renderBoard(board, move) {
       const lightSq = '#c8b07a';
       const darkSq = '#8b6b3d';
       const lightHl = '#d4c46a';
       const darkHl = '#a09030';
-      let html = '<div style="display:inline-grid;grid-template-columns:auto repeat(8,1fr);grid-template-rows:repeat(8,1fr) auto;border:2px solid var(--border);border-radius:4px;overflow:hidden;font-size:0;">';
+      const boardPx = SQ * 8;
+      const labelW = 28;
+
+      let html = `<div style="display:inline-block;">`;
+      // Board with SVG overlay
+      html += `<div style="display:inline-grid;grid-template-columns:${labelW}px repeat(8,${SQ}px);grid-template-rows:repeat(8,${SQ}px) ${labelW}px;border:2px solid var(--border);border-radius:4px;overflow:hidden;position:relative;">`;
 
       for (let r=0; r<8; r++) {
-        // Rank label
-        html += `<div style="display:flex;align-items:center;justify-content:center;width:24px;font-size:12px;color:var(--text-muted);font-family:var(--font-mono);">${8-r}</div>`;
+        html += `<div style="display:flex;align-items:center;justify-content:center;width:${labelW}px;font-size:13px;color:var(--text-muted);font-family:var(--font-mono);background:var(--bg-card);">${8-r}</div>`;
         for (let c=0; c<8; c++) {
           const isLight = (r+c)%2===0;
           let bg = isLight ? lightSq : darkSq;
-          if (lastMove && ((lastMove[0]===r&&lastMove[1]===c)||(lastMove[2]===r&&lastMove[3]===c))) {
+          if (move && ((move.fr===r&&move.fc===c)||(move.tr===r&&move.tc===c))) {
             bg = isLight ? lightHl : darkHl;
           }
           const piece = board[r][c];
-          const sym = piece ? `<img src="${PIECE_SVG[piece.color+piece.type]}" alt="" style="width:85%;height:85%;pointer-events:none;">` : '';
-          html += `<div style="width:clamp(36px,8vw,56px);height:clamp(36px,8vw,56px);background:${bg};display:flex;align-items:center;justify-content:center;user-select:none;">${sym}</div>`;
+          const sym = piece ? `<img src="${PIECE_SVG[piece.color+piece.type]}" alt="" style="width:85%;height:85%;pointer-events:none;filter:drop-shadow(1px 1px 1px rgba(0,0,0,0.3));">` : '';
+          html += `<div style="width:${SQ}px;height:${SQ}px;background:${bg};display:flex;align-items:center;justify-content:center;user-select:none;">${sym}</div>`;
         }
       }
       // File labels
-      html += '<div style="width:24px;"></div>';
+      html += `<div style="width:${labelW}px;background:var(--bg-card);"></div>`;
       for (let c=0; c<8; c++) {
-        html += `<div style="display:flex;align-items:center;justify-content:center;height:22px;font-size:12px;color:var(--text-muted);font-family:var(--font-mono);">${'abcdefgh'[c]}</div>`;
+        html += `<div style="display:flex;align-items:center;justify-content:center;height:${labelW}px;font-size:13px;color:var(--text-muted);font-family:var(--font-mono);background:var(--bg-card);">${'abcdefgh'[c]}</div>`;
       }
-      html += '</div>';
+
+      // SVG arrow overlay
+      if (move) {
+        const x1 = labelW + move.fc * SQ + SQ/2;
+        const y1 = move.fr * SQ + SQ/2;
+        const x2 = labelW + move.tc * SQ + SQ/2;
+        const y2 = move.tr * SQ + SQ/2;
+        const totalW = labelW + boardPx;
+        const totalH = boardPx + labelW;
+        html += `<svg style="position:absolute;top:0;left:0;width:${totalW}px;height:${totalH}px;pointer-events:none;" viewBox="0 0 ${totalW} ${totalH}">
+          <defs>
+            <marker id="arrowhead" markerWidth="4" markerHeight="3.5" refX="3.5" refY="1.75" orient="auto">
+              <polygon points="0 0, 4 1.75, 0 3.5" fill="rgba(220,80,40,0.85)"/>
+            </marker>
+          </defs>
+          <line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="rgba(220,80,40,0.85)" stroke-width="8" stroke-linecap="round" marker-end="url(#arrowhead)" opacity="0.8"/>
+        </svg>`;
+      }
+
+      html += `</div></div>`;
       return html;
     }
 
@@ -505,18 +537,15 @@ window.SCO = (function () {
       const area = document.getElementById('pgn-board-area');
       if (!area) return;
 
-      // Determine last move highlight
-      let lastMove = null;
-      // We can't easily track from/to without storing it, skip highlight for simplicity
-
-      const boardHtml = renderBoard(parsed.positions[currentMove], lastMove);
+      const move = currentMove > 0 ? parsed.moveSquares[currentMove] : null;
+      const boardHtml = renderBoard(parsed.positions[currentMove], move);
 
       // Build move list with current move highlighted
-      let movesHtml = '<div style="font-family:var(--font-mono);font-size:0.85rem;line-height:1.9;max-height:380px;overflow-y:auto;flex:1;min-width:180px;">';
+      let movesHtml = `<div style="font-family:var(--font-mono);font-size:0.92rem;line-height:2;max-height:${SQ*8}px;overflow-y:auto;flex:1;min-width:200px;">`;
       for (let i=0; i<parsed.moveLabels.length; i++) {
         if (i%2===0) movesHtml += `<span style="color:var(--text-muted);margin-right:4px;">${Math.floor(i/2)+1}.</span>`;
         const isActive = i+1===currentMove;
-        movesHtml += `<span class="pgn-move${isActive?' pgn-move-active':''}" data-move="${i+1}" style="cursor:pointer;padding:2px 5px;border-radius:3px;${isActive?'background:var(--navy-light);color:var(--cream-light);':''}">${parsed.moveLabels[i]}</span> `;
+        movesHtml += `<span class="pgn-move${isActive?' pgn-move-active':''}" data-move="${i+1}" style="cursor:pointer;padding:2px 6px;border-radius:3px;${isActive?'background:var(--navy-light);color:var(--cream-light);':''}">${parsed.moveLabels[i]}</span> `;
         if (i%2===1) movesHtml += '<br>';
       }
       movesHtml += '</div>';
