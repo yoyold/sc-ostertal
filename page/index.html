@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SC Ostertal – Schachclub seit 1972</title>
+  <meta name="description" content="Schachclub Ostertal – Ihr Schachverein im Saarland. Training, Turniere und Mannschaftskämpfe für alle Spielstärken.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>♔</text></svg>">
+</head>
+<body>
+
+  <!-- ===== Header ===== -->
+  <header id="header">
+    <div class="container nav-inner">
+      <a href="#" class="logo">
+        <div class="logo-icon">
+          <svg viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="42" height="42" rx="4" fill="#0d0d0d"/>
+            <text x="21" y="30" font-size="26" text-anchor="middle" fill="#f7f3eb">♔</text>
+          </svg>
+        </div>
+        <div class="logo-text">SC <span>Ostertal</span></div>
+      </a>
+
+      <button class="nav-toggle" aria-label="Menü öffnen" onclick="toggleNav()">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav id="mainNav">
+        <a href="#neuigkeiten">Neuigkeiten</a>
+        <a href="#termine">Termine</a>
+        <a href="#mannschaften">Mannschaften</a>
+        <a href="#kontakt">Kontakt</a>
+        <a href="admin.html" class="admin-link">Admin</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== Hero ===== -->
+  <section class="hero" id="hero">
+    <div class="container hero-content">
+      <div class="hero-text">
+        <div class="hero-badge">Schachclub im Saarland</div>
+        <h1>SC <em>Ostertal</em></h1>
+        <p class="hero-description" id="heroDescription">
+          Der Schachclub Ostertal ist seit über 50 Jahren eine feste Größe im saarländischen Schach. Ob Anfänger oder erfahrener Turnierspieler – bei uns ist jeder willkommen, der Freude am königlichen Spiel hat.
+        </p>
+        <div class="hero-actions">
+          <a href="#kontakt" class="btn btn-primary">Mitmachen ♟</a>
+          <a href="#termine" class="btn btn-secondary">Nächste Termine</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="chessboard-deco" id="chessboard"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Neuigkeiten ===== -->
+  <section id="neuigkeiten">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <div class="section-label">Aktuelles</div>
+        <h2>Neuigkeiten</h2>
+        <p>Was im Verein passiert – Berichte, Ergebnisse und Ankündigungen.</p>
+        <div class="section-divider"></div>
+      </div>
+      <div class="news-grid" id="newsGrid">
+        <!-- Dynamisch befüllt -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Termine ===== -->
+  <section id="termine">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <div class="section-label">Kalender</div>
+        <h2>Kommende Termine</h2>
+        <p>Mannschaftskämpfe, Turniere und Vereinsveranstaltungen.</p>
+        <div class="section-divider"></div>
+      </div>
+      <div class="termine-list" id="termineList">
+        <!-- Dynamisch befüllt -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Mannschaften ===== -->
+  <section id="mannschaften">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <div class="section-label">Teams</div>
+        <h2>Unsere Mannschaften</h2>
+        <p>Die Spieler des SC Ostertal in den verschiedenen Ligen.</p>
+        <div class="section-divider"></div>
+      </div>
+      <div class="teams-grid" id="teamsGrid">
+        <!-- Dynamisch befüllt -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Kontakt ===== -->
+  <section id="kontakt">
+    <div class="container">
+      <div class="section-header animate-on-scroll">
+        <div class="section-label">Kontakt</div>
+        <h2>Schreib uns</h2>
+        <p>Fragen, Interesse am Verein oder einfach mal vorbeikommen?</p>
+        <div class="section-divider"></div>
+      </div>
+      <div class="kontakt-grid">
+        <div class="kontakt-info" id="kontaktInfo">
+          <div class="kontakt-item">
+            <div class="kontakt-icon">📍</div>
+            <div>
+              <h4>Adresse</h4>
+              <p id="kontaktAdresse">Vereinsheim SC Ostertal
+Hauptstraße 42
+66606 St. Wendel-Ostertal</p>
+            </div>
+          </div>
+          <div class="kontakt-item">
+            <div class="kontakt-icon">🕐</div>
+            <div>
+              <h4>Training</h4>
+              <p id="kontaktTraining">Jeden Freitag ab 19:00 Uhr im Vereinsheim</p>
+            </div>
+          </div>
+          <div class="kontakt-item">
+            <div class="kontakt-icon">✉️</div>
+            <div>
+              <h4>E-Mail</h4>
+              <p><a href="mailto:info@sc-ostertal.de" id="kontaktEmail">info@sc-ostertal.de</a></p>
+            </div>
+          </div>
+        </div>
+        <div class="kontakt-form">
+          <h3>Nachricht senden</h3>
+          <div class="form-group">
+            <label for="cfName">Name</label>
+            <input type="text" id="cfName" placeholder="Dein Name">
+          </div>
+          <div class="form-group">
+            <label for="cfEmail">E-Mail</label>
+            <input type="email" id="cfEmail" placeholder="deine@email.de">
+          </div>
+          <div class="form-group">
+            <label for="cfMessage">Nachricht</label>
+            <textarea id="cfMessage" placeholder="Deine Nachricht an uns..."></textarea>
+          </div>
+          <button class="btn btn-primary" onclick="sendContact()">Absenden</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer>
+    <div class="container footer-inner">
+      <div class="footer-text">
+        © 2026 SC Ostertal – <a href="#">Impressum</a> · <a href="#">Datenschutz</a>
+      </div>
+      <div class="footer-links">
+        <a href="#neuigkeiten">Neuigkeiten</a>
+        <a href="#termine">Termine</a>
+        <a href="#mannschaften">Mannschaften</a>
+        <a href="#kontakt">Kontakt</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

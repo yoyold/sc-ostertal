@@ -1,0 +1,89 @@
+{
+  "vereinsname": "SC Ostertal",
+  "slogan": "Tradition & Strategie seit 1972",
+  "ueber_uns": "Der Schachclub Ostertal ist seit über 50 Jahren eine feste Größe im saarländischen Schach. Ob Anfänger oder erfahrener Turnierspieler – bei uns ist jeder willkommen, der Freude am königlichen Spiel hat. Wir bieten regelmäßiges Training, Mannschaftskämpfe in verschiedenen Ligen und ein aktives Vereinsleben.",
+  "trainingszeiten": "Jeden Freitag ab 19:00 Uhr im Vereinsheim",
+  "adresse": "Vereinsheim SC Ostertal\nHauptstraße 42\n66606 St. Wendel-Ostertal",
+  "email": "info@sc-ostertal.de",
+  "telefon": "",
+  "neuigkeiten": [
+    {
+      "id": "1",
+      "titel": "Saisonstart 2026 – Neue Saison, neue Ziele!",
+      "datum": "2026-02-10",
+      "inhalt": "Die neue Saison der Saarlandliga steht vor der Tür! Unser Team hat sich in der Vorbereitung gut geschlagen und wir blicken optimistisch auf die kommenden Runden. Der erste Mannschaftskampf findet am 1. März auswärts statt.",
+      "autor": "Vorstand"
+    },
+    {
+      "id": "2",
+      "titel": "Jugendtraining erweitert",
+      "datum": "2026-01-15",
+      "inhalt": "Ab sofort bieten wir jeden Mittwoch von 17:00 bis 18:30 Uhr ein zusätzliches Jugendtraining an. Unser Jugendwart Michael betreut die jungen Talente mit viel Engagement. Neue Teilnehmer sind jederzeit willkommen!",
+      "autor": "Jugendabteilung"
+    },
+    {
+      "id": "3",
+      "titel": "Vereinsmeisterschaft 2025 – Ergebnisse",
+      "datum": "2025-12-20",
+      "inhalt": "Die Vereinsmeisterschaft 2025 ist Geschichte! Nach spannenden 7 Runden setzte sich Thomas Müller mit 6 aus 7 Punkten souverän durch. Herzlichen Glückwunsch! Die vollständige Tabelle hängt im Vereinsheim aus.",
+      "autor": "Turnierleitung"
+    }
+  ],
+  "termine": [
+    {
+      "id": "1",
+      "titel": "Mannschaftskampf Runde 5",
+      "datum": "2026-03-01",
+      "zeit": "14:00",
+      "ort": "Auswärts – SC Neunkirchen",
+      "beschreibung": "Saarlandliga, 5. Runde"
+    },
+    {
+      "id": "2",
+      "titel": "Blitzturnier",
+      "datum": "2026-03-15",
+      "zeit": "18:00",
+      "ort": "Vereinsheim",
+      "beschreibung": "Offenes Blitzturnier, 5 Min. + 3 Sek., Startgeld 5€"
+    },
+    {
+      "id": "3",
+      "titel": "Jugend-Schnellschachturnier",
+      "datum": "2026-04-05",
+      "zeit": "10:00",
+      "ort": "Vereinsheim",
+      "beschreibung": "Für alle Jugendlichen bis U18, 15 Min. pro Spieler"
+    },
+    {
+      "id": "4",
+      "titel": "Mitgliederversammlung",
+      "datum": "2026-04-20",
+      "zeit": "19:00",
+      "ort": "Vereinsheim",
+      "beschreibung": "Jahreshauptversammlung mit Vorstandswahlen"
+    }
+  ],
+  "mannschaften": [
+    {
+      "id": "1",
+      "name": "1. Mannschaft",
+      "liga": "Saarlandliga",
+      "spieler": ["Thomas Müller (Brett 1)", "Stefan Weber (Brett 2)", "Klaus Fischer (Brett 3)", "Hans Becker (Brett 4)", "Peter Schneider (Brett 5)", "Jörg Hoffmann (Brett 6)", "Markus Wagner (Brett 7)", "Ralf Klein (Brett 8)"],
+      "kapitaen": "Thomas Müller"
+    },
+    {
+      "id": "2",
+      "name": "2. Mannschaft",
+      "liga": "Bezirksliga",
+      "spieler": ["Frank Braun (Brett 1)", "Michael Schmitt (Brett 2)", "Andreas Kiefer (Brett 3)", "Dieter Wolf (Brett 4)"],
+      "kapitaen": "Frank Braun"
+    },
+    {
+      "id": "3",
+      "name": "Jugendmannschaft",
+      "liga": "Jugendliga Saar",
+      "spieler": ["Lukas Müller (Brett 1)", "Emma Weber (Brett 2)", "Tim Fischer (Brett 3)", "Sophie Becker (Brett 4)"],
+      "kapitaen": "Michael Schmitt (Betreuer)"
+    }
+  ]
+}

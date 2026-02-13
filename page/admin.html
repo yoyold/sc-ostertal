@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin – SC Ostertal</title>
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>♔</text></svg>">
+</head>
+<body>
+
+  <!-- ===== Login Screen ===== -->
+  <div class="login-screen" id="loginScreen">
+    <div class="login-card">
+      <h1>SC <span>Ostertal</span></h1>
+      <p class="login-subtitle">Admin-Bereich</p>
+
+      <div class="login-error" id="loginError"></div>
+
+      <div class="form-group">
+        <label for="ghOwner">GitHub Benutzername</label>
+        <input type="text" id="ghOwner" placeholder="z.B. mein-username">
+      </div>
+      <div class="form-group">
+        <label for="ghRepo">Repository-Name</label>
+        <input type="text" id="ghRepo" placeholder="z.B. sc-ostertal" value="sc-ostertal">
+      </div>
+      <div class="form-group">
+        <label for="ghToken">Personal Access Token</label>
+        <input type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxx">
+        <p class="help-text">
+          Erstelle einen Token unter <strong>GitHub → Settings → Developer settings → Personal access tokens → Fine-grained tokens</strong>. 
+          Der Token braucht <strong>Contents: Read and Write</strong> Berechtigung für das Repository.
+        </p>
+      </div>
+      <div class="form-group">
+        <label for="ghBranch">Branch (optional)</label>
+        <input type="text" id="ghBranch" placeholder="main" value="main">
+      </div>
+
+      <button class="login-btn" onclick="adminLogin()">Anmelden</button>
+    </div>
+  </div>
+
+  <!-- ===== Admin Layout ===== -->
+  <div class="admin-layout" id="adminLayout">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="admin-logo">
+        <h2>SC <span>Ostertal</span></h2>
+        <p>Adminbereich</p>
+      </div>
+      <ul class="admin-nav">
+        <li><a href="#" class="active" data-panel="dashboard" onclick="showPanel('dashboard')"><span class="nav-icon">📊</span> Dashboard</a></li>
+        <li><a href="#" data-panel="news" onclick="showPanel('news')"><span class="nav-icon">📰</span> Neuigkeiten</a></li>
+        <li><a href="#" data-panel="events" onclick="showPanel('events')"><span class="nav-icon">📅</span> Termine</a></li>
+        <li><a href="#" data-panel="teams" onclick="showPanel('teams')"><span class="nav-icon">👥</span> Mannschaften</a></li>
+        <li><a href="#" data-panel="settings" onclick="showPanel('settings')"><span class="nav-icon">⚙️</span> Allgemein</a></li>
+      </ul>
+      <div class="admin-sidebar-footer">
+        <a href="index.html">← Zurück zur Webseite</a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+
+      <!-- ── Dashboard ── -->
+      <div class="admin-panel active" id="panel-dashboard">
+        <div class="admin-topbar">
+          <h1>Dashboard</h1>
+        </div>
+        <div class="admin-info">
+          Willkommen im Admin-Bereich! Hier kannst du Neuigkeiten, Termine, Mannschaften und allgemeine Vereinsinfos direkt bearbeiten. Änderungen werden als Commit in dein GitHub-Repository geschrieben und sind sofort auf der Webseite sichtbar.
+        </div>
+        <div id="dashboardStats" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin-top:1.5rem;">
+        </div>
+      </div>
+
+      <!-- ── Neuigkeiten ── -->
+      <div class="admin-panel" id="panel-news">
+        <div class="admin-topbar">
+          <h1>Neuigkeiten</h1>
+          <button class="btn btn-add" onclick="showNewsForm()">+ Neuer Beitrag</button>
+        </div>
+        <div id="newsFormArea" style="display:none;margin-bottom:2rem;">
+          <div class="admin-form">
+            <input type="hidden" id="newsEditId">
+            <div class="form-group">
+              <label for="newsTitel">Titel</label>
+              <input type="text" id="newsTitel" placeholder="Überschrift des Beitrags">
+            </div>
+            <div class="form-group">
+              <label for="newsDatum">Datum</label>
+              <input type="date" id="newsDatum">
+            </div>
+            <div class="form-group">
+              <label for="newsAutor">Autor</label>
+              <input type="text" id="newsAutor" placeholder="z.B. Vorstand">
+            </div>
+            <div class="form-group">
+              <label for="newsInhalt">Inhalt</label>
+              <textarea id="newsInhalt" placeholder="Text des Beitrags..."></textarea>
+            </div>
+            <div class="form-actions">
+              <button class="btn btn-save" onclick="saveNews()">Speichern & Veröffentlichen</button>
+              <button class="btn btn-cancel" onclick="hideNewsForm()">Abbrechen</button>
+            </div>
+          </div>
+        </div>
+        <div class="admin-list" id="newsList"></div>
+      </div>
+
+      <!-- ── Termine ── -->
+      <div class="admin-panel" id="panel-events">
+        <div class="admin-topbar">
+          <h1>Termine</h1>
+          <button class="btn btn-add" onclick="showEventForm()">+ Neuer Termin</button>
+        </div>
+        <div id="eventFormArea" style="display:none;margin-bottom:2rem;">
+          <div class="admin-form">
+            <input type="hidden" id="eventEditId">
+            <div class="form-group">
+              <label for="eventTitel">Titel</label>
+              <input type="text" id="eventTitel" placeholder="Name des Termins">
+            </div>
+            <div class="form-group">
+              <label for="eventDatum">Datum</label>
+              <input type="date" id="eventDatum">
+            </div>
+            <div class="form-group">
+              <label for="eventZeit">Uhrzeit</label>
+              <input type="time" id="eventZeit">
+            </div>
+            <div class="form-group">
+              <label for="eventOrt">Ort</label>
+              <input type="text" id="eventOrt" placeholder="z.B. Vereinsheim">
+            </div>
+            <div class="form-group">
+              <label for="eventBeschreibung">Beschreibung</label>
+              <textarea id="eventBeschreibung" placeholder="Details zum Termin..."></textarea>
+            </div>
+            <div class="form-actions">
+              <button class="btn btn-save" onclick="saveEvent()">Speichern</button>
+              <button class="btn btn-cancel" onclick="hideEventForm()">Abbrechen</button>
+            </div>
+          </div>
+        </div>
+        <div class="admin-list" id="eventsList"></div>
+      </div>
+
+      <!-- ── Mannschaften ── -->
+      <div class="admin-panel" id="panel-teams">
+        <div class="admin-topbar">
+          <h1>Mannschaften</h1>
+          <button class="btn btn-add" onclick="showTeamForm()">+ Neue Mannschaft</button>
+        </div>
+        <div id="teamFormArea" style="display:none;margin-bottom:2rem;">
+          <div class="admin-form">
+            <input type="hidden" id="teamEditId">
+            <div class="form-group">
+              <label for="teamName">Mannschaftsname</label>
+              <input type="text" id="teamName" placeholder="z.B. 1. Mannschaft">
+            </div>
+            <div class="form-group">
+              <label for="teamLiga">Liga</label>
+              <input type="text" id="teamLiga" placeholder="z.B. Saarlandliga">
+            </div>
+            <div class="form-group">
+              <label for="teamKapitaen">Kapitän / Betreuer</label>
+              <input type="text" id="teamKapitaen" placeholder="Name">
+            </div>
+            <div class="form-group">
+              <label for="teamSpieler">Spieler (einer pro Zeile)</label>
+              <textarea id="teamSpieler" placeholder="Thomas Müller (Brett 1)&#10;Stefan Weber (Brett 2)&#10;..."></textarea>
+            </div>
+            <div class="form-actions">
+              <button class="btn btn-save" onclick="saveTeam()">Speichern</button>
+              <button class="btn btn-cancel" onclick="hideTeamForm()">Abbrechen</button>
+            </div>
+          </div>
+        </div>
+        <div class="admin-list" id="teamsList"></div>
+      </div>
+
+      <!-- ── Allgemeine Einstellungen ── -->
+      <div class="admin-panel" id="panel-settings">
+        <div class="admin-topbar">
+          <h1>Allgemeine Infos</h1>
+        </div>
+        <div class="admin-form">
+          <div class="form-group">
+            <label for="setSlogan">Vereinsslogan</label>
+            <input type="text" id="setSlogan">
+          </div>
+          <div class="form-group">
+            <label for="setUeber">Über uns (Kurztext für die Startseite)</label>
+            <textarea id="setUeber" rows="4"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="setTraining">Trainingszeiten</label>
+            <input type="text" id="setTraining">
+          </div>
+          <div class="form-group">
+            <label for="setAdresse">Adresse</label>
+            <textarea id="setAdresse" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="setEmail">E-Mail</label>
+            <input type="email" id="setEmail">
+          </div>
+          <div class="form-group">
+            <label for="setTelefon">Telefon (optional)</label>
+            <input type="text" id="setTelefon">
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-save" onclick="saveSettings()">Änderungen speichern</button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>
