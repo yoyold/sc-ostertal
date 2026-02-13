@@ -19,14 +19,19 @@ var admin = (function () {
         ? endpoint
         : `https://api.github.com/repos/${state.repo}/${endpoint}`;
 
+      const headers = {
+        'Authorization': `token ${state.token}`,
+        'Accept': 'application/vnd.github.v3+json',
+        ...opts.headers
+      };
+      // Only add Content-Type when there's a body, to avoid triggering CORS preflight on GET
+      if (opts.body) {
+        headers['Content-Type'] = 'application/json';
+      }
+
       const res = await fetch(url, {
         ...opts,
-        headers: {
-          'Authorization': `token ${state.token}`,
-          'Accept': 'application/vnd.github.v3+json',
-          'Content-Type': 'application/json',
-          ...opts.headers
-        }
+        headers
       });
 
       if (!res.ok) {

@@ -32,6 +32,8 @@ body::before { content: ''; position: fixed; inset: 0; background-image: url("da
 .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--cream); transition: var(--transition); }
 .nav-links a:hover { color: var(--cream); }
 .nav-links a:hover::after { width: 100%; }
+.nav-links a.active { color: var(--cream); }
+.nav-links a.active::after { width: 100%; }
 .nav-admin { background: transparent; border: 1px solid var(--navy-light); color: var(--cream-dim); padding: 6px 16px; border-radius: var(--radius); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; transition: var(--transition); text-decoration: none; }
 .nav-admin:hover { background: var(--navy-light); color: var(--cream-light); }
 .nav-toggle { display: none; background: none; border: none; color: var(--text-primary); font-size: 1.5rem; cursor: pointer; padding: 4px; }
@@ -103,6 +105,75 @@ section { position: relative; z-index: 1; padding: 6rem 2rem; }
 .info-value { font-size: 1rem; color: var(--text-primary); }
 .info-value a { color: var(--accent-blue-light); text-decoration: none; }
 .info-value a:hover { color: var(--cream); text-decoration: underline; }
+
+/* ===== Page Layout ===== */
+.page { position: relative; z-index: 1; padding-top: 72px; min-height: 100vh; }
+.page-inner { max-width: 1000px; margin: 0 auto; padding: 3rem 2rem 4rem; }
+.page-header { margin-bottom: 3rem; }
+.page-label { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent-blue); margin-bottom: 0.75rem; }
+.page-title { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; line-height: 1.15; }
+.page-divider { width: 60px; height: 3px; background: var(--navy-light); margin-top: 1rem; border-radius: 2px; }
+
+/* ===== Sub-Tabs (Schach page) ===== */
+.sub-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 2rem; overflow-x: auto; }
+.sub-tab { padding: 12px 20px; font-size: 0.88rem; font-weight: 500; color: var(--text-muted); cursor: pointer; border: none; background: none; transition: var(--transition); border-bottom: 2px solid transparent; white-space: nowrap; font-family: var(--font-body); }
+.sub-tab:hover { color: var(--text-secondary); }
+.sub-tab.active { color: var(--accent-blue); border-bottom-color: var(--accent-blue); }
+.sub-panel { display: none; }
+.sub-panel.active { display: block; }
+
+/* ===== Chess Learn Grid ===== */
+.chess-section-title { font-family: var(--font-display); font-size: 1.4rem; margin-bottom: 1.5rem; }
+.learn-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.25rem; }
+.learn-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; transition: var(--transition); }
+.learn-card:hover { border-color: var(--border-light); background: var(--bg-card-hover); }
+.learn-card .icon { font-size: 2rem; display: block; margin-bottom: 0.75rem; }
+.learn-card h4 { font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 0.5rem; }
+.learn-card p { color: var(--text-secondary); font-size: 0.92rem; line-height: 1.65; }
+
+/* ===== Chess Puzzle ===== */
+.puzzle-wrap { position: relative; width: 100%; max-width: 600px; margin: 0 auto; aspect-ratio: 1; }
+.puzzle-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 1px solid var(--border); border-radius: var(--radius); }
+
+/* ===== Resources Grid ===== */
+.resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+.resource-item { display: block; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; text-decoration: none; color: var(--text-primary); transition: var(--transition); }
+.resource-item:hover { border-color: var(--border-light); background: var(--bg-card-hover); transform: translateY(-2px); box-shadow: var(--shadow); }
+.resource-item h4 { font-family: var(--font-display); font-size: 1.05rem; margin-bottom: 0.4rem; }
+.resource-item p { color: var(--text-secondary); font-size: 0.88rem; line-height: 1.6; margin-bottom: 0.5rem; }
+.resource-item .url { font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent-blue); }
+
+/* ===== Contacts Grid ===== */
+.contacts-grid { margin-bottom: 3rem; }
+
+/* ===== Contact Form ===== */
+.contact-form-wrap { max-width: 640px; margin: 0 auto; }
+.contact-form-title { font-family: var(--font-display); font-size: 1.4rem; margin-bottom: 1.5rem; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form-group { margin-bottom: 1.25rem; }
+.form-group label { display: block; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 0.5rem; }
+.form-group input,
+.form-group textarea,
+.form-group select { width: 100%; padding: 12px 14px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text-primary); font-family: var(--font-body); font-size: 0.95rem; transition: var(--transition); outline: none; }
+.form-group input:focus,
+.form-group textarea:focus { border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(90,138,191,0.12); }
+.form-group textarea { min-height: 120px; resize: vertical; line-height: 1.6; }
+.form-submit { margin-top: 0.5rem; }
+.form-status { margin-top: 1rem; font-size: 0.9rem; }
+
+/* ===== Tournaments ===== */
+.tournament-section { margin-bottom: 3rem; }
+.archive-header { margin-top: 2rem; }
+
+/* ===== Impressum ===== */
+.impressum-content { max-width: 640px; }
+
+@media (max-width: 768px) {
+  .page-inner { padding: 2rem 1.25rem 3rem; }
+  .learn-grid, .resources-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .sub-tabs { gap: 0; }
+}
 
 .footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; color: var(--text-muted); font-size: 0.85rem; }
 .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
