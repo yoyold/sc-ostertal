@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+  <title>Turniere – SC Ostertal</title>
+</head>
+<body>
+  <nav class="nav"><div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="img/logo.png" alt="SC Ostertal Logo"><span class="nav-logo-text">SC Ostertal</span></a>
+    <button class="nav-toggle" aria-label="Menü">☰</button>
+    <ul class="nav-links">
+      <li><a href="aktuelles.html">Aktuelles</a></li>
+      <li><a href="termine.html">Termine</a></li>
+      <li><a href="turniere.html" class="active">Turniere</a></li>
+      <li><a href="mannschaften.html">Mannschaften</a></li>
+      <li><a href="schach.html" >Schach</a></li>
+      <li><a href="verein.html">Über uns</a></li>
+      <li><a href="kontakt.html" >Kontakt</a></li>
+      <li><a href="admin.html" class="nav-admin">Admin</a></li>
+    </ul>
+  </div></nav>
+  <main class="page"><div class="page-inner">
+    <div class="page-header">
+      <div class="page-label">Wettbewerbe</div>
+      <h1 class="page-title">Turniere</h1>
+      <div class="page-divider"></div>
+    </div>
+
+    <div class="tournament-section">
+      <h2 style="font-family:var(--font-display);font-size:1.4rem;margin-bottom:1.5rem;">Aktuelle Turniere</h2>
+      <div id="current-tournaments"><div class="loading-spinner"></div></div>
+    </div>
+
+    <div class="archive-header">
+      <h2 style="font-family:var(--font-display);font-size:1.4rem;margin-bottom:0.5rem;">Turnierarchiv</h2>
+      <p style="color:var(--text-secondary);font-size:0.92rem;margin-bottom:1.5rem;">Klicke auf ein Turnier, um die Ergebnisse zu sehen.</p>
+    </div>
+    <div id="tournament-archive"><div class="loading-spinner"></div></div>
+  </div></main>
+  <footer class="footer"><div class="footer-inner">
+    <span>&copy; 2026 Schachclub Ostertal &middot; <a href="impressum.html">Impressum</a></span>
+    <span style="color:var(--text-muted)">Niederkirchen im Ostertal</span>
+  </div></footer>
+  <script src="js/app.js"></script>
+  <script>SCO.load().then(d => SCO.renderTournaments(d));</script>
+</body></html>

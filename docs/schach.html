@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+  <title>Schach – SC Ostertal</title>
+</head>
+<body>
+  <nav class="nav"><div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="img/logo.png" alt="SC Ostertal Logo"><span class="nav-logo-text">SC Ostertal</span></a>
+    <button class="nav-toggle" aria-label="Menü">☰</button>
+    <ul class="nav-links">
+      <li><a href="aktuelles.html">Aktuelles</a></li>
+      <li><a href="termine.html">Termine</a></li>
+      <li><a href="turniere.html" >Turniere</a></li>
+      <li><a href="mannschaften.html">Mannschaften</a></li>
+      <li><a href="schach.html" class="active">Schach</a></li>
+      <li><a href="verein.html">Über uns</a></li>
+      <li><a href="kontakt.html" >Kontakt</a></li>
+      <li><a href="admin.html" class="nav-admin">Admin</a></li>
+    </ul>
+  </div></nav>
+  <main class="page"><div class="page-inner">
+    <div class="page-header">
+      <div class="page-label">Sektion Schach</div>
+      <h1 class="page-title">Schach</h1>
+      <div class="page-divider"></div>
+    </div>
+
+    <div class="sub-tabs">
+      <button class="sub-tab active" data-sub="lernen">Schach lernen</button>
+      <button class="sub-tab" data-sub="partien">Partien</button>
+      <button class="sub-tab" data-sub="aufgaben">Aufgabe des Tages</button>
+      <button class="sub-tab" data-sub="ressourcen">Ressourcen</button>
+    </div>
+
+    <!-- LERNEN -->
+    <div class="sub-panel active" id="sub-lernen">
+      <h2 class="chess-section-title">Schach lernen für Anfänger</h2>
+      <div class="learn-grid">
+        <div class="learn-card">
+          <span class="icon">♔</span>
+          <h4>Das Schachbrett</h4>
+          <p>Ein Schachbrett hat 64 Felder in abwechselnd hellen und dunklen Farben. Das Brett wird so aufgestellt, dass rechts unten ein helles Feld ist. Jedes Feld hat eine eigene Adresse aus Buchstabe (a–h) und Zahl (1–8).</p>
+        </div>
+        <div class="learn-card">
+          <span class="icon">♙</span>
+          <h4>Die Bauern</h4>
+          <p>Bauern ziehen ein Feld geradeaus vorwärts, schlagen aber diagonal. Vom Startfeld dürfen sie auch zwei Felder vorrücken. Erreicht ein Bauer die gegnerische Grundreihe, wird er in eine beliebige Figur (außer König) umgewandelt.</p>
+        </div>
+        <div class="learn-card">
+          <span class="icon">♜</span>
+          <h4>Turm, Läufer, Dame</h4>
+          <p>Der Turm zieht horizontal und vertikal beliebig weit. Der Läufer zieht diagonal. Die Dame kombiniert beides und ist die stärkste Figur auf dem Brett.</p>
+        </div>
+        <div class="learn-card">
+          <span class="icon">♞</span>
+          <h4>Springer & König</h4>
+          <p>Der Springer zieht in L-Form (2+1 Felder) und kann andere Figuren überspringen. Der König zieht ein Feld in jede Richtung. Er darf nie auf ein bedrohtes Feld ziehen – wird er mattgesetzt, ist das Spiel vorbei!</p>
+        </div>
+        <div class="learn-card">
+          <span class="icon">🏰</span>
+          <h4>Rochade</h4>
+          <p>Ein Spezialzug mit König und Turm gleichzeitig. Der König zieht zwei Felder Richtung Turm, der Turm springt auf die andere Seite. Geht nur, wenn beide Figuren noch nicht gezogen haben und kein Schach dazwischen ist.</p>
+        </div>
+        <div class="learn-card">
+          <span class="icon">🏁</span>
+          <h4>Schachmatt & Remis</h4>
+          <p>Schachmatt: Der König steht im Schach und kann nicht entkommen – du hast gewonnen! Remis (Unentschieden) entsteht durch Patt, dreifache Stellungswiederholung, 50-Züge-Regel oder Einigung der Spieler.</p>
+        </div>
+      </div>
+      <div style="margin-top:2rem;padding:1.5rem;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);">
+        <h4 style="font-family:var(--font-display);margin-bottom:0.75rem;">Lust bekommen?</h4>
+        <p style="color:var(--text-secondary);font-size:0.95rem;">Komm einfach zu unserem Training vorbei – jeden Freitag ab 19:00 Uhr im Vereinsheim! Wir bringen jedem Schach bei, egal ob jung oder alt. <a href="kontakt.html">Melde dich bei uns!</a></p>
+      </div>
+    </div>
+
+    <!-- PARTIEN -->
+    <div class="sub-panel" id="sub-partien">
+      <h2 class="chess-section-title">Partien nachspielen</h2>
+      <p style="color:var(--text-secondary);margin-bottom:1.5rem;">Navigiere mit den Buttons oder den Pfeiltasten ← → durch die Züge.</p>
+      <div id="pgn-viewer"><div class="loading-spinner"></div></div>
+    </div>
+
+    <!-- AUFGABEN -->
+    <div class="sub-panel" id="sub-aufgaben">
+      <h2 class="chess-section-title">Tägliche Schachaufgabe</h2>
+      <p style="color:var(--text-secondary);margin-bottom:1.5rem;">Löse jeden Tag eine neue Schachaufgabe von Shredder Chess.</p>
+      <div class="puzzle-wrap">
+        <iframe src="https://www.shredderchess.com/online/playshredder/puzzleoftheday.html" title="Shredder Schachaufgabe des Tages" loading="lazy" referrerpolicy="no-referrer"></iframe>
+      </div>
+      <p style="color:var(--text-muted);font-size:0.82rem;margin-top:0.75rem;text-align:center;">Bereitgestellt von <a href="https://www.shredderchess.com" target="_blank">shredderchess.com</a></p>
+    </div>
+
+    <!-- RESSOURCEN -->
+    <div class="sub-panel" id="sub-ressourcen">
+      <h2 class="chess-section-title">Kostenlose Schach-Tools & Ressourcen</h2>
+      <div class="resources-grid">
+        <a href="https://lichess.org" target="_blank" class="resource-item">
+          <h4>Lichess</h4>
+          <p>Komplett kostenlose Schachplattform. Online spielen, Aufgaben lösen, Turniere, Analyse – alles gratis und ohne Werbung.</p>
+          <span class="url">lichess.org</span>
+        </a>
+        <a href="https://www.chess.com" target="_blank" class="resource-item">
+          <h4>Chess.com</h4>
+          <p>Die weltweit größte Schachplattform mit Lektionen, Aufgaben und Online-Partien. Grundfunktionen kostenlos.</p>
+          <span class="url">chess.com</span>
+        </a>
+        <a href="https://chesstempo.com" target="_blank" class="resource-item">
+          <h4>ChessTempo</h4>
+          <p>Taktiktrainer mit über 200.000 Aufgaben, nach Schwierigkeit sortiert. Ideal zum systematischen Taktiktraining.</p>
+          <span class="url">chesstempo.com</span>
+        </a>
+        <a href="https://www.chessgames.com" target="_blank" class="resource-item">
+          <h4>ChessGames.com</h4>
+          <p>Riesige Datenbank berühmter Schachpartien zum Nachspielen und Studieren.</p>
+          <span class="url">chessgames.com</span>
+        </a>
+        <a href="https://database.lichess.org" target="_blank" class="resource-item">
+          <h4>Lichess Datenbank</h4>
+          <p>Eröffnungsexplorer mit Millionen von Partien. Welche Züge werden am häufigsten gespielt? Wie gut schneiden sie ab?</p>
+          <span class="url">database.lichess.org</span>
+        </a>
+        <a href="https://www.shredderchess.com" target="_blank" class="resource-item">
+          <h4>Shredder Chess</h4>
+          <p>Tägliche Schachaufgaben, Schachcomputer verschiedener Stärke und Endspieldatenbank.</p>
+          <span class="url">shredderchess.com</span>
+        </a>
+        <a href="https://www.chessbase.com/pages/fritz-online" target="_blank" class="resource-item">
+          <h4>Fritz Online (ChessBase)</h4>
+          <p>Online-Analyse und Partien mit der Fritz-Engine direkt im Browser.</p>
+          <span class="url">chessbase.com</span>
+        </a>
+        <a href="https://nextchessmove.com" target="_blank" class="resource-item">
+          <h4>Next Chess Move</h4>
+          <p>Gib eine Stellung ein und lass die Engine den besten Zug berechnen – kostenlose Analyse im Browser.</p>
+          <span class="url">nextchessmove.com</span>
+        </a>
+      </div>
+    </div>
+
+  </div></main>
+  <footer class="footer"><div class="footer-inner">
+    <span>&copy; 2026 Schachclub Ostertal &middot; <a href="impressum.html">Impressum</a></span>
+    <span style="color:var(--text-muted)">Niederkirchen im Ostertal</span>
+  </div></footer>
+  <script src="js/app.js"></script>
+  <script>
+    SCO.initSubTabs();
+    SCO.load().then(d => SCO.renderPGNViewer(d));
+  </script>
+</body></html>

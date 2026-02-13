@@ -12,58 +12,50 @@
       <div class="logo"><img src="img/logo.png" alt="Logo" style="width:80px;height:80px;object-fit:contain;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.4))"></div>
       <h2>SC Ostertal Admin</h2>
       <p>Melde dich mit deinem GitHub-Token an, um Inhalte zu bearbeiten.</p>
-      <div class="form-group">
-        <label>GitHub Repository (user/repo)</label>
-        <input type="text" id="login-repo" placeholder="z.B. meinname/sc-ostertal">
-      </div>
-      <div class="form-group">
-        <label>GitHub Personal Access Token</label>
-        <input type="password" id="login-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
-      </div>
+      <div class="form-group"><label>GitHub Repository (user/repo)</label><input type="text" id="login-repo" placeholder="z.B. meinname/sc-ostertal"></div>
+      <div class="form-group"><label>GitHub Personal Access Token</label><input type="password" id="login-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"></div>
       <button class="btn btn-primary" id="login-btn" onclick="admin.login()">Anmelden</button>
-      <div class="help-text">
-        Du benötigst einen <a href="https://github.com/settings/tokens/new" target="_blank">Personal Access Token</a> mit <strong>repo</strong>-Berechtigung.<br>
-        Die Zugangsdaten werden nur lokal im Browser gespeichert.
-      </div>
+      <div class="help-text">Du benötigst einen <a href="https://github.com/settings/tokens/new" target="_blank">Personal Access Token</a> mit <strong>repo</strong>-Berechtigung.</div>
     </div>
   </div>
   <div id="admin-app" style="display:none;">
-    <div class="admin-topbar">
-      <div class="admin-topbar-inner">
-        <div class="admin-topbar-left">
-          <h1><img src="img/logo.png" alt="" style="width:32px;height:32px;object-fit:contain;vertical-align:middle;margin-right:8px">Verwaltung</h1>
-          <a href="index.html">← Zur Webseite</a>
-        </div>
-        <div class="admin-topbar-right">
-          <span class="status-dot" id="status-dot"></span>
-          <span id="repo-name" style="font-family:var(--font-mono);font-size:0.8rem;color:var(--text-muted);"></span>
-          <button class="btn btn-ghost btn-sm" onclick="admin.logout()">Abmelden</button>
-        </div>
+    <div class="admin-topbar"><div class="admin-topbar-inner">
+      <div class="admin-topbar-left">
+        <h1><img src="img/logo.png" alt="" style="width:32px;height:32px;object-fit:contain;vertical-align:middle;margin-right:8px">Verwaltung</h1>
+        <a href="index.html">← Zur Webseite</a>
       </div>
-    </div>
+      <div class="admin-topbar-right">
+        <span class="status-dot" id="status-dot"></span>
+        <span id="repo-name" style="font-family:var(--font-mono);font-size:0.8rem;color:var(--text-muted)"></span>
+        <button class="btn btn-ghost btn-sm" onclick="admin.logout()">Abmelden</button>
+      </div>
+    </div></div>
     <main class="admin-main">
       <div class="admin-tabs">
         <button class="admin-tab active" data-tab="news">Aktuelles</button>
         <button class="admin-tab" data-tab="events">Termine</button>
+        <button class="admin-tab" data-tab="tournaments">Turniere</button>
         <button class="admin-tab" data-tab="teams">Mannschaften</button>
+        <button class="admin-tab" data-tab="pgn">Partien (PGN)</button>
+        <button class="admin-tab" data-tab="contacts">Kontakte</button>
         <button class="admin-tab" data-tab="club">Vereinsinfo</button>
+        <button class="admin-tab" data-tab="impressum">Impressum</button>
       </div>
-      <div class="tab-panel active" id="panel-news">
-        <div class="panel-header"><h2>Neuigkeiten</h2><button class="btn btn-sm btn-success" onclick="admin.openNewsEditor()">+ Neuer Beitrag</button></div>
-        <div class="item-list" id="news-list"></div>
+      <div class="tab-panel active" id="panel-news"><div class="panel-header"><h2>Neuigkeiten</h2><button class="btn btn-sm btn-success" onclick="admin.openNewsEditor()">+ Neuer Beitrag</button></div><div class="item-list" id="news-list"></div></div>
+      <div class="tab-panel" id="panel-events"><div class="panel-header"><h2>Termine</h2><button class="btn btn-sm btn-success" onclick="admin.openEventEditor()">+ Neuer Termin</button></div><div class="item-list" id="events-list"></div></div>
+      <div class="tab-panel" id="panel-tournaments">
+        <div class="panel-header"><h2>Aktuelle Turniere</h2><button class="btn btn-sm btn-success" onclick="admin.openTournamentEditor('current')">+ Neues Turnier</button></div>
+        <div class="item-list" id="current-tournaments-list"></div>
+        <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border)">
+          <div class="panel-header"><h2>Turnierarchiv</h2><button class="btn btn-sm btn-success" onclick="admin.openTournamentEditor('archive')">+ Archiveintrag</button></div>
+          <div class="item-list" id="archive-tournaments-list"></div>
+        </div>
       </div>
-      <div class="tab-panel" id="panel-events">
-        <div class="panel-header"><h2>Termine</h2><button class="btn btn-sm btn-success" onclick="admin.openEventEditor()">+ Neuer Termin</button></div>
-        <div class="item-list" id="events-list"></div>
-      </div>
-      <div class="tab-panel" id="panel-teams">
-        <div class="panel-header"><h2>Mannschaften</h2><button class="btn btn-sm btn-success" onclick="admin.openTeamEditor()">+ Neue Mannschaft</button></div>
-        <div class="item-list" id="teams-list"></div>
-      </div>
-      <div class="tab-panel" id="panel-club">
-        <div class="panel-header"><h2>Vereinsinfo bearbeiten</h2></div>
-        <div id="club-form"></div>
-      </div>
+      <div class="tab-panel" id="panel-teams"><div class="panel-header"><h2>Mannschaften</h2><button class="btn btn-sm btn-success" onclick="admin.openTeamEditor()">+ Neue Mannschaft</button></div><div class="item-list" id="teams-list"></div></div>
+      <div class="tab-panel" id="panel-pgn"><div class="panel-header"><h2>Partien (PGN)</h2><button class="btn btn-sm btn-success" onclick="admin.openPGNEditor()">+ Neue Partie</button></div><div class="item-list" id="pgn-list"></div></div>
+      <div class="tab-panel" id="panel-contacts"><div class="panel-header"><h2>Ansprechpartner</h2><button class="btn btn-sm btn-success" onclick="admin.openContactEditor()">+ Neuer Kontakt</button></div><div class="item-list" id="contacts-list"></div></div>
+      <div class="tab-panel" id="panel-club"><div class="panel-header"><h2>Vereinsinfo bearbeiten</h2></div><div id="club-form"></div></div>
+      <div class="tab-panel" id="panel-impressum"><div class="panel-header"><h2>Impressum bearbeiten</h2></div><div id="impressum-form"></div></div>
     </main>
   </div>
   <div class="modal-overlay" id="modal-overlay"><div class="modal" id="modal-content"></div></div>
