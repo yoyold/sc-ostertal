@@ -15,16 +15,20 @@ var admin = (function () {
 
   const gh = {
     async request(endpoint, opts = {}) {
-      const url = endpoint.startsWith('http')
-        ? endpoint
-        : `https://api.github.com/repos/${state.repo}/${endpoint}`;
+      let url;
+      if (endpoint.startsWith('http')) {
+        url = endpoint;
+      } else if (endpoint) {
+        url = `https://api.github.com/repos/${state.repo}/${endpoint}`;
+      } else {
+        url = `https://api.github.com/repos/${state.repo}`;
+      }
 
       const headers = {
-        'Authorization': `token ${state.token}`,
+        'Authorization': `Bearer ${state.token}`,
         'Accept': 'application/vnd.github.v3+json',
         ...opts.headers
       };
-      // Only add Content-Type when there's a body, to avoid triggering CORS preflight on GET
       if (opts.body) {
         headers['Content-Type'] = 'application/json';
       }

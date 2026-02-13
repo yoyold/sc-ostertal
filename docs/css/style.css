@@ -43,7 +43,7 @@ body::before { content: ''; position: fixed; inset: 0; background-image: url("da
 .hero-chess-bg { position: absolute; inset: 0; opacity: 0.025; background-image: repeating-conic-gradient(var(--cream) 0% 25%, transparent 0% 50%); background-size: 80px 80px; transform: perspective(800px) rotateX(55deg) translateY(-20%); transform-origin: center top; mask-image: radial-gradient(ellipse at center 30%, black 10%, transparent 70%); }
 .hero-content { position: relative; z-index: 2; max-width: 800px; padding: 2rem; animation: fadeInUp 1s ease-out; }
 @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-.hero-logo { width: 160px; height: 160px; border-radius: 50%; object-fit: cover; margin: 0 auto 2rem; border: 3px solid rgba(30,48,84,0.6); box-shadow: 0 8px 40px rgba(0,0,0,0.4), 0 0 80px rgba(30,48,84,0.15); animation: fadeInUp 1s ease-out 0.1s both; }
+.hero-logo { width: 160px; height: 160px; object-fit: contain; margin: 0 auto 2rem; box-shadow: 0 8px 40px rgba(0,0,0,0.4), 0 0 80px rgba(30,48,84,0.15); animation: fadeInUp 1s ease-out 0.1s both; }
 .hero-badge { display: inline-block; font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream-dim); border: 1px solid var(--navy-light); padding: 6px 20px; border-radius: 2px; margin-bottom: 2rem; animation: fadeInUp 1s ease-out 0.2s both; }
 .hero h1 { font-family: var(--font-display); font-size: clamp(3rem, 8vw, 6rem); font-weight: 900; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 0.5rem; animation: fadeInUp 1s ease-out 0.3s both; }
 .hero h1 .accent { color: var(--accent-blue); }
@@ -164,6 +164,10 @@ section { position: relative; z-index: 1; padding: 6rem 2rem; }
 /* ===== Tournaments ===== */
 .tournament-section { margin-bottom: 3rem; }
 .archive-header { margin-top: 2rem; }
+
+/* ===== PGN Viewer Buttons ===== */
+.pgn-nav-btn { background: var(--bg-card); border: 1px solid var(--border); color: var(--text-secondary); width: 44px; height: 38px; border-radius: var(--radius); cursor: pointer; font-size: 1rem; transition: var(--transition); display: inline-flex; align-items: center; justify-content: center; }
+.pgn-nav-btn:hover { background: var(--bg-card-hover); border-color: var(--border-light); color: var(--text-primary); }
 
 /* ===== Impressum ===== */
 .impressum-content { max-width: 640px; }

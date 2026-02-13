@@ -292,37 +292,248 @@ window.SCO = (function () {
       return;
     }
 
-    // Build game selector + viewer
-    let html = `<div style="margin-bottom:1.5rem;">
-      <select id="pgn-game-select" style="width:100%;padding:10px 14px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);color:var(--text-primary);font-family:var(--font-body);font-size:0.95rem;">
-        ${games.map((g, i) => `<option value="${i}">${g.title} (${g.result})</option>`).join('')}
-      </select>
-    </div>
-    <div id="pgn-board" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;"></div>`;
-    container.innerHTML = html;
+    // ---- Minimal chess engine for PGN replay ----
+    const PIECES = { K:'♔', Q:'♕', R:'♖', B:'♗', N:'♘', P:'♙', k:'♚', q:'♛', r:'♜', b:'♝', n:'♞', p:'♟' };
+    const INIT_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR';
 
-    function showGame(index) {
-      const game = games[index];
-      const moves = game.pgn.split(/\d+\.\s*/).filter(Boolean).map(m => m.trim());
-      const boardDiv = document.getElementById('pgn-board');
-      boardDiv.innerHTML = `
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
-          <div>
-            <span style="color:var(--text-primary);font-weight:600;">⬜ ${game.white}</span>
-            <span style="color:var(--text-muted);margin:0 0.5rem;">vs</span>
-            <span style="color:var(--text-primary);font-weight:600;">⬛ ${game.black}</span>
-          </div>
-          <span style="font-family:var(--font-mono);color:var(--accent-blue);font-size:0.9rem;">${game.result}</span>
-        </div>
-        <div style="font-family:var(--font-mono);font-size:0.9rem;line-height:2;color:var(--text-secondary);white-space:pre-wrap;">${game.pgn}</div>
-        <div style="margin-top:1rem;color:var(--text-muted);font-size:0.82rem;">${formatDate(game.date)}</div>
-      `;
+    function fenToBoard(fen) {
+      const board = Array.from({length:8}, ()=>Array(8).fill(null));
+      const rows = fen.split('/');
+      for (let r=0; r<8; r++) {
+        let c=0;
+        for (const ch of rows[r]) {
+          if (ch>='1'&&ch<='8') { c+=parseInt(ch); }
+          else { board[r][c]={ type:ch.toUpperCase(), color:ch===ch.toUpperCase()?'w':'b' }; c++; }
+        }
+      }
+      return board;
     }
 
-    showGame(0);
-    document.getElementById('pgn-game-select').addEventListener('change', function () {
-      showGame(parseInt(this.value));
+    function cloneBoard(b) { return b.map(r=>r.map(c=>c?{...c}:null)); }
+
+    function findPiece(board, type, color, fromFile, fromRank, toR, toC) {
+      const candidates = [];
+      for (let r=0; r<8; r++) for (let c=0; c<8; c++) {
+        const p = board[r][c];
+        if (!p || p.type!==type || p.color!==color) continue;
+        if (fromFile!==null && c!==fromFile) continue;
+        if (fromRank!==null && r!==fromRank) continue;
+        if (canReach(board, type, color, r, c, toR, toC)) candidates.push([r,c]);
+      }
+      return candidates[0] || null;
+    }
+
+    function canReach(board, type, color, fr, fc, tr, tc) {
+      const dr=tr-fr, dc=tc-fc, adr=Math.abs(dr), adc=Math.abs(dc);
+      switch(type) {
+        case 'P': {
+          const dir = color==='w'?-1:1;
+          if (dc===0 && dr===dir && !board[tr][tc]) return true;
+          if (dc===0 && dr===2*dir && fr===(color==='w'?6:1) && !board[fr+dir][fc] && !board[tr][tc]) return true;
+          if (adc===1 && dr===dir) return true; // capture or en passant
+          return false;
+        }
+        case 'N': return (adr===2&&adc===1)||(adr===1&&adc===2);
+        case 'B': return adr===adc && adr>0 && pathClear(board,fr,fc,tr,tc);
+        case 'R': return (dr===0||dc===0) && (adr+adc>0) && pathClear(board,fr,fc,tr,tc);
+        case 'Q': return ((adr===adc)||(dr===0||dc===0)) && (adr+adc>0) && pathClear(board,fr,fc,tr,tc);
+        case 'K': return adr<=1 && adc<=1 && (adr+adc>0);
+      }
+      return false;
+    }
+
+    function pathClear(board, fr, fc, tr, tc) {
+      const dr=Math.sign(tr-fr), dc=Math.sign(tc-fc);
+      let r=fr+dr, c=fc+dc;
+      while(r!==tr||c!==tc) { if(board[r][c]) return false; r+=dr; c+=dc; }
+      return true;
+    }
+
+    function parsePGN(pgn) {
+      // Extract individual move tokens
+      const clean = pgn.replace(/\{[^}]*\}/g,'').replace(/\([^)]*\)/g,'');
+      const tokens = clean.match(/(?:O-O-O|O-O|[KQRBN]?[a-h]?[1-8]?x?[a-h][1-8](?:=[QRBN])?[+#]?)/g) || [];
+
+      const positions = [cloneBoard(fenToBoard(INIT_FEN))];
+      const moveLabels = [];
+      let board = cloneBoard(positions[0]);
+      let turn = 'w';
+
+      for (const tok of tokens) {
+        let t = tok.replace(/[+#]/g,'');
+        const nb = cloneBoard(board);
+
+        // Castling
+        if (t==='O-O-O'||t==='O-O') {
+          const r = turn==='w'?7:0;
+          const isQ = t==='O-O-O';
+          nb[r][4]=null;
+          nb[r][isQ?0:7]=null;
+          nb[r][isQ?2:6]={type:'K',color:turn};
+          nb[r][isQ?3:5]={type:'R',color:turn};
+          positions.push(cloneBoard(nb));
+          moveLabels.push(tok);
+          board = nb; turn = turn==='w'?'b':'w';
+          continue;
+        }
+
+        // Promotion
+        let promo = null;
+        const promoMatch = t.match(/=([QRBN])/);
+        if (promoMatch) { promo=promoMatch[1]; t=t.replace(/=[QRBN]/,''); }
+
+        // Piece type
+        let pieceType = 'P';
+        if ('KQRBN'.includes(t[0])) { pieceType=t[0]; t=t.substring(1); }
+
+        // Target square (last two chars)
+        const targetFile = t.charCodeAt(t.length-2)-97;
+        const targetRank = 8-parseInt(t[t.length-1]);
+        t = t.substring(0, t.length-2).replace('x','');
+
+        // Disambiguation
+        let fromFile=null, fromRank=null;
+        for (const ch of t) {
+          if (ch>='a'&&ch<='h') fromFile=ch.charCodeAt(0)-97;
+          else if (ch>='1'&&ch<='8') fromRank=8-parseInt(ch);
+        }
+
+        const from = findPiece(nb, pieceType, turn, fromFile, fromRank, targetRank, targetFile);
+        if (from) {
+          // En passant capture
+          if (pieceType==='P' && from[1]!==targetFile && !nb[targetRank][targetFile]) {
+            nb[from[0]][targetFile] = null;
+          }
+          nb[from[0]][from[1]] = null;
+          nb[targetRank][targetFile] = { type: promo||pieceType, color: turn };
+        }
+
+        positions.push(cloneBoard(nb));
+        moveLabels.push(tok);
+        board = nb; turn = turn==='w'?'b':'w';
+      }
+
+      return { positions, moveLabels };
+    }
+
+    function renderBoard(board, lastMove) {
+      const lightSq = '#c8b07a';
+      const darkSq = '#8b6b3d';
+      const lightHl = '#d4c46a';
+      const darkHl = '#a09030';
+      let html = '<div style="display:inline-grid;grid-template-columns:auto repeat(8,1fr);grid-template-rows:repeat(8,1fr) auto;border:2px solid var(--border);border-radius:4px;overflow:hidden;font-size:0;">';
+
+      for (let r=0; r<8; r++) {
+        // Rank label
+        html += `<div style="display:flex;align-items:center;justify-content:center;width:24px;font-size:12px;color:var(--text-muted);font-family:var(--font-mono);">${8-r}</div>`;
+        for (let c=0; c<8; c++) {
+          const isLight = (r+c)%2===0;
+          let bg = isLight ? lightSq : darkSq;
+          if (lastMove && ((lastMove[0]===r&&lastMove[1]===c)||(lastMove[2]===r&&lastMove[3]===c))) {
+            bg = isLight ? lightHl : darkHl;
+          }
+          const piece = board[r][c];
+          const sym = piece ? PIECES[piece.color==='w'?piece.type:piece.type.toLowerCase()] : '';
+          html += `<div style="width:clamp(36px,8vw,56px);height:clamp(36px,8vw,56px);background:${bg};display:flex;align-items:center;justify-content:center;font-size:clamp(24px,5.5vw,38px);line-height:1;user-select:none;">${sym}</div>`;
+        }
+      }
+      // File labels
+      html += '<div style="width:24px;"></div>';
+      for (let c=0; c<8; c++) {
+        html += `<div style="display:flex;align-items:center;justify-content:center;height:22px;font-size:12px;color:var(--text-muted);font-family:var(--font-mono);">${'abcdefgh'[c]}</div>`;
+      }
+      html += '</div>';
+      return html;
+    }
+
+    // ---- Build viewer UI ----
+    let currentGame = 0;
+    let currentMove = 0;
+    let parsed = null;
+
+    function buildViewer() {
+      const game = games[currentGame];
+      parsed = parsePGN(game.pgn);
+      currentMove = 0;
+
+      container.innerHTML = `
+        <div style="margin-bottom:1.25rem;">
+          <select id="pgn-game-select" style="width:100%;padding:10px 14px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);color:var(--text-primary);font-family:var(--font-body);font-size:0.95rem;">
+            ${games.map((g,i)=>`<option value="${i}"${i===currentGame?' selected':''}>${g.title} (${g.result})</option>`).join('')}
+          </select>
+        </div>
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+            <div>
+              <span style="font-weight:600;">⬜ ${game.white}</span>
+              <span style="color:var(--text-muted);margin:0 0.5rem;">vs</span>
+              <span style="font-weight:600;">⬛ ${game.black}</span>
+            </div>
+            <span style="font-family:var(--font-mono);color:var(--accent-blue);font-size:0.9rem;">${game.result}</span>
+          </div>
+          <div id="pgn-board-area" style="display:flex;flex-wrap:wrap;gap:1.5rem;align-items:flex-start;"></div>
+          <div style="display:flex;gap:8px;margin-top:1rem;justify-content:center;">
+            <button class="pgn-nav-btn" id="pgn-first" title="Anfang">⏮</button>
+            <button class="pgn-nav-btn" id="pgn-prev" title="Zurück (←)">◀</button>
+            <button class="pgn-nav-btn" id="pgn-next" title="Vor (→)">▶</button>
+            <button class="pgn-nav-btn" id="pgn-last" title="Ende">⏭</button>
+          </div>
+          <div style="color:var(--text-muted);font-size:0.78rem;text-align:center;margin-top:0.5rem;">Pfeiltasten ← → zum Navigieren</div>
+        </div>
+      `;
+      updateBoard();
+
+      document.getElementById('pgn-game-select').addEventListener('change', function() {
+        currentGame = parseInt(this.value);
+        buildViewer();
+      });
+      document.getElementById('pgn-first').addEventListener('click', ()=>{ currentMove=0; updateBoard(); });
+      document.getElementById('pgn-prev').addEventListener('click',  ()=>{ if(currentMove>0){currentMove--;updateBoard();} });
+      document.getElementById('pgn-next').addEventListener('click',  ()=>{ if(currentMove<parsed.positions.length-1){currentMove++;updateBoard();} });
+      document.getElementById('pgn-last').addEventListener('click',  ()=>{ currentMove=parsed.positions.length-1; updateBoard(); });
+    }
+
+    function updateBoard() {
+      const area = document.getElementById('pgn-board-area');
+      if (!area) return;
+
+      // Determine last move highlight
+      let lastMove = null;
+      // We can't easily track from/to without storing it, skip highlight for simplicity
+
+      const boardHtml = renderBoard(parsed.positions[currentMove], lastMove);
+
+      // Build move list with current move highlighted
+      let movesHtml = '<div style="font-family:var(--font-mono);font-size:0.85rem;line-height:1.9;max-height:380px;overflow-y:auto;flex:1;min-width:180px;">';
+      for (let i=0; i<parsed.moveLabels.length; i++) {
+        if (i%2===0) movesHtml += `<span style="color:var(--text-muted);margin-right:4px;">${Math.floor(i/2)+1}.</span>`;
+        const isActive = i+1===currentMove;
+        movesHtml += `<span class="pgn-move${isActive?' pgn-move-active':''}" data-move="${i+1}" style="cursor:pointer;padding:2px 5px;border-radius:3px;${isActive?'background:var(--navy-light);color:var(--cream-light);':''}">${parsed.moveLabels[i]}</span> `;
+        if (i%2===1) movesHtml += '<br>';
+      }
+      movesHtml += '</div>';
+
+      area.innerHTML = `<div>${boardHtml}</div>${movesHtml}`;
+
+      // Click on moves
+      area.querySelectorAll('.pgn-move').forEach(el => {
+        el.addEventListener('click', () => {
+          currentMove = parseInt(el.dataset.move);
+          updateBoard();
+        });
+      });
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (!parsed || !document.getElementById('pgn-board-area')) return;
+      if (e.key==='ArrowLeft') { e.preventDefault(); if(currentMove>0){currentMove--;updateBoard();} }
+      if (e.key==='ArrowRight') { e.preventDefault(); if(currentMove<parsed.positions.length-1){currentMove++;updateBoard();} }
+      if (e.key==='Home') { e.preventDefault(); currentMove=0; updateBoard(); }
+      if (e.key==='End') { e.preventDefault(); currentMove=parsed.positions.length-1; updateBoard(); }
     });
+
+    buildViewer();
   }
 
   // ===== Sub-Tabs (Schach page) =====
