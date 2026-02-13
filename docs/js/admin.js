@@ -7,7 +7,8 @@ var admin = (function () {
     token: null,
     repo: null,
     content: null,
-    sha: null, // current SHA of content.json (needed for GitHub API updates)
+    sha: null,
+    contentPath: null,
     branch: 'main'
   };
 
@@ -46,23 +47,33 @@ var admin = (function () {
     },
 
     async getContent() {
-      const data = await gh.request(`contents/content.json?ref=${state.branch}`);
-      state.sha = data.sha;
-      const decoded = atob(data.content);
-      // Handle UTF-8 properly
-      const bytes = new Uint8Array(decoded.split('').map(c => c.charCodeAt(0)));
-      const text = new TextDecoder('utf-8').decode(bytes);
-      return JSON.parse(text);
+      // Try common paths where content.json might live
+      const paths = ['content.json', 'docs/content.json'];
+      let lastErr = null;
+      for (const path of paths) {
+        try {
+          const data = await gh.request(`contents/${path}?ref=${state.branch}`);
+          state.sha = data.sha;
+          state.contentPath = path;
+          const decoded = atob(data.content);
+          const bytes = new Uint8Array(decoded.split('').map(c => c.charCodeAt(0)));
+          const text = new TextDecoder('utf-8').decode(bytes);
+          return JSON.parse(text);
+        } catch (e) {
+          lastErr = e;
+        }
+      }
+      throw new Error('content.json nicht gefunden. Geprüfte Pfade: ' + paths.join(', ') + '. ' + (lastErr?.message || ''));
     },
 
     async saveContent(content, message = 'Inhalt aktualisiert via Admin-Panel') {
       const json = JSON.stringify(content, null, 2);
-      // Encode UTF-8 properly
       const bytes = new TextEncoder().encode(json);
       const binary = Array.from(bytes).map(b => String.fromCharCode(b)).join('');
       const encoded = btoa(binary);
 
-      const data = await gh.request('contents/content.json', {
+      const contentPath = state.contentPath || 'content.json';
+      const data = await gh.request(`contents/${contentPath}`, {
         method: 'PUT',
         body: JSON.stringify({
           message,
@@ -826,7 +837,7 @@ var admin = (function () {
     localStorage.removeItem('sco_repo');
     localStorage.removeItem('sco_token');
     localStorage.removeItem('sco_branch');
-    state = { token: null, repo: null, content: null, sha: null, branch: 'main' };
+    state = { token: null, repo: null, content: null, sha: null, contentPath: null, branch: 'main' };
     document.getElementById('admin-app').style.display = 'none';
     document.getElementById('login-screen').style.display = 'flex';
     toast('Abgemeldet.', 'success');
