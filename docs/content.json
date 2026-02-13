@@ -9,18 +9,80 @@
     "founded": "1986"
   },
   "news": [
-    { "id": "1", "title": "Saisonstart 2026: Mannschaftsaufstellungen stehen fest", "date": "2026-02-10", "content": "Die neue Saison steht vor der Tür! Unsere Mannschaftsführer haben die Aufstellungen für die kommende Runde finalisiert. Die erste Mannschaft tritt wieder in der Saarlandliga an, die zweite Mannschaft kämpft in der Bezirksliga um den Aufstieg.", "author": "Vorstand" },
-    { "id": "2", "title": "Jugendtraining ab sofort jeden Mittwoch", "date": "2026-01-28", "content": "Ab sofort findet jeden Mittwoch von 17:00 bis 18:30 Uhr ein spezielles Jugendtraining statt. Unter der Leitung von FM Thomas Müller werden Taktik, Eröffnungen und Endspiele trainiert. Neue Gesichter sind jederzeit willkommen!", "author": "Jugendwart" },
-    { "id": "3", "title": "Vereinsmeisterschaft 2025: Ergebnisse", "date": "2025-12-15", "content": "Die Vereinsmeisterschaft 2025 ist Geschichte! Nach spannenden 7 Runden im Schweizer System setzte sich Michael Becker souverän mit 6,5 aus 7 Punkten durch.", "author": "Turnierleitung" }
+    {
+      "id": "1",
+      "title": "Saisonstart 2026: Mannschaftsaufstellungen stehen fest",
+      "date": "2026-02-10",
+      "content": "Die neue Saison steht vor der Tür! Unsere Mannschaftsführer haben die Aufstellungen für die kommende Runde finalisiert. Die erste Mannschaft tritt wieder in der Saarlandliga an, die zweite Mannschaft kämpft in der Bezirksliga um den Aufstieg.",
+      "author": "Vorstand"
+    },
+    {
+      "id": "2",
+      "title": "Jugendtraining ab sofort jeden Mittwoch",
+      "date": "2026-01-28",
+      "content": "Ab sofort findet jeden Mittwoch von 17:00 bis 18:30 Uhr ein spezielles Jugendtraining statt. Unter der Leitung von FM Thomas Müller werden Taktik, Eröffnungen und Endspiele trainiert. Neue Gesichter sind jederzeit willkommen!",
+      "author": "Jugendwart"
+    },
+    {
+      "id": "3",
+      "title": "Vereinsmeisterschaft 2025: Ergebnisse",
+      "date": "2025-12-15",
+      "content": "Die Vereinsmeisterschaft 2025 ist Geschichte! Nach spannenden 7 Runden im Schweizer System setzte sich Michael Becker souverän mit 6,5 aus 7 Punkten durch.",
+      "author": "Turnierleitung"
+    }
   ],
   "events": [
-    { "id": "1", "title": "Saisonbesprechung", "date": "2026-02-21", "time": "19:00", "description": "Besprechung der Mannschaftsaufstellungen und des Saisonplans." },
-    { "id": "2", "title": "Blitzturnier März", "date": "2026-03-14", "time": "18:00", "description": "Offenes Blitzturnier mit 5+3 Bedenkzeit. Startgeld: 5€." },
-    { "id": "3", "title": "Ostertal Open 2026", "date": "2026-04-18", "time": "09:00", "description": "Unser jährliches offenes Turnier. 7 Runden, 90min + 30s/Zug." }
+    {
+      "id": "1",
+      "title": "Saisonbesprechung",
+      "date": "2026-02-21",
+      "time": "19:00",
+      "description": "Besprechung der Mannschaftsaufstellungen und des Saisonplans."
+    },
+    {
+      "id": "2",
+      "title": "Blitzturnier März",
+      "date": "2026-03-14",
+      "time": "18:00",
+      "description": "Offenes Blitzturnier mit 5+3 Bedenkzeit. Startgeld: 5€."
+    },
+    {
+      "id": "3",
+      "title": "Ostertal Open 2026",
+      "date": "2026-04-18",
+      "time": "09:00",
+      "description": "Unser jährliches offenes Turnier. 7 Runden, 90min + 30s/Zug."
+    }
   ],
   "teams": [
-    { "name": "1. Mannschaft", "league": "Saarlandliga", "players": ["FM Thomas Müller (Br. 1)", "Michael Becker (Br. 2)", "Anna Schmidt (Br. 3)", "Peter Wagner (Br. 4)", "Klaus Hoffmann (Br. 5)", "Stefan Braun (Br. 6)", "Maria Schneider (Br. 7)", "Jürgen Klein (Br. 8)"] },
-    { "name": "2. Mannschaft", "league": "Bezirksliga", "players": ["Robert Fischer (Br. 1)", "Eva Neumann (Br. 2)", "Hans Weber (Br. 3)", "Sabine Lang (Br. 4)", "Markus Scholz (Br. 5)", "Christine Bauer (Br. 6)", "Wolfgang Kraus (Br. 7)", "Lisa Vogel (Br. 8)"] }
+    {
+      "name": "1. Mannschaft",
+      "league": "Saarlandliga",
+      "players": [
+        "FM Thomas Müller (Br. 1)",
+        "Michael Becker (Br. 2)",
+        "Anna Schmidt (Br. 3)",
+        "Peter Wagner (Br. 4)",
+        "Klaus Hoffmann (Br. 5)",
+        "Stefan Braun (Br. 6)",
+        "Maria Schneider (Br. 7)",
+        "Jürgen Klein (Br. 8)"
+      ]
+    },
+    {
+      "name": "2. Mannschaft",
+      "league": "Bezirksliga",
+      "players": [
+        "Robert Fischer (Br. 1)",
+        "Eva Neumann (Br. 2)",
+        "Hans Weber (Br. 3)",
+        "Sabine Lang (Br. 4)",
+        "Markus Scholz (Br. 5)",
+        "Christine Bauer (Br. 6)",
+        "Wolfgang Kraus (Br. 7)",
+        "Lisa Vogel (Br. 8)"
+      ]
+    }
   ],
   "tournaments": {
     "current": [
@@ -31,11 +93,36 @@
         "date_range": "März – Mai 2026",
         "external_url": "",
         "standings": [
-          { "rank": 1, "player": "Michael Becker", "points": "2.0/2", "games": 2 },
-          { "rank": 2, "player": "Anna Schmidt", "points": "2.0/2", "games": 2 },
-          { "rank": 3, "player": "FM Thomas Müller", "points": "1.5/2", "games": 2 },
-          { "rank": 4, "player": "Peter Wagner", "points": "1.0/2", "games": 2 },
-          { "rank": 5, "player": "Klaus Hoffmann", "points": "1.0/2", "games": 2 }
+          {
+            "rank": 1,
+            "player": "Michael Becker",
+            "points": "2.0/2",
+            "games": 2
+          },
+          {
+            "rank": 2,
+            "player": "Anna Schmidt",
+            "points": "2.0/2",
+            "games": 2
+          },
+          {
+            "rank": 3,
+            "player": "FM Thomas Müller",
+            "points": "1.5/2",
+            "games": 2
+          },
+          {
+            "rank": 4,
+            "player": "Peter Wagner",
+            "points": "1.0/2",
+            "games": 2
+          },
+          {
+            "rank": 5,
+            "player": "Klaus Hoffmann",
+            "points": "1.0/2",
+            "games": 2
+          }
         ]
       }
     ],
@@ -48,9 +135,24 @@
         "winner": "Michael Becker (6.5/7)",
         "external_url": "",
         "standings": [
-          { "rank": 1, "player": "Michael Becker", "points": "6.5/7", "games": 7 },
-          { "rank": 2, "player": "Anna Schmidt", "points": "5.5/7", "games": 7 },
-          { "rank": 3, "player": "Peter Wagner", "points": "5.0/7", "games": 7 }
+          {
+            "rank": 1,
+            "player": "Michael Becker",
+            "points": "6.5/7",
+            "games": 7
+          },
+          {
+            "rank": 2,
+            "player": "Anna Schmidt",
+            "points": "5.5/7",
+            "games": 7
+          },
+          {
+            "rank": 3,
+            "player": "Peter Wagner",
+            "points": "5.0/7",
+            "games": 7
+          }
         ]
       },
       {
@@ -72,7 +174,7 @@
       "black": "Anna Schmidt",
       "result": "1-0",
       "date": "2025-04-12",
-      "pgn": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 d6 8. c3 O-O 9. h3 Nb8 10. d4 Nbd7 11. Nbd2 Bb7 12. Bc2 Re8 13. Nf1 Bf8 14. Ng3 g6 15. a4 Bg7 16. Bd2 c5 17. d5 c4 18. Bg5 Nc5 19. Qd2 h6 20. Be3 Nfd7 21. Qd1 Qc7 1-0"
+      "pgn": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 d6 8. c3 O-O 9. h3 Nb8 10. d4 Nbd7 11. Nbd2 Bb7 12. Bc2 Re8 13. Nf1 Bf8 14. Ng3 g6 15. a4 nicht gut Bg7 16. Bd2 c5 17. d5 c4 18. Bg5 Nc5 19. Qd2 h6 20. Be3 Nfd7 21. Qd1 Qc7 1-0"
     },
     {
       "id": "g2",
@@ -85,9 +187,27 @@
     }
   ],
   "contacts": [
-    { "id": "c1", "name": "Lukas Dony", "role": "1. Vorsitzender", "email": "lukas.dony@web.de", "phone": "" },
-    { "id": "c2", "name": "Thomas Müller", "role": "Spielleiter", "email": "", "phone": "" },
-    { "id": "c3", "name": "Eva Neumann", "role": "Jugendwartin", "email": "", "phone": "" }
+    {
+      "id": "c1",
+      "name": "Lukas Dony",
+      "role": "1. Vorsitzender",
+      "email": "lukas.dony@web.de",
+      "phone": ""
+    },
+    {
+      "id": "c2",
+      "name": "Thomas Müller",
+      "role": "Spielleiter",
+      "email": "",
+      "phone": ""
+    },
+    {
+      "id": "c3",
+      "name": "Eva Neumann",
+      "role": "Jugendwartin",
+      "email": "",
+      "phone": ""
+    }
   ],
   "impressum": {
     "verein": "Schachclub Ostertal e.V.",
