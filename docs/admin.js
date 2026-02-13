@@ -1,6 +1,6 @@
 /* ===== SC Ostertal – Admin Panel (GitHub CMS) ===== */
 
-const admin = (function () {
+var admin = (function () {
   'use strict';
 
   let state = {
