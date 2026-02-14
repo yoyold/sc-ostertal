@@ -152,6 +152,63 @@ window.SCO = (function () {
     const tournaments = data.tournaments;
     if (!tournaments) return;
 
+    // Helper: render round results table
+    function renderRounds(rounds) {
+      if (!rounds || rounds.length === 0) return '';
+      return `
+        <div class="tournament-rounds">
+          <h4 class="tournament-rounds-title">Rundenergebnisse</h4>
+          <div class="tournament-rounds-list">
+            ${rounds.map((rd, i) => `
+              <details class="tournament-round-detail"${i === rounds.length - 1 ? ' open' : ''}>
+                <summary class="tournament-round-summary">
+                  <span>Runde ${rd.round}</span>
+                  ${rd.date ? `<span class="tournament-round-date">${rd.date}</span>` : ''}
+                </summary>
+                <div class="tournament-round-games">
+                  ${(rd.games || []).map(g => `
+                    <div class="tournament-round-game">
+                      <span class="tournament-round-player">${g.white}</span>
+                      <span class="tournament-round-result">${g.result}</span>
+                      <span class="tournament-round-player">${g.black}</span>
+                    </div>
+                  `).join('')}
+                </div>
+              </details>
+            `).join('')}
+          </div>
+        </div>`;
+    }
+
+    // Helper: render screenshots gallery
+    function renderScreenshots(screenshots) {
+      if (!screenshots || screenshots.length === 0) return '';
+      return `
+        <div class="tournament-screenshots">
+          <h4 class="tournament-screenshots-title">Impressionen</h4>
+          <div class="tournament-screenshots-grid">
+            ${screenshots.map(s => `
+              <a href="${s.url}" target="_blank" class="tournament-screenshot-link">
+                <img src="${s.url}" alt="${s.caption || 'Turnierbild'}" class="tournament-screenshot-img" loading="lazy">
+                ${s.caption ? `<span class="tournament-screenshot-caption">${s.caption}</span>` : ''}
+              </a>
+            `).join('')}
+          </div>
+        </div>`;
+    }
+
+    // Helper: render external links
+    function renderLinks(tournament) {
+      const links = [];
+      if (tournament.external_url) links.push({ url: tournament.external_url, label: tournament.external_label || 'Turnier-Seite' });
+      if (tournament.links) tournament.links.forEach(l => links.push(l));
+      if (links.length === 0) return '';
+      return `
+        <div class="tournament-links">
+          ${links.map(l => `<a href="${l.url}" target="_blank" class="tournament-ext-link">↗ ${l.label}</a>`).join('')}
+        </div>`;
+    }
+
     // Current tournaments
     const currentContainer = document.getElementById('current-tournaments');
     if (currentContainer) {
@@ -160,35 +217,39 @@ window.SCO = (function () {
         currentContainer.innerHTML = '<p style="color:var(--text-muted)">Keine laufenden Turniere.</p>';
       } else {
         currentContainer.innerHTML = current.map(t => `
-          <div class="tournament-card fade-in" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem 2rem;margin-bottom:1rem;">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
-              <h3 style="font-family:var(--font-display);font-size:1.2rem;">${t.name}</h3>
-              ${t.external_url ? `<a href="${t.external_url}" target="_blank" style="color:var(--accent-blue);font-size:0.85rem;">Extern →</a>` : ''}
+          <div class="tournament-card fade-in">
+            <div class="tournament-card-header">
+              <div>
+                <h3 class="tournament-card-title">${t.name}</h3>
+                <p class="tournament-card-type">${t.type}</p>
+                <p class="tournament-card-date">${t.date_range}</p>
+              </div>
+              ${renderLinks(t)}
             </div>
-            <p style="color:var(--text-secondary);font-size:0.88rem;margin-bottom:0.3rem;">${t.type}</p>
-            <p style="color:var(--text-muted);font-size:0.82rem;font-family:var(--font-mono);margin-bottom:1rem;">${t.date_range}</p>
             ${t.standings && t.standings.length > 0 ? `
-              <table style="width:100%;border-collapse:collapse;font-size:0.9rem;">
+              <table class="tournament-table">
                 <thead>
-                  <tr style="border-bottom:1px solid var(--border);color:var(--text-muted);font-size:0.78rem;text-transform:uppercase;letter-spacing:0.08em;">
-                    <th style="padding:8px 12px;text-align:left;">#</th>
-                    <th style="padding:8px 12px;text-align:left;">Spieler</th>
-                    <th style="padding:8px 12px;text-align:center;">Punkte</th>
-                    <th style="padding:8px 12px;text-align:center;">Partien</th>
+                  <tr>
+                    <th style="text-align:left;">#</th>
+                    <th style="text-align:left;">Spieler</th>
+                    <th style="text-align:center;">Punkte</th>
+                    <th style="text-align:center;">Partien</th>
                   </tr>
                 </thead>
                 <tbody>
                   ${t.standings.map(s => `
-                    <tr style="border-bottom:1px solid rgba(30,45,72,0.3);">
-                      <td style="padding:8px 12px;color:var(--accent-blue);font-weight:600;">${s.rank}</td>
-                      <td style="padding:8px 12px;">${s.player}</td>
-                      <td style="padding:8px 12px;text-align:center;font-family:var(--font-mono);">${s.points}</td>
-                      <td style="padding:8px 12px;text-align:center;color:var(--text-muted);">${s.games}</td>
+                    <tr>
+                      <td class="tournament-rank">${s.rank}</td>
+                      <td>${s.player}</td>
+                      <td style="text-align:center;font-family:var(--font-mono);">${s.points}</td>
+                      <td style="text-align:center;color:var(--text-muted);">${s.games}</td>
                     </tr>
                   `).join('')}
                 </tbody>
               </table>
             ` : ''}
+            ${renderRounds(t.rounds)}
+            ${renderScreenshots(t.screenshots)}
           </div>
         `).join('');
       }
@@ -202,36 +263,41 @@ window.SCO = (function () {
         archiveContainer.innerHTML = '<p style="color:var(--text-muted)">Kein Archiv vorhanden.</p>';
       } else {
         archiveContainer.innerHTML = archive.map(t => `
-          <details class="fade-in" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:0.75rem;">
-            <summary style="padding:1.25rem 1.5rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;list-style:none;">
+          <details class="tournament-archive-item fade-in">
+            <summary class="tournament-archive-summary">
               <div>
                 <strong style="font-family:var(--font-display);">${t.name}</strong>
-                <span style="color:var(--text-muted);font-size:0.85rem;margin-left:1rem;">${t.date_range}</span>
+                <span class="tournament-archive-date">${t.date_range}</span>
               </div>
-              ${t.winner ? `<span style="color:var(--accent-blue);font-size:0.85rem;font-family:var(--font-mono);">🏆 ${t.winner}</span>` : ''}
+              <div class="tournament-archive-meta">
+                ${t.winner ? `<span class="tournament-archive-winner">🏆 ${t.winner}</span>` : ''}
+                ${renderLinks(t)}
+              </div>
             </summary>
-            <div style="padding:0 1.5rem 1.25rem;">
-              <p style="color:var(--text-secondary);font-size:0.88rem;margin-bottom:0.75rem;">${t.type}</p>
+            <div class="tournament-archive-body">
+              <p class="tournament-card-type">${t.type}</p>
               ${t.standings && t.standings.length > 0 ? `
-                <table style="width:100%;border-collapse:collapse;font-size:0.88rem;">
+                <table class="tournament-table tournament-table-sm">
                   <thead>
-                    <tr style="border-bottom:1px solid var(--border);color:var(--text-muted);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;">
-                      <th style="padding:6px 12px;text-align:left;">#</th>
-                      <th style="padding:6px 12px;text-align:left;">Spieler</th>
-                      <th style="padding:6px 12px;text-align:center;">Punkte</th>
+                    <tr>
+                      <th style="text-align:left;">#</th>
+                      <th style="text-align:left;">Spieler</th>
+                      <th style="text-align:center;">Punkte</th>
                     </tr>
                   </thead>
                   <tbody>
                     ${t.standings.map(s => `
-                      <tr style="border-bottom:1px solid rgba(30,45,72,0.3);">
-                        <td style="padding:6px 12px;color:var(--accent-blue);">${s.rank}</td>
-                        <td style="padding:6px 12px;">${s.player}</td>
-                        <td style="padding:6px 12px;text-align:center;font-family:var(--font-mono);">${s.points}</td>
+                      <tr>
+                        <td class="tournament-rank">${s.rank}</td>
+                        <td>${s.player}</td>
+                        <td style="text-align:center;font-family:var(--font-mono);">${s.points}</td>
                       </tr>
                     `).join('')}
                   </tbody>
                 </table>
               ` : '<p style="color:var(--text-muted);font-size:0.85rem;">Keine Ergebnisse hinterlegt.</p>'}
+              ${renderRounds(t.rounds)}
+              ${renderScreenshots(t.screenshots)}
             </div>
           </details>
         `).join('');
