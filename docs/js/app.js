@@ -292,7 +292,7 @@ window.SCO = (function () {
       return;
     }
 
-    // ---- Minimal chess engine for PGN replay ----
+    // ---- Chess piece SVGs ----
     const WK_BASE = 'https://upload.wikimedia.org/wikipedia/commons/';
     const PIECE_SVG = {
       wK: WK_BASE+'4/42/Chess_klt45.svg', wQ: WK_BASE+'1/15/Chess_qlt45.svg',
@@ -304,270 +304,375 @@ window.SCO = (function () {
     };
     const INIT_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR';
 
+    // ---- Board logic ----
     function fenToBoard(fen) {
       const board = Array.from({length:8}, ()=>Array(8).fill(null));
       const rows = fen.split('/');
       for (let r=0; r<8; r++) {
         let c=0;
         for (const ch of rows[r]) {
-          if (ch>='1'&&ch<='8') { c+=parseInt(ch); }
-          else { board[r][c]={ type:ch.toUpperCase(), color:ch===ch.toUpperCase()?'w':'b' }; c++; }
+          if (ch>='1'&&ch<='8') c+=parseInt(ch);
+          else { board[r][c]={type:ch.toUpperCase(),color:ch===ch.toUpperCase()?'w':'b'}; c++; }
         }
       }
       return board;
     }
-
     function cloneBoard(b) { return b.map(r=>r.map(c=>c?{...c}:null)); }
 
     function findPiece(board, type, color, fromFile, fromRank, toR, toC) {
-      const candidates = [];
       for (let r=0; r<8; r++) for (let c=0; c<8; c++) {
         const p = board[r][c];
-        if (!p || p.type!==type || p.color!==color) continue;
-        if (fromFile!==null && c!==fromFile) continue;
-        if (fromRank!==null && r!==fromRank) continue;
-        if (canReach(board, type, color, r, c, toR, toC)) candidates.push([r,c]);
+        if (!p||p.type!==type||p.color!==color) continue;
+        if (fromFile!==null&&c!==fromFile) continue;
+        if (fromRank!==null&&r!==fromRank) continue;
+        if (canReach(board,type,color,r,c,toR,toC)) return [r,c];
       }
-      return candidates[0] || null;
+      return null;
     }
-
-    function canReach(board, type, color, fr, fc, tr, tc) {
-      const dr=tr-fr, dc=tc-fc, adr=Math.abs(dr), adc=Math.abs(dc);
+    function canReach(board,type,color,fr,fc,tr,tc) {
+      const dr=tr-fr,dc=tc-fc,adr=Math.abs(dr),adc=Math.abs(dc);
       switch(type) {
-        case 'P': {
-          const dir = color==='w'?-1:1;
-          if (dc===0 && dr===dir && !board[tr][tc]) return true;
-          if (dc===0 && dr===2*dir && fr===(color==='w'?6:1) && !board[fr+dir][fc] && !board[tr][tc]) return true;
-          if (adc===1 && dr===dir) return true; // capture or en passant
-          return false;
-        }
+        case 'P': { const dir=color==='w'?-1:1;
+          if(dc===0&&dr===dir&&!board[tr][tc]) return true;
+          if(dc===0&&dr===2*dir&&fr===(color==='w'?6:1)&&!board[fr+dir][fc]&&!board[tr][tc]) return true;
+          if(adc===1&&dr===dir) return true; return false; }
         case 'N': return (adr===2&&adc===1)||(adr===1&&adc===2);
-        case 'B': return adr===adc && adr>0 && pathClear(board,fr,fc,tr,tc);
-        case 'R': return (dr===0||dc===0) && (adr+adc>0) && pathClear(board,fr,fc,tr,tc);
-        case 'Q': return ((adr===adc)||(dr===0||dc===0)) && (adr+adc>0) && pathClear(board,fr,fc,tr,tc);
-        case 'K': return adr<=1 && adc<=1 && (adr+adc>0);
+        case 'B': return adr===adc&&adr>0&&pathClear(board,fr,fc,tr,tc);
+        case 'R': return (dr===0||dc===0)&&(adr+adc>0)&&pathClear(board,fr,fc,tr,tc);
+        case 'Q': return ((adr===adc)||(dr===0||dc===0))&&(adr+adc>0)&&pathClear(board,fr,fc,tr,tc);
+        case 'K': return adr<=1&&adc<=1&&(adr+adc>0);
+      } return false;
+    }
+    function pathClear(board,fr,fc,tr,tc) {
+      const dr=Math.sign(tr-fr),dc=Math.sign(tc-fc);
+      let r=fr+dr,c=fc+dc;
+      while(r!==tr||c!==tc){if(board[r][c])return false;r+=dr;c+=dc;} return true;
+    }
+
+    // Apply a single SAN move to a board, return { board, from, to }
+    function applyMove(board, san, turn) {
+      let t = san.replace(/[+#!?]/g,'');
+      const nb = cloneBoard(board);
+      let fr,fc,tr,tc;
+
+      if (t==='O-O-O'||t==='O-O') {
+        const r=turn==='w'?7:0; const isQ=t==='O-O-O';
+        nb[r][4]=null; nb[r][isQ?0:7]=null;
+        nb[r][isQ?2:6]={type:'K',color:turn}; nb[r][isQ?3:5]={type:'R',color:turn};
+        return { board:nb, from:{r,c:4}, to:{r,c:isQ?2:6} };
       }
-      return false;
+
+      let promo=null; const pm=t.match(/=([QRBN])/);
+      if(pm){promo=pm[1];t=t.replace(/=[QRBN]/,'');}
+      let pieceType='P';
+      if('KQRBN'.includes(t[0])){pieceType=t[0];t=t.substring(1);}
+      tc=t.charCodeAt(t.length-2)-97; tr=8-parseInt(t[t.length-1]);
+      t=t.substring(0,t.length-2).replace('x','');
+      let fromFile=null,fromRank=null;
+      for(const ch of t){if(ch>='a'&&ch<='h')fromFile=ch.charCodeAt(0)-97;else if(ch>='1'&&ch<='8')fromRank=8-parseInt(ch);}
+
+      const src=findPiece(nb,pieceType,turn,fromFile,fromRank,tr,tc);
+      if(src){
+        if(pieceType==='P'&&src[1]!==tc&&!nb[tr][tc]) nb[src[0]][tc]=null;
+        nb[src[0]][src[1]]=null;
+        nb[tr][tc]={type:promo||pieceType,color:turn};
+        fr=src[0];fc=src[1];
+      } else { fr=0;fc=0; }
+      return { board:nb, from:{r:fr,c:fc}, to:{r:tr,c:tc} };
     }
 
-    function pathClear(board, fr, fc, tr, tc) {
-      const dr=Math.sign(tr-fr), dc=Math.sign(tc-fc);
-      let r=fr+dr, c=fc+dc;
-      while(r!==tr||c!==tc) { if(board[r][c]) return false; r+=dr; c+=dc; }
-      return true;
+    // ---- PGN Tokenizer (preserves comments & variations) ----
+    function tokenizePGN(pgn) {
+      const tokens=[];let i=0;
+      while(i<pgn.length) {
+        if(/\s/.test(pgn[i])){i++;continue;}
+        if(pgn[i]==='{'){let j=pgn.indexOf('}',i+1);if(j===-1)j=pgn.length;tokens.push({type:'comment',text:pgn.substring(i+1,j).trim()});i=j+1;continue;}
+        if(pgn[i]==='('){tokens.push({type:'var-start'});i++;continue;}
+        if(pgn[i]===')'){tokens.push({type:'var-end'});i++;continue;}
+        if(pgn[i]==='$'){let j=i+1;while(j<pgn.length&&/\d/.test(pgn[j]))j++;const n=parseInt(pgn.substring(i+1,j));const s={1:'!',2:'?',3:'‼',4:'⁇',5:'⁉',6:'⁈',10:'=',14:'+=',15:'=+',16:'±',17:'∓',18:'+-',19:'-+'};tokens.push({type:'nag',text:s[n]||''});i=j;continue;}
+        const rm=pgn.substring(i).match(/^(1-0|0-1|1\/2-1\/2|\*)/);
+        if(rm){tokens.push({type:'result',text:rm[1]});i+=rm[1].length;continue;}
+        if(/\d/.test(pgn[i])){let j=i;while(j<pgn.length&&/[\d.\s]/.test(pgn[j]))j++;i=j;continue;}
+        const mm=pgn.substring(i).match(/^(O-O-O|O-O|[KQRBN]?[a-h]?[1-8]?x?[a-h][1-8](?:=[QRBN])?[+#!?]*)/);
+        if(mm&&mm[1]){tokens.push({type:'move',san:mm[1]});i+=mm[1].length;continue;}
+        i++;
+      }
+      return tokens;
     }
 
-    function parsePGN(pgn) {
-      // Extract individual move tokens
-      const clean = pgn.replace(/\{[^}]*\}/g,'').replace(/\([^)]*\)/g,'');
-      const tokens = clean.match(/(?:O-O-O|O-O|[KQRBN]?[a-h]?[1-8]?x?[a-h][1-8](?:=[QRBN])?[+#]?)/g) || [];
+    // ---- Build position tree from tokens ----
+    function buildGameTree(pgn) {
+      const tokens = tokenizePGN(pgn);
+      const startBoard = fenToBoard(INIT_FEN);
 
-      const positions = [cloneBoard(fenToBoard(INIT_FEN))];
-      const moveLabels = [];
-      const moveSquares = [null]; // from/to for each position; index 0 = start = null
-      let board = cloneBoard(positions[0]);
+      // Flat array of position nodes
+      // node.turn = whose move it is in THIS position (who moves next)
+      const nodes = [{ board:cloneBoard(startBoard), move:null, san:null, comment:null, nag:null, parent:null, turn:'w', children:[] }];
+      const mainLineIds = [0];
+
+      const stack = [];
+      let currentNodeId = 0;
       let turn = 'w';
+      let depth = 0;
 
       for (const tok of tokens) {
-        let t = tok.replace(/[+#]/g,'');
-        const nb = cloneBoard(board);
-        let fromR, fromC, toR, toC;
-
-        // Castling
-        if (t==='O-O-O'||t==='O-O') {
-          const r = turn==='w'?7:0;
-          const isQ = t==='O-O-O';
-          nb[r][4]=null;
-          nb[r][isQ?0:7]=null;
-          nb[r][isQ?2:6]={type:'K',color:turn};
-          nb[r][isQ?3:5]={type:'R',color:turn};
-          fromR=r; fromC=4; toR=r; toC=isQ?2:6;
-          positions.push(cloneBoard(nb));
-          moveLabels.push(tok);
-          moveSquares.push({fr:fromR,fc:fromC,tr:toR,tc:toC});
-          board = nb; turn = turn==='w'?'b':'w';
-          continue;
+        if (tok.type==='move') {
+          const parentNode = nodes[currentNodeId];
+          const result = applyMove(parentNode.board, tok.san, turn);
+          const nextTurn = turn==='w'?'b':'w';
+          const newId = nodes.length;
+          nodes.push({ board:result.board, move:{from:result.from,to:result.to}, san:tok.san, comment:null, nag:null, parent:currentNodeId, turn:nextTurn, children:[] });
+          parentNode.children.push(newId);
+          if (depth===0) mainLineIds.push(newId);
+          currentNodeId = newId;
+          turn = nextTurn;
         }
-
-        // Promotion
-        let promo = null;
-        const promoMatch = t.match(/=([QRBN])/);
-        if (promoMatch) { promo=promoMatch[1]; t=t.replace(/=[QRBN]/,''); }
-
-        // Piece type
-        let pieceType = 'P';
-        if ('KQRBN'.includes(t[0])) { pieceType=t[0]; t=t.substring(1); }
-
-        // Target square (last two chars)
-        const targetFile = t.charCodeAt(t.length-2)-97;
-        const targetRank = 8-parseInt(t[t.length-1]);
-        t = t.substring(0, t.length-2).replace('x','');
-
-        // Disambiguation
-        let fromFile=null, fromRank=null;
-        for (const ch of t) {
-          if (ch>='a'&&ch<='h') fromFile=ch.charCodeAt(0)-97;
-          else if (ch>='1'&&ch<='8') fromRank=8-parseInt(ch);
-        }
-
-        const from = findPiece(nb, pieceType, turn, fromFile, fromRank, targetRank, targetFile);
-        if (from) {
-          if (pieceType==='P' && from[1]!==targetFile && !nb[targetRank][targetFile]) {
-            nb[from[0]][targetFile] = null;
+        else if (tok.type==='comment') { nodes[currentNodeId].comment = tok.text; }
+        else if (tok.type==='nag') { nodes[currentNodeId].nag = tok.text; }
+        else if (tok.type==='var-start') {
+          const parentId = nodes[currentNodeId].parent;
+          if (parentId!==null) {
+            stack.push({ savedNodeId:currentNodeId, savedTurn:turn });
+            currentNodeId = parentId;
+            turn = nodes[parentId].turn; // whose move at parent position
+            depth++;
           }
-          nb[from[0]][from[1]] = null;
-          nb[targetRank][targetFile] = { type: promo||pieceType, color: turn };
-          fromR=from[0]; fromC=from[1]; toR=targetRank; toC=targetFile;
-        } else {
-          fromR=0; fromC=0; toR=targetRank; toC=targetFile;
         }
-
-        positions.push(cloneBoard(nb));
-        moveLabels.push(tok);
-        moveSquares.push({fr:fromR,fc:fromC,tr:toR,tc:toC});
-        board = nb; turn = turn==='w'?'b':'w';
+        else if (tok.type==='var-end') {
+          if (stack.length>0) { const ctx=stack.pop(); currentNodeId=ctx.savedNodeId; turn=ctx.savedTurn; depth--; }
+        }
       }
 
-      return { positions, moveLabels, moveSquares };
+      // Build display tokens by walking the tree
+      const displayTokens = [];
+
+      function walkTree(parentId, d) {
+        const parent = nodes[parentId];
+        if (parent.children.length===0) return;
+        const mainChildId = parent.children[0];
+        const mainChild = nodes[mainChildId];
+
+        displayTokens.push({ type:'move', nodeId:mainChildId, san:mainChild.san, isWhite:parent.turn==='w', depth:d });
+        if (mainChild.nag) displayTokens.push({ type:'nag', text:mainChild.nag, depth:d });
+        if (mainChild.comment) displayTokens.push({ type:'comment', text:mainChild.comment, depth:d });
+
+        for (let vi=1; vi<parent.children.length; vi++) {
+          displayTokens.push({ type:'var-start', depth:d+1 });
+          walkVariation(parent.children[vi], d+1);
+          displayTokens.push({ type:'var-end', depth:d+1 });
+        }
+        walkTree(mainChildId, d);
+      }
+
+      function walkVariation(nodeId, d) {
+        const node = nodes[nodeId];
+        const parentNode = nodes[node.parent];
+        displayTokens.push({ type:'move', nodeId, san:node.san, isWhite:parentNode.turn==='w', depth:d });
+        if (node.nag) displayTokens.push({ type:'nag', text:node.nag, depth:d });
+        if (node.comment) displayTokens.push({ type:'comment', text:node.comment, depth:d });
+        walkTree(nodeId, d);
+      }
+
+      walkTree(0, 0);
+      return { nodes, mainLineIds, displayTokens };
     }
 
-    const SQ = 64; // square size in px
-
+    // ---- Responsive Board Renderer ----
     function renderBoard(board, move) {
-      const lightSq = '#c8b07a';
-      const darkSq = '#8b6b3d';
-      const lightHl = '#d4c46a';
-      const darkHl = '#a09030';
-      const boardPx = SQ * 8;
-      const labelW = 28;
+      const lightSq='#c8b07a', darkSq='#8b6b3d', lightHl='#d4c46a', darkHl='#a09030';
 
-      let html = `<div style="display:inline-block;">`;
-      // Board with SVG overlay
-      html += `<div style="display:inline-grid;grid-template-columns:${labelW}px repeat(8,${SQ}px);grid-template-rows:repeat(8,${SQ}px) ${labelW}px;border:2px solid var(--border);border-radius:4px;overflow:hidden;position:relative;">`;
+      let html = '<div class="pgn-board-wrap">';
 
+      // Rank labels + squares container (side by side)
+      html += '<div class="pgn-board-frame">';
+
+      // Rank labels column
+      html += '<div class="pgn-rank-col">';
+      for (let r=0; r<8; r++) html += `<div class="pgn-rank-label">${8-r}</div>`;
+      html += '</div>';
+
+      // Squares container (position:relative for SVG overlay)
+      html += '<div class="pgn-squares-wrap">';
+      html += '<div class="pgn-squares-grid">';
       for (let r=0; r<8; r++) {
-        html += `<div style="display:flex;align-items:center;justify-content:center;width:${labelW}px;font-size:13px;color:var(--text-muted);font-family:var(--font-mono);background:var(--bg-card);">${8-r}</div>`;
         for (let c=0; c<8; c++) {
-          const isLight = (r+c)%2===0;
-          let bg = isLight ? lightSq : darkSq;
-          if (move && ((move.fr===r&&move.fc===c)||(move.tr===r&&move.tc===c))) {
-            bg = isLight ? lightHl : darkHl;
-          }
-          const piece = board[r][c];
-          const sym = piece ? `<img src="${PIECE_SVG[piece.color+piece.type]}" alt="" style="width:85%;height:85%;pointer-events:none;filter:drop-shadow(1px 1px 1px rgba(0,0,0,0.3));">` : '';
-          html += `<div style="width:${SQ}px;height:${SQ}px;background:${bg};display:flex;align-items:center;justify-content:center;user-select:none;">${sym}</div>`;
+          const isLight=(r+c)%2===0;
+          let bg=isLight?lightSq:darkSq;
+          if(move&&((move.from.r===r&&move.from.c===c)||(move.to.r===r&&move.to.c===c)))
+            bg=isLight?lightHl:darkHl;
+          const piece=board[r][c];
+          const img=piece?`<img src="${PIECE_SVG[piece.color+piece.type]}" alt="" class="pgn-piece">`:'';
+          html+=`<div class="pgn-sq" style="background:${bg}">${img}</div>`;
         }
       }
-      // File labels
-      html += `<div style="width:${labelW}px;background:var(--bg-card);"></div>`;
-      for (let c=0; c<8; c++) {
-        html += `<div style="display:flex;align-items:center;justify-content:center;height:${labelW}px;font-size:13px;color:var(--text-muted);font-family:var(--font-mono);background:var(--bg-card);">${'abcdefgh'[c]}</div>`;
-      }
+      html += '</div>'; // close squares-grid
 
-      // SVG arrow overlay
+      // SVG arrow overlay (inside squares-wrap, covers exactly the 8x8 area)
       if (move) {
-        const x1 = labelW + move.fc * SQ + SQ/2;
-        const y1 = move.fr * SQ + SQ/2;
-        const x2 = labelW + move.tc * SQ + SQ/2;
-        const y2 = move.tr * SQ + SQ/2;
-        const totalW = labelW + boardPx;
-        const totalH = boardPx + labelW;
-        html += `<svg style="position:absolute;top:0;left:0;width:${totalW}px;height:${totalH}px;pointer-events:none;" viewBox="0 0 ${totalW} ${totalH}">
-          <defs>
-            <marker id="arrowhead" markerWidth="4" markerHeight="3.5" refX="3.5" refY="1.75" orient="auto">
-              <polygon points="0 0, 4 1.75, 0 3.5" fill="rgba(220,80,40,0.85)"/>
-            </marker>
-          </defs>
-          <line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="rgba(220,80,40,0.85)" stroke-width="8" stroke-linecap="round" marker-end="url(#arrowhead)" opacity="0.8"/>
-        </svg>`;
+        const x1=move.from.c*12.5+6.25, y1=move.from.r*12.5+6.25;
+        const x2=move.to.c*12.5+6.25, y2=move.to.r*12.5+6.25;
+        // Shorten arrow slightly so tip doesn't overshoot center
+        const dx=x2-x1, dy=y2-y1, len=Math.sqrt(dx*dx+dy*dy);
+        const shorten=1.8;
+        const ax2=x2-dx/len*shorten, ay2=y2-dy/len*shorten;
+        html+=`<svg class="pgn-arrow-svg" viewBox="0 0 100 100">
+          <defs><marker id="ah" markerWidth="3.5" markerHeight="3" refX="3" refY="1.5" orient="auto">
+            <polygon points="0 0,3.5 1.5,0 3" fill="rgba(220,80,40,0.88)"/></marker></defs>
+          <line x1="${x1}" y1="${y1}" x2="${ax2}" y2="${ay2}" stroke="rgba(220,80,40,0.88)" stroke-width="1.4" stroke-linecap="round" marker-end="url(#ah)" opacity="0.82"/></svg>`;
       }
 
-      html += `</div></div>`;
+      html += '</div>'; // close squares-wrap
+      html += '</div>'; // close board-frame
+
+      // File labels row
+      html += '<div class="pgn-file-row">';
+      html += '<div class="pgn-file-spacer"></div>'; // spacer under rank labels
+      for (let c=0; c<8; c++) html += `<div class="pgn-file-label">${'abcdefgh'[c]}</div>`;
+      html += '</div>';
+
+      html += '</div>'; // close board-wrap
       return html;
     }
 
-    // ---- Build viewer UI ----
-    let currentGame = 0;
-    let currentMove = 0;
-    let parsed = null;
+    // ---- Build display move list HTML ----
+    function buildMoveListHTML(displayTokens, activeNodeId) {
+      let html='<div class="pgn-moves">';
+      let plyCounter=0; // track for move numbers in main line (depth 0)
+      let lastDepthWasVar = false;
+
+      for (let i=0; i<displayTokens.length; i++) {
+        const tok=displayTokens[i];
+
+        if (tok.type==='var-start') {
+          html+='<span class="pgn-variation">(';
+          lastDepthWasVar = true;
+          continue;
+        }
+        if (tok.type==='var-end') {
+          html+=')</span> ';
+          lastDepthWasVar = false;
+          continue;
+        }
+        if (tok.type==='comment') {
+          html+=`<span class="pgn-comment">{${tok.text}}</span> `;
+          continue;
+        }
+        if (tok.type==='nag') {
+          html+=`<span class="pgn-nag">${tok.text}</span>`;
+          continue;
+        }
+        if (tok.type==='move') {
+          const isActive = tok.nodeId === activeNodeId;
+
+          // Move number
+          if (tok.isWhite) {
+            // Count which move number: find ply depth
+            // For main line, compute from position in tree
+            const node = parsed.nodes[tok.nodeId];
+            let ply=0, cur=tok.nodeId;
+            while(cur!==null && cur!==0){ cur=parsed.nodes[cur].parent; ply++; }
+            const moveNum = Math.ceil(ply/2);
+            html+=`<span class="pgn-movenum">${moveNum}.</span>`;
+          } else if (lastDepthWasVar || (i>0 && displayTokens[i-1].type==='var-start')) {
+            // After variation start, show move number with ...
+            const node = parsed.nodes[tok.nodeId];
+            let ply=0, cur=tok.nodeId;
+            while(cur!==null && cur!==0){ cur=parsed.nodes[cur].parent; ply++; }
+            const moveNum = Math.ceil(ply/2);
+            html+=`<span class="pgn-movenum">${moveNum}…</span>`;
+          }
+
+          html+=`<span class="pgn-move-btn${isActive?' pgn-move-active':''}" data-node="${tok.nodeId}">${tok.san}</span> `;
+          lastDepthWasVar = false;
+        }
+      }
+      html+='</div>';
+      return html;
+    }
+
+    // ---- Viewer state ----
+    let currentGame=0, currentNodeId=0, parsed=null;
 
     function buildViewer() {
-      const game = games[currentGame];
-      parsed = parsePGN(game.pgn);
-      currentMove = 0;
+      const game=games[currentGame];
+      parsed=buildGameTree(game.pgn);
+      currentNodeId=0;
 
-      container.innerHTML = `
+      container.innerHTML=`
         <div style="margin-bottom:1.25rem;">
-          <select id="pgn-game-select" style="width:100%;padding:10px 14px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);color:var(--text-primary);font-family:var(--font-body);font-size:0.95rem;">
+          <select id="pgn-game-select" class="pgn-select">
             ${games.map((g,i)=>`<option value="${i}"${i===currentGame?' selected':''}>${g.title} (${g.result})</option>`).join('')}
           </select>
         </div>
-        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
-            <div>
-              <span style="font-weight:600;">⬜ ${game.white}</span>
+        <div class="pgn-viewer-card">
+          <div class="pgn-player-bar">
+            <div><span style="font-weight:600;">⬜ ${game.white}</span>
               <span style="color:var(--text-muted);margin:0 0.5rem;">vs</span>
-              <span style="font-weight:600;">⬛ ${game.black}</span>
-            </div>
+              <span style="font-weight:600;">⬛ ${game.black}</span></div>
             <span style="font-family:var(--font-mono);color:var(--accent-blue);font-size:0.9rem;">${game.result}</span>
           </div>
-          <div id="pgn-board-area" style="display:flex;flex-wrap:wrap;gap:1.5rem;align-items:flex-start;"></div>
-          <div style="display:flex;gap:8px;margin-top:1rem;justify-content:center;">
+          <div id="pgn-board-area" class="pgn-layout"></div>
+          <div class="pgn-controls">
             <button class="pgn-nav-btn" id="pgn-first" title="Anfang">⏮</button>
             <button class="pgn-nav-btn" id="pgn-prev" title="Zurück (←)">◀</button>
             <button class="pgn-nav-btn" id="pgn-next" title="Vor (→)">▶</button>
             <button class="pgn-nav-btn" id="pgn-last" title="Ende">⏭</button>
           </div>
-          <div style="color:var(--text-muted);font-size:0.78rem;text-align:center;margin-top:0.5rem;">Pfeiltasten ← → zum Navigieren</div>
-        </div>
-      `;
+          <div style="color:var(--text-muted);font-size:0.78rem;text-align:center;margin-top:0.3rem;">Pfeiltasten ← → zum Navigieren</div>
+        </div>`;
       updateBoard();
 
-      document.getElementById('pgn-game-select').addEventListener('change', function() {
-        currentGame = parseInt(this.value);
-        buildViewer();
+      document.getElementById('pgn-game-select').addEventListener('change',function(){currentGame=parseInt(this.value);buildViewer();});
+
+      const navInMainLine = () => {
+        // Build path from current node to root to know the line
+        const path=[]; let c=currentNodeId;
+        while(c!==null){ path.unshift(c); c=parsed.nodes[c].parent; }
+        return path;
+      };
+
+      document.getElementById('pgn-first').addEventListener('click',()=>{currentNodeId=0;updateBoard();});
+      document.getElementById('pgn-prev').addEventListener('click',()=>{
+        const node=parsed.nodes[currentNodeId];
+        if(node.parent!==null){currentNodeId=node.parent;updateBoard();}
       });
-      document.getElementById('pgn-first').addEventListener('click', ()=>{ currentMove=0; updateBoard(); });
-      document.getElementById('pgn-prev').addEventListener('click',  ()=>{ if(currentMove>0){currentMove--;updateBoard();} });
-      document.getElementById('pgn-next').addEventListener('click',  ()=>{ if(currentMove<parsed.positions.length-1){currentMove++;updateBoard();} });
-      document.getElementById('pgn-last').addEventListener('click',  ()=>{ currentMove=parsed.positions.length-1; updateBoard(); });
+      document.getElementById('pgn-next').addEventListener('click',()=>{
+        const node=parsed.nodes[currentNodeId];
+        if(node.children.length>0){currentNodeId=node.children[0];updateBoard();}
+      });
+      document.getElementById('pgn-last').addEventListener('click',()=>{
+        let c=currentNodeId;
+        while(parsed.nodes[c].children.length>0) c=parsed.nodes[c].children[0];
+        currentNodeId=c;updateBoard();
+      });
     }
 
     function updateBoard() {
-      const area = document.getElementById('pgn-board-area');
-      if (!area) return;
+      const area=document.getElementById('pgn-board-area');
+      if(!area) return;
+      const node=parsed.nodes[currentNodeId];
+      const boardHtml=renderBoard(node.board, node.move);
+      const movesHtml=buildMoveListHTML(parsed.displayTokens, currentNodeId);
+      area.innerHTML=`<div class="pgn-board-col">${boardHtml}</div><div class="pgn-moves-col">${movesHtml}</div>`;
 
-      const move = currentMove > 0 ? parsed.moveSquares[currentMove] : null;
-      const boardHtml = renderBoard(parsed.positions[currentMove], move);
-
-      // Build move list with current move highlighted
-      let movesHtml = `<div style="font-family:var(--font-mono);font-size:0.92rem;line-height:2;max-height:${SQ*8}px;overflow-y:auto;flex:1;min-width:200px;">`;
-      for (let i=0; i<parsed.moveLabels.length; i++) {
-        if (i%2===0) movesHtml += `<span style="color:var(--text-muted);margin-right:4px;">${Math.floor(i/2)+1}.</span>`;
-        const isActive = i+1===currentMove;
-        movesHtml += `<span class="pgn-move${isActive?' pgn-move-active':''}" data-move="${i+1}" style="cursor:pointer;padding:2px 6px;border-radius:3px;${isActive?'background:var(--navy-light);color:var(--cream-light);':''}">${parsed.moveLabels[i]}</span> `;
-        if (i%2===1) movesHtml += '<br>';
-      }
-      movesHtml += '</div>';
-
-      area.innerHTML = `<div>${boardHtml}</div>${movesHtml}`;
-
-      // Click on moves
-      area.querySelectorAll('.pgn-move').forEach(el => {
-        el.addEventListener('click', () => {
-          currentMove = parseInt(el.dataset.move);
-          updateBoard();
-        });
+      // Click handlers on moves
+      area.querySelectorAll('.pgn-move-btn').forEach(el=>{
+        el.addEventListener('click',()=>{currentNodeId=parseInt(el.dataset.node);updateBoard();});
       });
+
+      // Scroll active move into view
+      const active=area.querySelector('.pgn-move-active');
+      if(active) active.scrollIntoView({block:'nearest',behavior:'smooth'});
     }
 
     // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
-      if (!parsed || !document.getElementById('pgn-board-area')) return;
-      if (e.key==='ArrowLeft') { e.preventDefault(); if(currentMove>0){currentMove--;updateBoard();} }
-      if (e.key==='ArrowRight') { e.preventDefault(); if(currentMove<parsed.positions.length-1){currentMove++;updateBoard();} }
-      if (e.key==='Home') { e.preventDefault(); currentMove=0; updateBoard(); }
-      if (e.key==='End') { e.preventDefault(); currentMove=parsed.positions.length-1; updateBoard(); }
+    document.addEventListener('keydown',(e)=>{
+      if(!parsed||!document.getElementById('pgn-board-area')) return;
+      const node=parsed.nodes[currentNodeId];
+      if(e.key==='ArrowLeft'){e.preventDefault();if(node.parent!==null){currentNodeId=node.parent;updateBoard();}}
+      if(e.key==='ArrowRight'){e.preventDefault();if(node.children.length>0){currentNodeId=node.children[0];updateBoard();}}
+      if(e.key==='Home'){e.preventDefault();currentNodeId=0;updateBoard();}
+      if(e.key==='End'){e.preventDefault();let c=currentNodeId;while(parsed.nodes[c].children.length>0)c=parsed.nodes[c].children[0];currentNodeId=c;updateBoard();}
     });
 
     buildViewer();
