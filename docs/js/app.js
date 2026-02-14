@@ -479,7 +479,10 @@ window.SCO = (function () {
 
     // ---- Responsive Board Renderer ----
     function renderBoard(board, move) {
-      const lightSq='#c8b07a', darkSq='#8b6b3d', lightHl='#d4c46a', darkHl='#a09030';
+      // Site-themed board colors (navy/cream)
+      const lightSq='#d9d0c1', darkSq='#2a4170';  // cream-ish / navy-light
+      const lightHl='#7aa0cc', darkHl='#5a8abf';   // accent-blue highlight
+      const arrowColor='rgba(196,92,92,0.88)';      // accent-red for arrow
 
       let html = '<div class="pgn-board-wrap">';
 
@@ -517,8 +520,8 @@ window.SCO = (function () {
         const ax2=x2-dx/len*shorten, ay2=y2-dy/len*shorten;
         html+=`<svg class="pgn-arrow-svg" viewBox="0 0 100 100">
           <defs><marker id="ah" markerWidth="3.5" markerHeight="3" refX="3" refY="1.5" orient="auto">
-            <polygon points="0 0,3.5 1.5,0 3" fill="rgba(220,80,40,0.88)"/></marker></defs>
-          <line x1="${x1}" y1="${y1}" x2="${ax2}" y2="${ay2}" stroke="rgba(220,80,40,0.88)" stroke-width="1.4" stroke-linecap="round" marker-end="url(#ah)" opacity="0.82"/></svg>`;
+            <polygon points="0 0,3.5 1.5,0 3" fill="${arrowColor}"/></marker></defs>
+          <line x1="${x1}" y1="${y1}" x2="${ax2}" y2="${ay2}" stroke="${arrowColor}" stroke-width="1.4" stroke-linecap="round" marker-end="url(#ah)" opacity="0.85"/></svg>`;
       }
 
       html += '</div>'; // close squares-wrap
@@ -606,31 +609,16 @@ window.SCO = (function () {
         </div>
         <div class="pgn-viewer-card">
           <div class="pgn-player-bar">
-            <div><span style="font-weight:600;">⬜ ${game.white}</span>
-              <span style="color:var(--text-muted);margin:0 0.5rem;">vs</span>
-              <span style="font-weight:600;">⬛ ${game.black}</span></div>
-            <span style="font-family:var(--font-mono);color:var(--accent-blue);font-size:0.9rem;">${game.result}</span>
+            <div><span class="pgn-player-white">⬜ ${game.white}</span>
+              <span class="pgn-vs">vs</span>
+              <span class="pgn-player-black">⬛ ${game.black}</span></div>
+            <span class="pgn-result">${game.result}</span>
           </div>
           <div id="pgn-board-area" class="pgn-layout"></div>
-          <div class="pgn-controls">
-            <button class="pgn-nav-btn" id="pgn-first" title="Anfang">⏮</button>
-            <button class="pgn-nav-btn" id="pgn-prev" title="Zurück (←)">◀</button>
-            <button class="pgn-nav-btn" id="pgn-next" title="Vor (→)">▶</button>
-            <button class="pgn-nav-btn" id="pgn-last" title="Ende">⏭</button>
-          </div>
-          <div style="color:var(--text-muted);font-size:0.78rem;text-align:center;margin-top:0.3rem;">Pfeiltasten ← → zum Navigieren</div>
         </div>`;
       updateBoard();
 
       document.getElementById('pgn-game-select').addEventListener('change',function(){currentGame=parseInt(this.value);buildViewer();});
-
-      const navInMainLine = () => {
-        // Build path from current node to root to know the line
-        const path=[]; let c=currentNodeId;
-        while(c!==null){ path.unshift(c); c=parsed.nodes[c].parent; }
-        return path;
-      };
-
       document.getElementById('pgn-first').addEventListener('click',()=>{currentNodeId=0;updateBoard();});
       document.getElementById('pgn-prev').addEventListener('click',()=>{
         const node=parsed.nodes[currentNodeId];
@@ -653,7 +641,32 @@ window.SCO = (function () {
       const node=parsed.nodes[currentNodeId];
       const boardHtml=renderBoard(node.board, node.move);
       const movesHtml=buildMoveListHTML(parsed.displayTokens, currentNodeId);
-      area.innerHTML=`<div class="pgn-board-col">${boardHtml}</div><div class="pgn-moves-col">${movesHtml}</div>`;
+
+      // Board + controls in left column, moves in right column
+      area.innerHTML=`
+        <div class="pgn-board-col">
+          ${boardHtml}
+          <div class="pgn-controls">
+            <button class="pgn-nav-btn" id="pgn-first" title="Anfang">⏮</button>
+            <button class="pgn-nav-btn" id="pgn-prev" title="Zurück (←)">◀</button>
+            <button class="pgn-nav-btn" id="pgn-next" title="Vor (→)">▶</button>
+            <button class="pgn-nav-btn" id="pgn-last" title="Ende">⏭</button>
+          </div>
+          <div class="pgn-kb-hint">Pfeiltasten ← → zum Navigieren</div>
+        </div>
+        <div class="pgn-moves-col">${movesHtml}</div>`;
+
+      // Re-bind nav buttons (they are re-created each updateBoard)
+      document.getElementById('pgn-first').addEventListener('click',()=>{currentNodeId=0;updateBoard();});
+      document.getElementById('pgn-prev').addEventListener('click',()=>{
+        const n=parsed.nodes[currentNodeId]; if(n.parent!==null){currentNodeId=n.parent;updateBoard();}
+      });
+      document.getElementById('pgn-next').addEventListener('click',()=>{
+        const n=parsed.nodes[currentNodeId]; if(n.children.length>0){currentNodeId=n.children[0];updateBoard();}
+      });
+      document.getElementById('pgn-last').addEventListener('click',()=>{
+        let c=currentNodeId; while(parsed.nodes[c].children.length>0)c=parsed.nodes[c].children[0]; currentNodeId=c;updateBoard();
+      });
 
       // Click handlers on moves
       area.querySelectorAll('.pgn-move-btn').forEach(el=>{
