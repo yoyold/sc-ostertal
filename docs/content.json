@@ -2,7 +2,7 @@
   "club": {
     "name": "SC Ostertal",
     "motto": "Tradition. Strategie. Gemeinschaft.",
-    "about": "Der Schachclub Ostertal wurde 1986 in Niederkirchen im Ostertal gegründet und ist seitdem ein fester Bestandteil des kulturellen Lebens im Ostertal. Mit über 60 aktiven Mitgliedern bieten wir Spielern aller Stärken ein Zuhause – vom Anfänger bis zum erfahrenen Turnierspieler. Unsere Mannschaften nehmen regelmäßig an der Saarlandliga und den Bezirksligen teil.",
+    "about": "Der Schachclub Ostertal wurde 1986 in Niederkirchen im Ostertal gegründet und ist seitdem ein fester Bestandteil des kulturellen Lebens im Ostertal. Mit über 60 aktiven Mitgliedern bieten wir Spielern aller Stärken ein Zuhause – vom Anfänger bis zum erfahrenen Turnierspieler. Unsere Mannschaften nehmen regelmäßig an der Verbandsliga und den Kreisligen teil.",
     "training": "Jeden Freitag ab 19:00 Uhr im Vereinsheim",
     "address": "Vereinsheim SC Ostertal, Niederkirchen im Ostertal",
     "email": "info@sc-ostertal.de",
@@ -13,14 +13,14 @@
       "id": "1",
       "title": "Saisonstart 2026: Mannschaftsaufstellungen stehen fest",
       "date": "2026-02-10",
-      "content": "Die neue Saison steht vor der Tür! Unsere Mannschaftsführer haben die Aufstellungen für die kommende Runde finalisiert. Die erste Mannschaft tritt wieder in der Saarlandliga an, die zweite Mannschaft kämpft in der Bezirksliga um den Aufstieg.",
+      "content": "Die neue Saison steht vor der Tür! Unsere Mannschaftsführer haben die Aufstellungen für die kommende Runde finalisiert. Die erste Mannschaft tritt wieder in der Verbandsliga an, die zweite Mannschaft kämpft in der Kreisliga um den Aufstieg.",
       "author": "Vorstand"
     },
     {
       "id": "2",
       "title": "Jugendtraining ab sofort jeden Mittwoch",
       "date": "2026-01-28",
-      "content": "Ab sofort findet jeden Mittwoch von 17:00 bis 18:30 Uhr ein spezielles Jugendtraining statt. Unter der Leitung von FM Thomas Müller werden Taktik, Eröffnungen und Endspiele trainiert. Neue Gesichter sind jederzeit willkommen!",
+      "content": "Ab sofort findet jeden Mittwoch von 17:00 bis 18:30 Uhr ein spezielles Jugendtraining statt. Neue Gesichter sind jederzeit willkommen!",
       "author": "Jugendwart"
     },
     {
@@ -57,32 +57,112 @@
   "teams": [
     {
       "name": "1. Mannschaft",
-      "league": "Saarlandliga",
+      "league": "Verbandsliga",
+      "season_url": "https://ssv1921ev.de/index.php/ergebnisdienst?view=mannschaft&saison=2&liga=15&tlnr=5",
       "players": [
-        "FM Thomas Müller (Br. 1)",
-        "Michael Becker (Br. 2)",
-        "Anna Schmidt (Br. 3)",
-        "Peter Wagner (Br. 4)",
-        "Klaus Hoffmann (Br. 5)",
-        "Stefan Braun (Br. 6)",
-        "Maria Schneider (Br. 7)",
-        "Jürgen Klein (Br. 8)"
+        {"board": 1, "name": "Fernschild, Daniel", "dwz": 2006},
+        {"board": 2, "name": "Agne, Marcel", "dwz": 2024},
+        {"board": 3, "name": "Weber, Michael", "dwz": 1926},
+        {"board": 4, "name": "Morgenstern, Martin", "dwz": 1890},
+        {"board": 5, "name": "Müller, Frank", "dwz": 1836},
+        {"board": 6, "name": "Metzler, Jonas", "dwz": 1829},
+        {"board": 7, "name": "Kraushaar, Martin", "dwz": 1775},
+        {"board": 8, "name": "Bier, Klaus", "dwz": 1779},
+        {"board": 9, "name": "Burgardt, Sabrina", "dwz": 1601}
       ]
     },
     {
       "name": "2. Mannschaft",
-      "league": "Bezirksliga",
+      "league": "Kreisliga",
+      "season_url": "https://ssv1921ev.de/index.php/ergebnisdienst?view=mannschaft&saison=2&liga=17&tlnr=3",
       "players": [
-        "Robert Fischer (Br. 1)",
-        "Eva Neumann (Br. 2)",
-        "Hans Weber (Br. 3)",
-        "Sabine Lang (Br. 4)",
-        "Markus Scholz (Br. 5)",
-        "Christine Bauer (Br. 6)",
-        "Wolfgang Kraus (Br. 7)",
-        "Lisa Vogel (Br. 8)"
+        {"board": 1, "name": "Cullmann, Lothar", "dwz": 1554},
+        {"board": 2, "name": "Klischat, Armin", "dwz": 1611},
+        {"board": 3, "name": "Dony, Lukas", "dwz": 1518},
+        {"board": 4, "name": "Birtel, Simon Dr.", "dwz": null},
+        {"board": 5, "name": "Kornmann, Karina", "dwz": 1459},
+        {"board": 6, "name": "Henning, Jan Philipp", "dwz": 1246},
+        {"board": 7, "name": "Weber, Andrea", "dwz": 1377},
+        {"board": 8, "name": "Buttgereit, Vincent", "dwz": 1425},
+        {"board": 9, "name": "Buttgereit, Lilly", "dwz": 1344},
+        {"board": 10, "name": "Steinmetz, Jürgen", "dwz": 1350},
+        {"board": 11, "name": "Buttgereit, Dirk", "dwz": 1178},
+        {"board": 12, "name": "Ballof, Wolfgang", "dwz": 1403},
+        {"board": 13, "name": "Stieler, Ulrich", "dwz": 1214},
+        {"board": 14, "name": "Weyrich, Peter", "dwz": 997},
+        {"board": 15, "name": "Buttgereit, Yannik", "dwz": 923},
+        {"board": 16, "name": "Buttgereit, Barbara", "dwz": 854},
+        {"board": 17, "name": "Cullmann, Claus Kurt", "dwz": 792},
+        {"board": 18, "name": "Rieth, Nicola", "dwz": null}
       ]
     }
+  ],
+  "leagues": [
+    {
+      "id": "l1",
+      "name": "Verbandsliga",
+      "season": "2025/2026",
+      "our_team": "Ostertal I",
+      "external_url": "https://ssv1921ev.de/index.php/ergebnisdienst?view=tabelle&saison=2&liga=15&typeid=21",
+      "standings": [
+        {"rank": 1,  "team": "Riegelsberg I",       "games": 9, "wins": 9, "draws": 0, "losses": 0, "mp": 27, "bp": "51.5", "our_team": false},
+        {"rank": 2,  "team": "Saarbrücken II",      "games": 9, "wins": 8, "draws": 0, "losses": 1, "mp": 23, "bp": "44.0", "our_team": false},
+        {"rank": 3,  "team": "Bliestal/Kirkel I",   "games": 9, "wins": 5, "draws": 1, "losses": 3, "mp": 20, "bp": "35.0", "our_team": false},
+        {"rank": 4,  "team": "Ostertal I",           "games": 9, "wins": 5, "draws": 0, "losses": 4, "mp": 19, "bp": "37.0", "our_team": true},
+        {"rank": 5,  "team": "Turm Siersburg",       "games": 9, "wins": 5, "draws": 0, "losses": 4, "mp": 18, "bp": "43.5", "our_team": false},
+        {"rank": 6,  "team": "Emmersweiler I",       "games": 9, "wins": 5, "draws": 0, "losses": 4, "mp": 18, "bp": "33.5", "our_team": false},
+        {"rank": 7,  "team": "Bexbach I",            "games": 9, "wins": 3, "draws": 1, "losses": 5, "mp": 16, "bp": "30.5", "our_team": false},
+        {"rank": 8,  "team": "Rochade Saarlouis I",  "games": 9, "wins": 2, "draws": 0, "losses": 7, "mp": 10, "bp": "32.0", "our_team": false},
+        {"rank": 9,  "team": "St.Ingbert I",         "games": 9, "wins": 1, "draws": 0, "losses": 8, "mp": 10, "bp": "22.0", "our_team": false},
+        {"rank": 10, "team": "Fischbach I",           "games": 9, "wins": 1, "draws": 0, "losses": 7, "mp": 9,  "bp": "29.0", "our_team": false}
+      ]
+    },
+    {
+      "id": "l2",
+      "name": "Kreisliga",
+      "season": "2025/2026",
+      "our_team": "Ostertal II",
+      "external_url": "https://ssv1921ev.de/index.php/ergebnisdienst?view=tabelle&saison=2&liga=17&typeid=21",
+      "standings": [
+        {"rank": 1, "team": "Merchweiler",          "games": 9, "wins": 8, "draws": 0, "losses": 1, "mp": 25, "bp": "50.5", "our_team": false},
+        {"rank": 2, "team": "Ostertal II",           "games": 9, "wins": 6, "draws": 1, "losses": 2, "mp": 21, "bp": "48.0", "our_team": true},
+        {"rank": 3, "team": "Illingen III",          "games": 9, "wins": 6, "draws": 0, "losses": 3, "mp": 21, "bp": "47.0", "our_team": false},
+        {"rank": 4, "team": "Riegelsberg III",       "games": 9, "wins": 2, "draws": 2, "losses": 5, "mp": 14, "bp": "28.5", "our_team": false},
+        {"rank": 5, "team": "Rochade Saarlouis III", "games": 9, "wins": 1, "draws": 1, "losses": 7, "mp": 12, "bp": "19.5", "our_team": false},
+        {"rank": 6, "team": "Rochade Saarlouis IV",  "games": 9, "wins": 1, "draws": 2, "losses": 6, "mp": 11, "bp": "22.5", "our_team": false}
+      ]
+    }
+  ],
+  "dwz_list": [
+    {"rank": 1,  "name": "Agne, Marcel",          "dwz": 2021, "elo": 1992},
+    {"rank": 2,  "name": "Fernschild, Daniel",    "dwz": 1990, "elo": 1984},
+    {"rank": 3,  "name": "Weber, Michael",         "dwz": 1924, "elo": 1934},
+    {"rank": 4,  "name": "Morgenstern, Martin",   "dwz": 1881, "elo": 1994},
+    {"rank": 5,  "name": "Metzler, Jonas",         "dwz": 1829, "elo": null},
+    {"rank": 6,  "name": "Müller, Frank",          "dwz": 1797, "elo": null},
+    {"rank": 7,  "name": "Bier, Klaus",            "dwz": 1746, "elo": 1963},
+    {"rank": 8,  "name": "Kraushaar, Martin",      "dwz": 1728, "elo": null},
+    {"rank": 9,  "name": "Dessbesell, Tobias",     "dwz": 1631, "elo": null},
+    {"rank": 10, "name": "Klischat, Armin",        "dwz": 1611, "elo": null},
+    {"rank": 11, "name": "Burgardt, Sabrina",      "dwz": 1574, "elo": 1874},
+    {"rank": 12, "name": "Cullmann, Lothar",       "dwz": 1554, "elo": 1836},
+    {"rank": 13, "name": "Dony, Lukas",            "dwz": 1518, "elo": 1715},
+    {"rank": 14, "name": "Kornmann, Karina",       "dwz": 1459, "elo": null},
+    {"rank": 15, "name": "Buttgereit, Vincent",    "dwz": 1425, "elo": null},
+    {"rank": 16, "name": "Ballof, Wolfgang",       "dwz": 1403, "elo": null},
+    {"rank": 17, "name": "Weber, Andrea",          "dwz": 1377, "elo": null},
+    {"rank": 18, "name": "Steinmetz, Jürgen",      "dwz": 1350, "elo": null},
+    {"rank": 19, "name": "Buttgereit, Lilly",      "dwz": 1344, "elo": null},
+    {"rank": 20, "name": "Kölsch, Lukas",          "dwz": 1252, "elo": null},
+    {"rank": 21, "name": "Henning, Jan Philipp",   "dwz": 1246, "elo": null},
+    {"rank": 22, "name": "Stieler, Ulrich",        "dwz": 1214, "elo": null},
+    {"rank": 23, "name": "Buttgereit, Dirk",       "dwz": 1178, "elo": null},
+    {"rank": 24, "name": "Weyrich, Peter",          "dwz": 997,  "elo": null},
+    {"rank": 25, "name": "Buttgereit, Yannik",     "dwz": 923,  "elo": null},
+    {"rank": 26, "name": "Buttgereit, Barbara",    "dwz": 854,  "elo": null},
+    {"rank": 27, "name": "Cullmann, Claus Kurt",   "dwz": 792,  "elo": null},
+    {"rank": 28, "name": "Rieth, Nicola",           "dwz": null, "elo": null},
+    {"rank": 29, "name": "Birtel, Simon Dr.",       "dwz": null, "elo": null}
   ],
   "tournaments": {
     "current": [
@@ -93,35 +173,58 @@
         "date_range": "März – Mai 2026",
         "external_url": "",
         "standings": [
+          {"rank": 1,  "player": "Weber, Michael",       "points": "2.0", "games": 2},
+          {"rank": 2,  "player": "Morgenstern, Martin",  "points": "2.0", "games": 2},
+          {"rank": 3,  "player": "Kraushaar, Martin",    "points": "2.0", "games": 2},
+          {"rank": 4,  "player": "Weyrich, Peter",        "points": "1.5", "games": 2},
+          {"rank": 5,  "player": "Cullmann, Lothar",     "points": "1.0", "games": 2},
+          {"rank": 5,  "player": "Dony, Lukas",           "points": "1.0", "games": 2},
+          {"rank": 5,  "player": "Weber, Andrea",         "points": "1.0", "games": 2},
+          {"rank": 5,  "player": "Ballof, Wolfgang",      "points": "1.0", "games": 2},
+          {"rank": 5,  "player": "Buttgereit, Lilly",    "points": "1.0", "games": 2},
+          {"rank": 5,  "player": "Henning, Jan Philipp", "points": "1.0", "games": 2},
+          {"rank": 11, "player": "Steinmetz, Jürgen",    "points": "0.5", "games": 2},
+          {"rank": 12, "player": "Stieler, Ulrich",      "points": "0.0", "games": 2},
+          {"rank": 13, "player": "Buttgereit, Dirk",     "points": "0.0", "games": 2},
+          {"rank": 14, "player": "Cullmann, Claus Kurt", "points": "0.0", "games": 2}
+        ],
+        "rounds": [
           {
-            "rank": 1,
-            "player": "Michael Becker",
-            "points": "2.0/2",
-            "games": 2
+            "round": 1,
+            "games": [
+              {"white": "Steinmetz, Jürgen",    "result": "0-1", "black": "Weber, Michael"},
+              {"white": "Morgenstern, Martin",  "result": "1-0", "black": "Buttgereit, Lilly"},
+              {"white": "Henning, Jan Philipp", "result": "0-1", "black": "Kraushaar, Martin"},
+              {"white": "Cullmann, Lothar",     "result": "1-0", "black": "Stieler, Ulrich"},
+              {"white": "Buttgereit, Dirk",     "result": "0-1", "black": "Dony, Lukas"},
+              {"white": "Ballof, Wolfgang",     "result": "0-1", "black": "Weyrich, Peter"},
+              {"white": "Cullmann, Claus Kurt", "result": "0-1", "black": "Weber, Andrea"}
+            ]
           },
           {
-            "rank": 2,
-            "player": "Anna Schmidt",
-            "points": "2.0/2",
-            "games": 2
+            "round": 2,
+            "games": [
+              {"white": "Weber, Michael",       "result": "1-0", "black": "Cullmann, Lothar"},
+              {"white": "Dony, Lukas",           "result": "0-1", "black": "Morgenstern, Martin"},
+              {"white": "Kraushaar, Martin",    "result": "1-0", "black": "Weber, Andrea"},
+              {"white": "Weyrich, Peter",        "result": "½-½", "black": "Steinmetz, Jürgen"},
+              {"white": "Stieler, Ulrich",      "result": "0-1", "black": "Ballof, Wolfgang"},
+              {"white": "Buttgereit, Lilly",    "result": "1-0", "black": "Buttgereit, Dirk"},
+              {"white": "Cullmann, Claus Kurt", "result": "0-1", "black": "Henning, Jan Philipp"}
+            ]
           },
           {
-            "rank": 3,
-            "player": "FM Thomas Müller",
-            "points": "1.5/2",
-            "games": 2
-          },
-          {
-            "rank": 4,
-            "player": "Peter Wagner",
-            "points": "1.0/2",
-            "games": 2
-          },
-          {
-            "rank": 5,
-            "player": "Klaus Hoffmann",
-            "points": "1.0/2",
-            "games": 2
+            "round": 3,
+            "date": "ausstehend",
+            "games": [
+              {"white": "Morgenstern, Martin",  "result": "–", "black": "Weber, Michael"},
+              {"white": "Weyrich, Peter",        "result": "–", "black": "Kraushaar, Martin"},
+              {"white": "Weber, Andrea",         "result": "–", "black": "Cullmann, Lothar"},
+              {"white": "Henning, Jan Philipp", "result": "–", "black": "Dony, Lukas"},
+              {"white": "Ballof, Wolfgang",     "result": "–", "black": "Buttgereit, Lilly"},
+              {"white": "Steinmetz, Jürgen",    "result": "–", "black": "Stieler, Ulrich"},
+              {"white": "Buttgereit, Dirk",     "result": "–", "black": "Cullmann, Claus Kurt"}
+            ]
           }
         ]
       }
@@ -135,34 +238,10 @@
         "winner": "Michael Becker (6.5/7)",
         "external_url": "",
         "standings": [
-          {
-            "rank": 1,
-            "player": "Michael Becker",
-            "points": "6.5/7",
-            "games": 7
-          },
-          {
-            "rank": 2,
-            "player": "Anna Schmidt",
-            "points": "5.5/7",
-            "games": 7
-          },
-          {
-            "rank": 3,
-            "player": "Peter Wagner",
-            "points": "5.0/7",
-            "games": 7
-          }
+          {"rank": 1, "player": "Michael Becker", "points": "6.5/7", "games": 7},
+          {"rank": 2, "player": "Anna Schmidt",   "points": "5.5/7", "games": 7},
+          {"rank": 3, "player": "Peter Wagner",   "points": "5.0/7", "games": 7}
         ]
-      },
-      {
-        "id": "ta2",
-        "name": "Ostertal Open 2025",
-        "type": "Offenes Turnier, 7 Runden",
-        "date_range": "April 2025",
-        "winner": "FM Thomas Müller (6.0/7)",
-        "external_url": "",
-        "standings": []
       }
     ]
   },
@@ -174,7 +253,7 @@
       "black": "Anna Schmidt",
       "result": "1-0",
       "date": "2025-04-12",
-      "pgn": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 d6 8. c3 O-O 9. h3 Nb8 10. d4 Nbd7 11. Nbd2 Bb7 12. Bc2 Re8 13. Nf1 Bf8 14. Ng3 g6 15. a4 nicht gut Bg7 16. Bd2 c5 17. d5 c4 18. Bg5 Nc5 19. Qd2 h6 20. Be3 Nfd7 21. Qd1 Qc7 1-0"
+      "pgn": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 d6 8. c3 O-O 9. h3 Nb8 10. d4 Nbd7 11. Nbd2 Bb7 12. Bc2 Re8 13. Nf1 Bf8 14. Ng3 g6 15. a4 Bg7 16. Bd2 c5 17. d5 c4 18. Bg5 Nc5 19. Qd2 h6 20. Be3 Nfd7 21. Qd1 Qc7 1-0"
     },
     {
       "id": "g2",

@@ -111,17 +111,112 @@ window.SCO = (function () {
       container.innerHTML = '<p style="color:var(--text-muted)">Keine Mannschaften eingetragen.</p>';
       return;
     }
-    container.innerHTML = teams.map(team => `
-      <div class="team-card fade-in">
-        <div class="team-header">
-          <h3>${team.name}</h3>
-          <span class="team-league">${team.league}</span>
+    container.innerHTML = teams.map(team => {
+      const playersHtml = team.players.map(p => {
+        if (typeof p === 'string') return `<li>${p}</li>`;
+        const dwzBadge = p.dwz ? `<span class="team-player-dwz">DWZ ${p.dwz}</span>` : '';
+        return `<li><span class="team-player-board">Brett ${p.board}</span><span class="team-player-name">${p.name}</span>${dwzBadge}</li>`;
+      }).join('');
+      const linkHtml = team.season_url
+        ? `<a href="${team.season_url}" target="_blank" class="tournament-ext-link" style="margin-top:0.75rem;display:inline-block;">↗ Aufstellung beim SSV</a>`
+        : '';
+      return `
+        <div class="team-card fade-in">
+          <div class="team-header">
+            <h3>${team.name}</h3>
+            <span class="team-league">${team.league}</span>
+          </div>
+          <ul class="team-players team-players-roster">
+            ${playersHtml}
+          </ul>
+          ${linkHtml}
+        </div>`;
+    }).join('');
+    requestAnimationFrame(initScrollAnimations);
+  }
+
+  function renderLeagues(data) {
+    const container = document.getElementById('leagues-container');
+    if (!container) return;
+    const leagues = data.leagues;
+    if (!leagues || leagues.length === 0) {
+      container.innerHTML = '<p style="color:var(--text-muted)">Keine Ligadaten vorhanden.</p>';
+      return;
+    }
+    container.innerHTML = leagues.map(league => `
+      <div class="tournament-card fade-in">
+        <div class="tournament-card-header">
+          <div>
+            <h3 class="tournament-card-title">${league.name} – ${league.our_team}</h3>
+            <p class="tournament-card-type">Saison ${league.season}</p>
+          </div>
+          ${league.external_url ? `<div class="tournament-links"><a href="${league.external_url}" target="_blank" class="tournament-ext-link">↗ Tabelle beim SSV</a></div>` : ''}
         </div>
-        <ul class="team-players">
-          ${team.players.map(p => `<li>${p}</li>`).join('')}
-        </ul>
+        <table class="tournament-table">
+          <thead>
+            <tr>
+              <th style="text-align:left;">#</th>
+              <th style="text-align:left;">Mannschaft</th>
+              <th style="text-align:center;" title="Spiele">Sp.</th>
+              <th style="text-align:center;" title="Siege">S</th>
+              <th style="text-align:center;" title="Unentschieden">U</th>
+              <th style="text-align:center;" title="Niederlagen">N</th>
+              <th style="text-align:center;" title="Mannschaftspunkte">MP</th>
+              <th style="text-align:center;" title="Brettpunkte">BP</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${league.standings.map(s => `
+              <tr${s.our_team ? ' class="league-our-team"' : ''}>
+                <td class="tournament-rank">${s.rank}</td>
+                <td${s.our_team ? ' style="font-weight:600;"' : ''}>${s.team}</td>
+                <td style="text-align:center;color:var(--text-muted);">${s.games}</td>
+                <td style="text-align:center;">${s.wins}</td>
+                <td style="text-align:center;">${s.draws}</td>
+                <td style="text-align:center;">${s.losses}</td>
+                <td style="text-align:center;font-family:var(--font-mono);font-weight:600;">${s.mp}</td>
+                <td style="text-align:center;font-family:var(--font-mono);color:var(--text-secondary);">${s.bp}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
       </div>
     `).join('');
+    requestAnimationFrame(initScrollAnimations);
+  }
+
+  function renderDWZ(data) {
+    const container = document.getElementById('dwz-container');
+    if (!container) return;
+    const list = data.dwz_list;
+    if (!list || list.length === 0) {
+      container.innerHTML = '<p style="color:var(--text-muted)">Keine DWZ-Daten vorhanden.</p>';
+      return;
+    }
+    container.innerHTML = `
+      <table class="tournament-table">
+        <thead>
+          <tr>
+            <th style="text-align:left;">#</th>
+            <th style="text-align:left;">Name</th>
+            <th style="text-align:center;">DWZ</th>
+            <th style="text-align:center;">Elo</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${list.map(p => `
+            <tr>
+              <td class="tournament-rank">${p.rank}</td>
+              <td>${p.name}</td>
+              <td style="text-align:center;font-family:var(--font-mono);">${p.dwz !== null ? p.dwz : '–'}</td>
+              <td style="text-align:center;font-family:var(--font-mono);color:var(--text-secondary);">${p.elo !== null ? p.elo : '–'}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+      <p style="margin-top:0.75rem;font-size:0.82rem;color:var(--text-muted);">
+        Quelle: <a href="https://www.schachbund.de/verein/90034.html" target="_blank" style="color:var(--accent-blue-light);text-decoration:none;">Deutscher Schachbund – Vereinsseite SC Ostertal</a>
+      </p>`;
     requestAnimationFrame(initScrollAnimations);
   }
 
@@ -815,6 +910,8 @@ window.SCO = (function () {
     renderNews,
     renderEvents,
     renderTeams,
+    renderLeagues,
+    renderDWZ,
     renderClubInfo,
     renderTournaments,
     renderContacts,

@@ -193,6 +193,14 @@ section { position: relative; z-index: 1; padding: 6rem 2rem; }
 .tournament-table-sm { font-size:0.9rem; }
 .tournament-table-sm th, .tournament-table-sm td { padding:6px 12px; }
 .tournament-rank { color:var(--accent-blue);font-weight:600; }
+.league-our-team { background:rgba(30,48,84,0.22); }
+.league-our-team td { color:var(--text-primary); }
+
+/* Roster player list */
+.team-players-roster li::before { display:none; }
+.team-player-board { font-family:var(--font-mono);font-size:0.72rem;color:var(--text-muted);min-width:52px; }
+.team-player-name { flex:1; }
+.team-player-dwz { font-family:var(--font-mono);font-size:0.8rem;color:var(--accent-blue-light);background:rgba(30,48,84,0.25);padding:2px 8px;border-radius:3px;white-space:nowrap; }
 
 /* Round results */
 .tournament-rounds { margin-top:1.25rem; }
