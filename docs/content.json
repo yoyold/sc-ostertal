@@ -277,23 +277,23 @@
   "contacts": [
     {
       "id": "c1",
-      "name": "Lukas Dony",
+      "name": "Martin Morgenstern",
       "role": "1. Vorsitzender",
-      "email": "lukas.dony@web.de",
-      "phone": ""
+      "email": "m.morgenstern.wnd@t-online.de",
+      "phone": "06856 8186"
     },
     {
       "id": "c2",
-      "name": "Thomas Müller",
-      "role": "Spielleiter",
+      "name": "Dirk Buttgereit",
+      "role": "Spielleiter 2. Mannschaft",
       "email": "",
       "phone": ""
     },
     {
       "id": "c3",
-      "name": "Eva Neumann",
-      "role": "Jugendwartin",
-      "email": "",
+      "name": "Lukas Dony",
+      "role": "Webseitenbetreiber",
+      "email": "lukas.dony@web.de",
       "phone": ""
     }
   ],
