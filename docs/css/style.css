@@ -120,6 +120,11 @@ section { position: relative; z-index: 1; padding: 6rem 2rem; }
 .info-value a { color: var(--accent-blue-light); text-decoration: none; }
 .info-value a:hover { color: var(--cream); text-decoration: underline; }
 
+.map-section { margin-top: 3.5rem; }
+.map-label { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent-blue); margin-bottom: 1rem; }
+.map-wrapper { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
+.map-wrapper iframe { display: block; }
+
 /* ===== Page Layout ===== */
 .page { position: relative; z-index: 1; padding-top: 80px; min-height: 100vh; }
 .page-inner { max-width: 1200px; margin: 0 auto; padding: 3.5rem 2.5rem 5rem; }
