@@ -173,20 +173,20 @@
         "date_range": "März – Mai 2026",
         "external_url": "",
         "standings": [
-          {"rank": 1,  "player": "Weber, Michael",       "points": "2.0", "games": 2},
-          {"rank": 2,  "player": "Morgenstern, Martin",  "points": "2.0", "games": 2},
-          {"rank": 3,  "player": "Kraushaar, Martin",    "points": "2.0", "games": 2},
-          {"rank": 4,  "player": "Weyrich, Peter",        "points": "1.5", "games": 2},
-          {"rank": 5,  "player": "Cullmann, Lothar",     "points": "1.0", "games": 2},
-          {"rank": 5,  "player": "Dony, Lukas",           "points": "1.0", "games": 2},
-          {"rank": 5,  "player": "Weber, Andrea",         "points": "1.0", "games": 2},
-          {"rank": 5,  "player": "Ballof, Wolfgang",      "points": "1.0", "games": 2},
-          {"rank": 5,  "player": "Buttgereit, Lilly",    "points": "1.0", "games": 2},
-          {"rank": 5,  "player": "Henning, Jan Philipp", "points": "1.0", "games": 2},
-          {"rank": 11, "player": "Steinmetz, Jürgen",    "points": "0.5", "games": 2},
-          {"rank": 12, "player": "Stieler, Ulrich",      "points": "0.0", "games": 2},
-          {"rank": 13, "player": "Buttgereit, Dirk",     "points": "0.0", "games": 2},
-          {"rank": 14, "player": "Cullmann, Claus Kurt", "points": "0.0", "games": 2}
+          {"rank": 1,  "player": "Weber, Michael",       "points": "3.5", "games": 4},
+          {"rank": 2,  "player": "Cullmann, Lothar",     "points": "3.0", "games": 4},
+          {"rank": 2,  "player": "Kraushaar, Martin",    "points": "3.0", "games": 4},
+          {"rank": 4,  "player": "Morgenstern, Martin",  "points": "2.5", "games": 4},
+          {"rank": 4,  "player": "Dony, Lukas",           "points": "2.5", "games": 4},
+          {"rank": 4,  "player": "Steinmetz, Jürgen",    "points": "2.5", "games": 4},
+          {"rank": 4,  "player": "Ballof, Wolfgang",      "points": "2.5", "games": 4},
+          {"rank": 8,  "player": "Weber, Andrea",         "points": "2.0", "games": 4},
+          {"rank": 9,  "player": "Weyrich, Peter",        "points": "1.5", "games": 4},
+          {"rank": 9,  "player": "Henning, Jan Philipp", "points": "1.5", "games": 4},
+          {"rank": 9,  "player": "Buttgereit, Lilly",    "points": "1.5", "games": 4},
+          {"rank": 12, "player": "Buttgereit, Dirk",     "points": "1.0", "games": 4},
+          {"rank": 12, "player": "Stieler, Ulrich",      "points": "1.0", "games": 4},
+          {"rank": 14, "player": "Cullmann, Claus Kurt", "points": "0.0", "games": 4}
         ],
         "rounds": [
           {
@@ -215,15 +215,39 @@
           },
           {
             "round": 3,
+            "games": [
+              {"white": "Morgenstern, Martin",  "result": "½-½", "black": "Weber, Michael"},
+              {"white": "Weyrich, Peter",        "result": "0-1", "black": "Kraushaar, Martin"},
+              {"white": "Weber, Andrea",         "result": "0-1", "black": "Cullmann, Lothar"},
+              {"white": "Henning, Jan Philipp", "result": "½-½", "black": "Dony, Lukas"},
+              {"white": "Ballof, Wolfgang",     "result": "½-½", "black": "Buttgereit, Lilly"},
+              {"white": "Steinmetz, Jürgen",    "result": "1-0", "black": "Stieler, Ulrich"},
+              {"white": "Buttgereit, Dirk",     "result": "1-0", "black": "Cullmann, Claus Kurt"}
+            ]
+          },
+          {
+            "round": 4,
+            "games": [
+              {"white": "Kraushaar, Martin",    "result": "0-1", "black": "Weber, Michael"},
+              {"white": "Cullmann, Lothar",     "result": "1-0", "black": "Morgenstern, Martin"},
+              {"white": "Dony, Lukas",           "result": "1-0", "black": "Weyrich, Peter"},
+              {"white": "Henning, Jan Philipp", "result": "0-1", "black": "Ballof, Wolfgang"},
+              {"white": "Buttgereit, Lilly",    "result": "0-1", "black": "Steinmetz, Jürgen"},
+              {"white": "Weber, Andrea",         "result": "1-0", "black": "Buttgereit, Dirk"},
+              {"white": "Stieler, Ulrich",      "result": "1-0", "black": "Cullmann, Claus Kurt"}
+            ]
+          },
+          {
+            "round": 5,
             "date": "ausstehend",
             "games": [
-              {"white": "Morgenstern, Martin",  "result": "–", "black": "Weber, Michael"},
-              {"white": "Weyrich, Peter",        "result": "–", "black": "Kraushaar, Martin"},
-              {"white": "Weber, Andrea",         "result": "–", "black": "Cullmann, Lothar"},
-              {"white": "Henning, Jan Philipp", "result": "–", "black": "Dony, Lukas"},
-              {"white": "Ballof, Wolfgang",     "result": "–", "black": "Buttgereit, Lilly"},
-              {"white": "Steinmetz, Jürgen",    "result": "–", "black": "Stieler, Ulrich"},
-              {"white": "Buttgereit, Dirk",     "result": "–", "black": "Cullmann, Claus Kurt"}
+              {"white": "Weber, Michael",       "result": "–", "black": "Dony, Lukas"},
+              {"white": "Cullmann, Lothar",     "result": "–", "black": "Kraushaar, Martin"},
+              {"white": "Morgenstern, Martin",  "result": "–", "black": "Steinmetz, Jürgen"},
+              {"white": "Ballof, Wolfgang",     "result": "–", "black": "Weber, Andrea"},
+              {"white": "Weyrich, Peter",        "result": "–", "black": "Henning, Jan Philipp"},
+              {"white": "Cullmann, Claus Kurt", "result": "–", "black": "Buttgereit, Lilly"},
+              {"white": "Buttgereit, Dirk",     "result": "–", "black": "Stieler, Ulrich"}
             ]
           }
         ]
