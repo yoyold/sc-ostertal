@@ -834,9 +834,18 @@ window.SCO = (function () {
         el.addEventListener('click',()=>{currentNodeId=parseInt(el.dataset.node);updateBoard();});
       });
 
-      // Scroll active move into view
+      // Scroll active move into view WITHIN the moves column only (never scroll the page,
+      // otherwise mobile jumps away from the board on every move)
       const active=area.querySelector('.pgn-move-active');
-      if(active) active.scrollIntoView({block:'nearest',behavior:'smooth'});
+      const col=area.querySelector('.pgn-moves-col');
+      if(active&&col){
+        const aRect=active.getBoundingClientRect(), cRect=col.getBoundingClientRect();
+        if(aRect.top<cRect.top){
+          col.scrollTop+=aRect.top-cRect.top-8;
+        } else if(aRect.bottom>cRect.bottom){
+          col.scrollTop+=aRect.bottom-cRect.bottom+8;
+        }
+      }
     }
 
     // Keyboard navigation
