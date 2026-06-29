@@ -11,24 +11,10 @@
   "news": [
     {
       "id": "1",
-      "title": "Saisonstart 2026: Mannschaftsaufstellungen stehen fest",
-      "date": "2026-02-10",
-      "content": "Die neue Saison steht vor der Tür! Unsere Mannschaftsführer haben die Aufstellungen für die kommende Runde finalisiert. Die erste Mannschaft tritt wieder in der Verbandsliga an, die zweite Mannschaft kämpft in der Kreisliga um den Aufstieg.",
+      "title": "Neustart für die DWZ: Großes Update der Wertungszahl 2026",
+      "date": "2026-06-29",
+      "content": "Der Deutsche Schachbund reformiert die Deutsche Wertungszahl (DWZ) im Zuge der Einführung eines neuen Wertungsportals. Hintergrund ist, dass die DWZ im Vergleich zur internationalen Elo-Zahl zunehmend deflationiert war. Mit einer einmaligen Anpassung werden die Werte realigniert: Spieler unter 1000 erhalten pauschal 400 Punkte hinzu, im Bereich 1000–2109 gilt die Formel „neue DWZ = 0,64 × alte DWZ + 760\" (z. B. 1200 → 1528, 1600 → 1784), ab 2110 bleibt die Zahl unverändert. Von Juni bis zum 22. Juli 2026 gibt es eine Übergangsphase ohne sichtbare Wertungsupdates, danach startet das neue Portal mit den angepassten Werten. Künftig sollen außerdem neue K-Faktoren, eine bessere Behandlung perfekter Turnierergebnisse, eine verbesserte Einschätzung neuer Spieler sowie verbesserter Datenschutz zum Einsatz kommen. Den vollständigen Artikel gibt es hier: <a href=\"https://schachlich.de/neustart-fuer-die-dwz/\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--accent-blue-light);text-decoration:none;\">schachlich.de: Neustart für die DWZ</a>.",
       "author": "Vorstand"
-    },
-    {
-      "id": "2",
-      "title": "Jugendtraining ab sofort jeden Mittwoch",
-      "date": "2026-01-28",
-      "content": "Ab sofort findet jeden Mittwoch von 17:00 bis 18:30 Uhr ein spezielles Jugendtraining statt. Neue Gesichter sind jederzeit willkommen!",
-      "author": "Jugendwart"
-    },
-    {
-      "id": "3",
-      "title": "Vereinsmeisterschaft 2025: Ergebnisse",
-      "date": "2025-12-15",
-      "content": "Die Vereinsmeisterschaft 2025 ist Geschichte! Nach spannenden 7 Runden im Schweizer System setzte sich Michael Becker souverän mit 6,5 aus 7 Punkten durch.",
-      "author": "Turnierleitung"
     }
   ],
   "events": [
