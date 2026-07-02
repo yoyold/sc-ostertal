@@ -122,6 +122,12 @@ section { position: relative; z-index: 1; padding: 6rem 2rem; }
 .map-label { font-family: var(--font-display); font-style: italic; font-size: 1.05rem; letter-spacing: 0; text-transform: none; color: var(--accent-blue); margin-bottom: 1rem; }
 .map-wrapper { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
 .map-wrapper iframe { display: block; }
+.venue-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: stretch; }
+.club-photo { background: url('../img/vereinsheim.jpg') center/cover no-repeat; border: 1px solid var(--border); border-radius: var(--radius); min-height: 420px; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+@media (max-width: 900px) {
+  .venue-grid { grid-template-columns: 1fr; }
+  .club-photo { min-height: 0; aspect-ratio: 4 / 3; }
+}
 
 /* ===== Page Layout ===== */
 .page { position: relative; z-index: 1; padding-top: 80px; min-height: 100vh; }
