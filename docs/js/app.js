@@ -640,9 +640,10 @@ window.SCO = (function () {
 
     // ---- Responsive Board Renderer ----
     function renderBoard(board, move) {
-      // Site-themed board colors (navy/cream)
-      const lightSq='#d9d0c1', darkSq='#2a4170';  // cream-ish / navy-light
-      const lightHl='#7aa0cc', darkHl='#5a8abf';   // accent-blue highlight
+      // Site-themed board colors — dark squares deutlich heller als der
+      // Seitenhintergrund, damit sich das Brett und schwarze Figuren abheben
+      const lightSq='#e8dfd0', darkSq='#6b83ad';   // cream / medium blue
+      const lightHl='#d9c98c', darkHl='#a8935a';    // gold highlight for last move
       const arrowColor='rgba(196,92,92,0.88)';      // accent-red for arrow
 
       let html = '<div class="pgn-board-wrap">';
@@ -737,7 +738,7 @@ window.SCO = (function () {
             while(cur!==null && cur!==0){ cur=parsed.nodes[cur].parent; ply++; }
             const moveNum = Math.ceil(ply/2);
             html+=`<span class="pgn-movenum">${moveNum}.</span>`;
-          } else if (lastDepthWasVar || (i>0 && displayTokens[i-1].type==='var-start')) {
+          } else if (lastDepthWasVar || (i>0 && ['var-start','var-end','comment'].includes(displayTokens[i-1].type))) {
             // After variation start, show move number with ...
             const node = parsed.nodes[tok.nodeId];
             let ply=0, cur=tok.nodeId;
@@ -780,20 +781,6 @@ window.SCO = (function () {
       updateBoard();
 
       document.getElementById('pgn-game-select').addEventListener('change',function(){currentGame=parseInt(this.value);buildViewer();});
-      document.getElementById('pgn-first').addEventListener('click',()=>{currentNodeId=0;updateBoard();});
-      document.getElementById('pgn-prev').addEventListener('click',()=>{
-        const node=parsed.nodes[currentNodeId];
-        if(node.parent!==null){currentNodeId=node.parent;updateBoard();}
-      });
-      document.getElementById('pgn-next').addEventListener('click',()=>{
-        const node=parsed.nodes[currentNodeId];
-        if(node.children.length>0){currentNodeId=node.children[0];updateBoard();}
-      });
-      document.getElementById('pgn-last').addEventListener('click',()=>{
-        let c=currentNodeId;
-        while(parsed.nodes[c].children.length>0) c=parsed.nodes[c].children[0];
-        currentNodeId=c;updateBoard();
-      });
     }
 
     function updateBoard() {
@@ -851,6 +838,7 @@ window.SCO = (function () {
     // Keyboard navigation
     document.addEventListener('keydown',(e)=>{
       if(!parsed||!document.getElementById('pgn-board-area')) return;
+      if(e.target.closest && e.target.closest('select,input,textarea')) return;
       const node=parsed.nodes[currentNodeId];
       if(e.key==='ArrowLeft'){e.preventDefault();if(node.parent!==null){currentNodeId=node.parent;updateBoard();}}
       if(e.key==='ArrowRight'){e.preventDefault();if(node.children.length>0){currentNodeId=node.children[0];updateBoard();}}
