@@ -343,6 +343,9 @@ section { position: relative; z-index: 1; padding: 6rem 2rem; }
   .learn-grid, .resources-grid { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
   .sub-tabs { gap: 0; }
+  /* Tabellen horizontal scrollbar statt das Layout zu sprengen */
+  .tournament-table { display:block; overflow-x:auto; -webkit-overflow-scrolling:touch; white-space:nowrap; font-size:0.85rem; }
+  .tournament-table th, .tournament-table td { padding:6px 8px; }
 }
 
 .footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; color: var(--text-muted); font-size: 0.85rem; }
