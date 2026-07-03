@@ -20,24 +20,10 @@
   "events": [
     {
       "id": "1",
-      "title": "Saisonbesprechung",
-      "date": "2026-02-21",
-      "time": "19:00",
-      "description": "Besprechung der Mannschaftsaufstellungen und des Saisonplans."
-    },
-    {
-      "id": "2",
-      "title": "Blitzturnier März",
-      "date": "2026-03-14",
-      "time": "18:00",
-      "description": "Offenes Blitzturnier mit 5+3 Bedenkzeit. Startgeld: 5€."
-    },
-    {
-      "id": "3",
-      "title": "Ostertal Open 2026",
-      "date": "2026-04-18",
-      "time": "09:00",
-      "description": "Unser jährliches offenes Turnier. 7 Runden, 90min + 30s/Zug."
+      "title": "Simultan mit GM Ralf Appel",
+      "date": "2026-08-09",
+      "time": "",
+      "description": "Simultanveranstaltung mit Großmeister Ralf Appel in Thallichtenberg."
     }
   ],
   "teams": [

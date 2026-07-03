@@ -31,7 +31,9 @@
   --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+html { scroll-behavior: smooth; scroll-padding-top: 88px; zoom: 1.25; }
+/* Auf kleinen Bildschirmen nicht hochskalieren — dort ist der Platz knapp */
+@media (max-width: 900px) { html { zoom: 1; } }
 body { font-family: var(--font-body); background: var(--bg-primary); color: var(--text-primary); line-height: 1.75; font-size: 1.08rem; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23e8dfd0' fill-opacity='0.015'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); pointer-events: none; z-index: 0; }
 ::selection { background: var(--navy-light); color: var(--cream-light); }
@@ -124,7 +126,7 @@ section { position: relative; z-index: 1; padding: 6rem 2rem; }
 .map-wrapper iframe { display: block; }
 .venue-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: stretch; }
 .club-photo { background: url('../img/vereinsheim.jpg') center/cover no-repeat; border: 1px solid var(--border); border-radius: var(--radius); min-height: 420px; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
-@media (max-width: 900px) {
+@media (max-width: 1125px) {
   .venue-grid { grid-template-columns: 1fr; }
   .club-photo { min-height: 0; aspect-ratio: 4 / 3; }
 }
@@ -280,11 +282,11 @@ section { position: relative; z-index: 1; padding: 6rem 2rem; }
 
 /* Layout: board+controls left, moves right */
 .pgn-layout { display:flex;gap:1.5rem;align-items:flex-start; }
-.pgn-board-col { flex-shrink:0; }
+.pgn-board-col { flex-shrink:0;width:min(660px, 100%); }
 .pgn-moves-col { flex:1;min-width:200px;max-height:min(720px, 60vw);overflow-y:auto;border:1px solid var(--border);border-radius:var(--radius);background:var(--navy-dark); }
 
 /* Board structure */
-.pgn-board-wrap { width:100%;max-width:min(880px, 65vw); }
+.pgn-board-wrap { width:100%;max-width:100%; }
 .pgn-board-frame { display:flex;align-items:stretch; }
 
 /* Rank labels column */
@@ -319,7 +321,7 @@ section { position: relative; z-index: 1; padding: 6rem 2rem; }
 .pgn-variation .pgn-variation { font-size:0.92em; }
 
 /* Mobile: stack vertically, controls stay with board */
-@media(max-width:768px) {
+@media(max-width:960px) {
   .pgn-layout { flex-direction:column; }
   .pgn-board-wrap { max-width:100%; }
   .pgn-board-col { width:100%; }
@@ -334,7 +336,7 @@ section { position: relative; z-index: 1; padding: 6rem 2rem; }
 /* ===== Impressum ===== */
 .impressum-content { max-width: 780px; }
 
-@media (max-width: 768px) {
+@media (max-width: 960px) {
   .page-inner { padding: 2rem 1.25rem 3rem; }
   .learn-grid, .resources-grid { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
@@ -357,8 +359,8 @@ section { position: relative; z-index: 1; padding: 6rem 2rem; }
 .loading-spinner::after { content: ''; width: 32px; height: 32px; border: 3px solid var(--border); border-top-color: var(--accent-blue); border-radius: 50%; animation: spin 0.8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-@media (max-width: 900px) { .about-grid, .teams-grid, .news-grid { grid-template-columns: 1fr; } }
-@media (max-width: 768px) {
+@media (max-width: 1125px) { .about-grid, .teams-grid, .news-grid { grid-template-columns: 1fr; } }
+@media (max-width: 960px) {
   .nav-links { display: none; }
   .nav-toggle { display: block; }
   .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 80px; left: 0; right: 0; background: rgba(11,18,32,0.98); backdrop-filter: blur(20px); padding: 1.5rem 2rem; border-bottom: 1px solid var(--border); gap: 1.25rem; }
