@@ -530,6 +530,9 @@ window.SCO = (function () {
       t=t.substring(0,t.length-2).replace('x','');
       let fromFile=null,fromRank=null;
       for(const ch of t){if(ch>='a'&&ch<='h')fromFile=ch.charCodeAt(0)-97;else if(ch>='1'&&ch<='8')fromRank=8-parseInt(ch);}
+      // Bauernzüge ohne Schlag bleiben immer auf ihrer Linie — sonst kann die
+      // Suche fälschlich einen Nachbarbauern (Diagonal-Geometrie) auswählen
+      if(pieceType==='P'&&!san.includes('x')) fromFile=tc;
 
       const src=findPiece(nb,pieceType,turn,fromFile,fromRank,tr,tc);
       if(src){
@@ -537,7 +540,10 @@ window.SCO = (function () {
         nb[src[0]][src[1]]=null;
         nb[tr][tc]={type:promo||pieceType,color:turn};
         fr=src[0];fc=src[1];
-      } else { fr=0;fc=0; }
+      } else {
+        console.warn('PGN: Zug nicht auflösbar:', san, '(am Zug:', turn + ')');
+        fr=0;fc=0;
+      }
       return { board:nb, from:{r:fr,c:fc}, to:{r:tr,c:tc} };
     }
 
