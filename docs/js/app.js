@@ -170,7 +170,7 @@ window.SCO = (function () {
               <tr${s.our_team ? ' class="league-our-team"' : ''}>
                 <td class="tournament-rank">${s.rank}</td>
                 <td${s.our_team ? ' style="font-weight:600;"' : ''}>${s.team}</td>
-                <td style="text-align:center;color:var(--text-muted);">${s.games}</td>
+                <td style="text-align:center;color:var(--text-secondary);">${s.games}</td>
                 <td style="text-align:center;">${s.wins}</td>
                 <td style="text-align:center;">${s.draws}</td>
                 <td style="text-align:center;">${s.losses}</td>
@@ -337,7 +337,7 @@ window.SCO = (function () {
                       <td class="tournament-rank">${s.rank}</td>
                       <td>${s.player}</td>
                       <td style="text-align:center;font-family:var(--font-mono);">${s.points}</td>
-                      <td style="text-align:center;color:var(--text-muted);">${s.games}</td>
+                      <td style="text-align:center;color:var(--text-secondary);">${s.games}</td>
                     </tr>
                   `).join('')}
                 </tbody>
