@@ -225,21 +225,7 @@
         ]
       }
     ],
-    "archive": [
-      {
-        "id": "ta1",
-        "name": "Vereinsmeisterschaft 2025",
-        "type": "Schweizer System, 7 Runden",
-        "date_range": "März – Mai 2025",
-        "winner": "Michael Becker (6.5/7)",
-        "external_url": "",
-        "standings": [
-          {"rank": 1, "player": "Michael Becker", "points": "6.5/7", "games": 7},
-          {"rank": 2, "player": "Anna Schmidt",   "points": "5.5/7", "games": 7},
-          {"rank": 3, "player": "Peter Wagner",   "points": "5.0/7", "games": 7}
-        ]
-      }
-    ]
+    "archive": []
   },
   "pgn_games": [
     {

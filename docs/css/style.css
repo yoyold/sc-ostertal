@@ -201,11 +201,10 @@ section { position: relative; z-index: 1; padding: 6rem 2rem; }
 .tournament-table thead tr { border-bottom:1px solid var(--border-light);color:var(--text-secondary);font-size:0.78rem;text-transform:uppercase;letter-spacing:0.08em; }
 .tournament-table th, .tournament-table td { padding:8px 12px; }
 .tournament-table tbody tr { border-bottom:1px solid var(--border); }
-.tournament-table tbody tr:nth-child(even) { background:rgba(232,223,208,0.035); }
 .tournament-table-sm { font-size:0.9rem; }
 .tournament-table-sm th, .tournament-table-sm td { padding:6px 12px; }
 .tournament-rank { color:var(--accent-blue-light);font-weight:600; }
-.league-our-team, .tournament-table tbody tr.league-our-team:nth-child(even) { background:rgba(90,138,191,0.18); }
+.league-our-team { background:rgba(90,138,191,0.18); }
 .league-our-team td { color:var(--cream-light); }
 .league-our-team td:first-child { box-shadow:inset 3px 0 0 var(--accent-blue); }
 

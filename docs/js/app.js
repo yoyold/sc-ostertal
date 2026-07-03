@@ -114,8 +114,7 @@ window.SCO = (function () {
     container.innerHTML = teams.map(team => {
       const playersHtml = team.players.map(p => {
         if (typeof p === 'string') return `<li>${p}</li>`;
-        const dwzBadge = p.dwz ? `<span class="team-player-dwz">DWZ ${p.dwz}</span>` : '';
-        return `<li><span class="team-player-board">Brett ${p.board}</span><span class="team-player-name">${p.name}</span>${dwzBadge}</li>`;
+        return `<li><span class="team-player-board">Brett ${p.board}</span><span class="team-player-name">${p.name}</span></li>`;
       }).join('');
       const linkHtml = team.season_url
         ? `<a href="${team.season_url}" target="_blank" class="tournament-ext-link" style="margin-top:0.75rem;display:inline-block;">↗ Aufstellung beim SSV</a>`
