@@ -430,7 +430,7 @@ window.SCO = (function () {
     }
     container.innerHTML = `
       <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;max-width:640px;">
-        <h2 style="font-family:var(--font-display);font-size:1.4rem;margin-bottom:1.5rem;">Angaben gemäß § 5 TMG</h2>
+        <h2 style="font-family:var(--font-display);font-size:1.4rem;margin-bottom:1.5rem;">Angaben gemäß § 5 DDG</h2>
         <p style="margin-bottom:0.5rem;"><strong>${imp.verein || ''}</strong></p>
         ${imp.address ? `<p style="color:var(--text-secondary);margin-bottom:1rem;">${imp.address}</p>` : ''}
         ${imp.responsible ? `<div style="margin-bottom:1rem;"><span style="color:var(--text-muted);font-size:0.82rem;text-transform:uppercase;letter-spacing:0.1em;">Verantwortlich</span><p>${imp.responsible}</p></div>` : ''}
