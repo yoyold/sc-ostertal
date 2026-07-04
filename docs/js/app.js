@@ -522,8 +522,9 @@ window.SCO = (function () {
         return { board:nb, from:{r,c:4}, to:{r,c:isQ?2:6} };
       }
 
-      let promo=null; const pm=t.match(/=([QRBN])/);
-      if(pm){promo=pm[1];t=t.replace(/=[QRBN]/,'');}
+      // Umwandlung: sowohl "e8=Q" als auch Kurzform "e8Q"
+      let promo=null; const pm=t.match(/=?([QRBN])$/);
+      if(pm&&t.length>2){promo=pm[1];t=t.slice(0,pm.index);}
       let pieceType='P';
       if('KQRBN'.includes(t[0])){pieceType=t[0];t=t.substring(1);}
       tc=t.charCodeAt(t.length-2)-97; tr=8-parseInt(t[t.length-1]);
@@ -559,7 +560,7 @@ window.SCO = (function () {
         const rm=pgn.substring(i).match(/^(1-0|0-1|1\/2-1\/2|\*)/);
         if(rm){tokens.push({type:'result',text:rm[1]});i+=rm[1].length;continue;}
         if(/\d/.test(pgn[i])){let j=i;while(j<pgn.length&&/[\d.\s]/.test(pgn[j]))j++;i=j;continue;}
-        const mm=pgn.substring(i).match(/^(O-O-O|O-O|[KQRBN]?[a-h]?[1-8]?x?[a-h][1-8](?:=[QRBN])?[+#!?]*)/);
+        const mm=pgn.substring(i).match(/^(O-O-O|O-O|[KQRBN]?[a-h]?[1-8]?x?[a-h][1-8](?:=?[QRBN])?[+#!?]*)/);
         if(mm&&mm[1]){tokens.push({type:'move',san:mm[1]});i+=mm[1].length;continue;}
         i++;
       }
