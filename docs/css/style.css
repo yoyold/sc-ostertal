@@ -40,11 +40,11 @@ body::before { content: ''; position: fixed; inset: 0; background-image: url("da
 
 .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(11,18,32,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
 .nav-inner { max-width: 1400px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 80px; }
-.nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text-primary); }
+.nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text-primary); flex-shrink: 0; white-space: nowrap; }
 .nav-logo img { width: 56px; height: 56px; object-fit: contain; }
 .nav-logo-text { font-family: var(--font-display); font-size: 1.45rem; font-weight: 700; letter-spacing: 0.02em; }
 .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
-.nav-links a { text-decoration: none; color: var(--text-secondary); font-size: 1.02rem; font-weight: 600; letter-spacing: 0; transition: var(--transition); position: relative; }
+.nav-links a { text-decoration: none; color: var(--text-secondary); font-size: 1.02rem; font-weight: 600; letter-spacing: 0; transition: var(--transition); position: relative; white-space: nowrap; }
 .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--cream); transition: var(--transition); }
 .nav-links a:hover { color: var(--cream); }
 .nav-links a:hover::after { width: 100%; }
@@ -338,7 +338,7 @@ section { position: relative; z-index: 1; padding: 6rem 2rem; }
 .pgn-variation .pgn-variation { font-size:0.92em; }
 
 /* Mobile: stack vertically, controls stay with board */
-@media(max-width:960px) {
+@media(max-width:1250px) {
   .pgn-layout { flex-direction:column; }
   .pgn-board-wrap { max-width:100%; }
   .pgn-board-col { width:100%; }
@@ -386,13 +386,21 @@ section { position: relative; z-index: 1; padding: 6rem 2rem; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 @media (max-width: 1125px) { .about-grid, .teams-grid, .news-grid { grid-template-columns: 1fr; } }
-@media (max-width: 960px) {
+/* Nav: Abstände im Zwischenbereich reduzieren, damit alle Punkte in eine Zeile passen */
+@media (max-width: 1700px) {
+  .nav-links { gap: 1.1rem; }
+}
+/* Nav: unterhalb dieser Breite auf Burger-Menü umschalten — die Dropdown-Punkte
+   brauchen mehr Platz als die alte flache Liste */
+@media (max-width: 1350px) {
   .nav-links { display: none; }
   .nav-toggle { display: block; }
   .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 80px; left: 0; right: 0; background: rgba(11,18,32,0.98); backdrop-filter: blur(20px); padding: 1.5rem 2rem; border-bottom: 1px solid var(--border); gap: 1.25rem; max-height: calc(100vh - 80px); overflow-y: auto; }
   .nav-dropdown { position: static; display: block; height: auto; }
   .nav-sub { display: block; position: static; transform: none; background: none; border: none; padding: 0.6rem 0 0 1.25rem; min-width: 0; display: flex; flex-direction: column; gap: 0.6rem; }
   .nav-sub li a { padding: 0; font-size: 0.95rem; }
+}
+@media (max-width: 960px) {
   .event-item { flex-direction: column; }
   .event-date-block { flex-direction: row; gap: 1rem; border-right: none; border-bottom: 2px solid var(--navy-light); min-width: auto; padding: 1rem 1.5rem; }
   .hero h1 { font-size: 2.5rem; }
