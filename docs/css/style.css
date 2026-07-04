@@ -62,6 +62,11 @@ body::before { content: ''; position: fixed; inset: 0; background-image: url("da
 .nav-sub li a::after { display: none; }
 .nav-sub li a:hover { background: var(--navy-dark); }
 
+/* E-Mail-Schutz: rückwärts gespeicherter Text wird optisch umgedreht,
+   Auswahl/Kopieren ist gesperrt */
+.email-guard { unicode-bidi: bidi-override; direction: rtl; display: inline-block; user-select: none; -webkit-user-select: none; cursor: pointer; color: var(--accent-blue-light); white-space: nowrap; }
+.email-guard:hover { text-decoration: underline; }
+
 .hero { position: relative; min-height: 84vh; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; z-index: 1; padding: 7rem 2rem 4rem; }
 .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 38%, rgba(30,48,84,0.18) 0%, transparent 62%); z-index: 0; }
 /* ruhige, flache Brettkante am unteren Hero-Rand statt perspektivischem Glow-Brett */

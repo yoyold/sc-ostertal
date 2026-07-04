@@ -236,7 +236,7 @@ window.SCO = (function () {
     if (address && club.address) address.textContent = club.address;
 
     const email = document.getElementById('info-email');
-    if (email && club.email) email.innerHTML = `<a href="mailto:${club.email}">${club.email}</a>`;
+    if (email && club.email) email.innerHTML = emailGuard(club.email);
 
     const founded = document.getElementById('info-founded');
     if (founded && club.founded) founded.textContent = club.founded;
@@ -413,7 +413,7 @@ window.SCO = (function () {
         <div class="fade-in" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem 2rem;">
           <h3 style="font-family:var(--font-display);font-size:1.1rem;margin-bottom:0.3rem;">${c.name}</h3>
           <p style="color:var(--accent-blue);font-size:0.85rem;font-family:var(--font-mono);margin-bottom:0.75rem;">${c.role}</p>
-          ${c.email ? `<p style="font-size:0.9rem;"><a href="mailto:${c.email}" style="color:var(--accent-blue-light);text-decoration:none;">${c.email}</a></p>` : ''}
+          ${c.email ? `<p style="font-size:0.9rem;">${emailGuard(c.email)}</p>` : ''}
           ${c.phone ? `<p style="font-size:0.9rem;color:var(--text-secondary);">${c.phone}</p>` : ''}
         </div>
       `).join('') + '</div>';
@@ -434,7 +434,7 @@ window.SCO = (function () {
         <p style="margin-bottom:0.5rem;"><strong>${imp.verein || ''}</strong></p>
         ${imp.address ? `<p style="color:var(--text-secondary);margin-bottom:1rem;">${imp.address}</p>` : ''}
         ${imp.responsible ? `<div style="margin-bottom:1rem;"><span style="color:var(--text-muted);font-size:0.82rem;text-transform:uppercase;letter-spacing:0.1em;">Verantwortlich</span><p>${imp.responsible}</p></div>` : ''}
-        ${imp.email ? `<div style="margin-bottom:1rem;"><span style="color:var(--text-muted);font-size:0.82rem;text-transform:uppercase;letter-spacing:0.1em;">Kontakt</span><p><a href="mailto:${imp.email}" style="color:var(--accent-blue-light);text-decoration:none;">${imp.email}</a></p></div>` : ''}
+        ${imp.email ? `<div style="margin-bottom:1rem;"><span style="color:var(--text-muted);font-size:0.82rem;text-transform:uppercase;letter-spacing:0.1em;">Kontakt</span><p>${emailGuard(imp.email)}</p></div>` : ''}
         ${imp.register ? `<div style="margin-bottom:1rem;"><span style="color:var(--text-muted);font-size:0.82rem;text-transform:uppercase;letter-spacing:0.1em;">Register</span><p style="color:var(--text-secondary);">${imp.register}</p></div>` : ''}
         ${imp.extra ? `<div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--border);color:var(--text-secondary);font-size:0.92rem;">${imp.extra}</div>` : ''}
       </div>
@@ -870,11 +870,37 @@ window.SCO = (function () {
     });
   }
 
+  // ===== E-Mail-Schutz =====
+  // E-Mail-Adressen sind in content.json rückwärts gespeichert und werden nur
+  // optisch (CSS bidi-override) richtig herum angezeigt. So steht die echte
+  // Adresse nie im Quelltext/DOM und ist für Harvester nicht lesbar. Der
+  // Mailto-Link wird erst beim Klick zusammengebaut.
+
+  function revEmail(s) { return (s || '').split('').reverse().join(''); }
+
+  function emailGuard(reversedEmail) {
+    if (!reversedEmail) return '';
+    return `<span class="email-guard" role="link" tabindex="0" title="Klicken, um eine E-Mail zu schreiben">${reversedEmail}</span>`;
+  }
+
+  document.addEventListener('click', (e) => {
+    const guard = e.target.closest && e.target.closest('.email-guard');
+    if (guard) window.location.href = 'mailto:' + revEmail(guard.textContent.trim());
+  });
+  document.addEventListener('copy', (e) => {
+    const sel = window.getSelection();
+    if (sel && sel.anchorNode && sel.anchorNode.parentElement && sel.anchorNode.parentElement.closest('.email-guard')) {
+      e.preventDefault();
+    }
+  });
+
   // ===== Contact Form =====
 
   function initContactForm() {
     const form = document.getElementById('contact-form');
     if (!form) return;
+    // Formular-Ziel erst zur Laufzeit setzen, damit die Adresse nicht im HTML steht
+    if (form.dataset.fs) form.action = 'https://formsubmit.co/' + revEmail(form.dataset.fs);
     form.addEventListener('submit', function (e) {
       const statusEl = document.getElementById('form-status');
       // Let formsubmit.co handle it – just show a message

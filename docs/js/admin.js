@@ -253,7 +253,7 @@ var admin = (function () {
       </div>
       <div class="form-group">
         <label>E-Mail</label>
-        <input type="email" id="club-email" value="${esc(c.email || '')}">
+        <input type="email" id="club-email" value="${esc(revEmail(c.email || ''))}">
       </div>
       <div style="margin-top:1.5rem;">
         <button class="btn btn-primary" style="width:auto;" onclick="admin.saveClubInfo()">Vereinsinfo speichern</button>
@@ -460,6 +460,10 @@ var admin = (function () {
     await saveAndRefresh('Mannschaft gelöscht');
   }
 
+  // E-Mail-Adressen werden in content.json rückwärts gespeichert (Spam-Schutz).
+  // Im Admin-Panel werden sie normal angezeigt und beim Speichern wieder gedreht.
+  function revEmail(s) { return (s || '').split('').reverse().join(''); }
+
   async function saveClubInfo() {
     state.content.club = {
       name: document.getElementById('club-name').value.trim(),
@@ -468,7 +472,7 @@ var admin = (function () {
       training: document.getElementById('club-training').value.trim(),
       founded: document.getElementById('club-founded').value.trim(),
       address: document.getElementById('club-address').value.trim(),
-      email: document.getElementById('club-email').value.trim()
+      email: revEmail(document.getElementById('club-email').value.trim())
     };
     await saveAndRefresh('Vereinsinfo aktualisiert');
   }
@@ -663,7 +667,7 @@ var admin = (function () {
         <div class="item-card">
           <div class="item-info">
             <h3>${esc(c.name)}</h3>
-            <div class="meta">${esc(c.role)}${c.email ? ' · ' + esc(c.email) : ''}${c.phone ? ' · ' + esc(c.phone) : ''}</div>
+            <div class="meta">${esc(c.role)}${c.email ? ' · ' + esc(revEmail(c.email)) : ''}${c.phone ? ' · ' + esc(c.phone) : ''}</div>
           </div>
           <div class="item-actions">
             <button class="btn btn-ghost btn-sm" onclick="admin.openContactEditor('${c.id}')">Bearbeiten</button>
@@ -686,7 +690,7 @@ var admin = (function () {
         <div class="form-group"><label>Funktion</label><input type="text" id="ed-c-role" value="${esc(item?.role || '')}" placeholder="1. Vorsitzender"></div>
       </div>
       <div class="form-row">
-        <div class="form-group"><label>E-Mail</label><input type="email" id="ed-c-email" value="${esc(item?.email || '')}"></div>
+        <div class="form-group"><label>E-Mail</label><input type="email" id="ed-c-email" value="${esc(revEmail(item?.email || ''))}"></div>
         <div class="form-group"><label>Telefon</label><input type="tel" id="ed-c-phone" value="${esc(item?.phone || '')}"></div>
       </div>
       <div class="modal-footer">
@@ -699,7 +703,7 @@ var admin = (function () {
   async function saveContact(id) {
     const name = document.getElementById('ed-c-name').value.trim();
     const role = document.getElementById('ed-c-role').value.trim();
-    const email = document.getElementById('ed-c-email').value.trim();
+    const email = revEmail(document.getElementById('ed-c-email').value.trim());
     const phone = document.getElementById('ed-c-phone').value.trim();
 
     if (!name || !role) { toast('Bitte Name und Funktion ausfüllen.', 'error'); return; }
@@ -731,7 +735,7 @@ var admin = (function () {
     document.getElementById('impressum-form').innerHTML = `
       <div class="form-group"><label>Vereinsname</label><input type="text" id="imp-verein" value="${esc(imp.verein || '')}"></div>
       <div class="form-group"><label>Adresse</label><input type="text" id="imp-address" value="${esc(imp.address || '')}"></div>
-      <div class="form-group"><label>E-Mail</label><input type="email" id="imp-email" value="${esc(imp.email || '')}"></div>
+      <div class="form-group"><label>E-Mail</label><input type="email" id="imp-email" value="${esc(revEmail(imp.email || ''))}"></div>
       <div class="form-group"><label>Verantwortlicher</label><input type="text" id="imp-responsible" value="${esc(imp.responsible || '')}" placeholder="Max Mustermann (1. Vorsitzender)"></div>
       <div class="form-group"><label>Vereinsregister (optional)</label><input type="text" id="imp-register" value="${esc(imp.register || '')}" placeholder="VR 12345 Amtsgericht Saarbrücken"></div>
       <div class="form-group"><label>Zusätzlicher Text (optional)</label><textarea id="imp-extra" rows="4">${esc(imp.extra || '')}</textarea></div>
@@ -745,7 +749,7 @@ var admin = (function () {
     state.content.impressum = {
       verein: document.getElementById('imp-verein').value.trim(),
       address: document.getElementById('imp-address').value.trim(),
-      email: document.getElementById('imp-email').value.trim(),
+      email: revEmail(document.getElementById('imp-email').value.trim()),
       responsible: document.getElementById('imp-responsible').value.trim(),
       register: document.getElementById('imp-register').value.trim(),
       extra: document.getElementById('imp-extra').value.trim()
