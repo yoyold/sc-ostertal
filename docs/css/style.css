@@ -337,6 +337,12 @@ section { position: relative; z-index: 1; padding: 6rem 2rem; }
 /* ===== Impressum ===== */
 .impressum-content { max-width: 780px; }
 
+/* ===== Chronik ===== */
+.chronik-content { max-width: 860px; }
+.chronik-content h2 { font-family: var(--font-display); font-size: 1.5rem; color: var(--cream-light); margin: 2.5rem 0 1rem; }
+.chronik-content h2:first-child { margin-top: 0; }
+.chronik-content p { color: var(--text-secondary); font-size: 1.08rem; margin-bottom: 1.25rem; }
+
 @media (max-width: 960px) {
   .page-inner { padding: 2rem 1.25rem 3rem; }
   .learn-grid, .resources-grid { grid-template-columns: 1fr; }
