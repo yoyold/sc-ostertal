@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%231e3054'/><text x='50%25' y='56%25' text-anchor='middle' dominant-baseline='middle' font-size='20' font-weight='900' font-family='serif' fill='%23e8dfd0'>♞</text></svg>">
-  <title>Über uns – SC Ostertal</title>
+  <title>Vereinsturnier – SC Ostertal</title>
 </head>
 <body>
   <nav class="nav">
@@ -18,9 +18,9 @@
       <ul class="nav-links">
         <li><a href="aktuelles.html">Aktuelles</a></li>
         <li><a href="termine.html">Termine</a></li>
-        <li class="nav-dropdown"><a href="vereinsturnier.html">Turniere ▾</a>
+        <li class="nav-dropdown"><a href="vereinsturnier.html" class="active">Turniere ▾</a>
           <ul class="nav-sub">
-            <li><a href="vereinsturnier.html">Vereinsturnier</a></li>
+            <li><a href="vereinsturnier.html" class="active">Vereinsturnier</a></li>
             <li><a href="mannschaftsmeisterschaft.html">Mannschaftsmeisterschaft</a></li>
             <li><a href="turnierarchiv.html">Turnierarchiv</a></li>
           </ul>
@@ -39,9 +39,9 @@
             <li><a href="ressourcen.html">Ressourcen</a></li>
           </ul>
         </li>
-        <li class="nav-dropdown"><a href="verein.html" class="active">Verein ▾</a>
+        <li class="nav-dropdown"><a href="verein.html">Verein ▾</a>
           <ul class="nav-sub">
-            <li><a href="verein.html" class="active">Über uns</a></li>
+            <li><a href="verein.html">Über uns</a></li>
             <li><a href="chronik.html">Chronik</a></li>
           </ul>
         </li>
@@ -54,53 +54,12 @@
   <main class="page">
     <div class="page-inner">
       <div class="page-header">
-        <div class="page-label">Der Verein</div>
-        <h1 class="page-title">Über den SC Ostertal</h1>
+        <div class="page-label">Wettbewerbe</div>
+        <h1 class="page-title">Vereinsturnier</h1>
         <div class="page-divider"></div>
       </div>
-      <div class="about-grid">
-        <div class="about-text">
-          <p id="about-text">Wird geladen…</p>
-          <a href="chronik.html" class="tournament-ext-link">↗ Zur Chronik des Vereins</a>
-        </div>
-        <div class="info-card">
-          <div class="info-item">
-            <div class="info-label">Training</div>
-            <div class="info-value" id="info-training">–</div>
-          </div>
-          <div class="info-item">
-            <div class="info-label">Adresse</div>
-            <div class="info-value" id="info-address">–</div>
-          </div>
-          <div class="info-item">
-            <div class="info-label">Kontakt</div>
-            <div class="info-value" id="info-email">–</div>
-          </div>
-          <div class="info-item">
-            <div class="info-label">Gegründet</div>
-            <div class="info-value" id="info-founded">–</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="map-section">
-        <div class="map-label">Unser Vereinsheim</div>
-        <div class="venue-grid">
-          <div class="club-photo" role="img" aria-label="Unser Vereinsheim in der Kuseler Straße 8, Niederkirchen"></div>
-          <div class="map-wrapper">
-          <iframe
-            src="https://maps.google.com/maps?q=Kuseler+Str.+8%2C+66606+St.+Wendel&output=embed&z=15"
-            width="100%"
-            height="420"
-            style="border:0;"
-            allowfullscreen=""
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-            title="Vereinsheim SC Ostertal">
-          </iframe>
-          </div>
-        </div>
-      </div>
+      <p style="color:var(--text-secondary);font-size:0.92rem;margin-bottom:1.5rem;">Aktuelle Turniere des SC Ostertal – Tabelle und Rundenergebnisse.</p>
+      <div id="current-tournaments"><div class="loading-spinner"></div></div>
     </div>
   </main>
 
@@ -111,9 +70,6 @@
     </div>
   </footer>
   <script src="js/app.js"></script>
-  <script>
-    SCO.load().then(d => SCO.renderClubInfo(d));
-    document.querySelector('.club-photo')?.addEventListener('contextmenu', e => e.preventDefault());
-  </script>
+  <script>SCO.load().then(d => SCO.renderTournaments(d));</script>
 </body>
 </html>
