@@ -24,7 +24,22 @@
       "date": "2026-08-09",
       "time": "",
       "description": "Simultanveranstaltung mit Großmeister Ralf Appel in Thallichtenberg."
-    }
+    },
+    {"id": "smm1", "title": "SMM – 1. Runde", "date": "2026-09-13", "time": "", "description": "Saarländische Mannschaftsmeisterschaft, 1. Runde – unsere Mannschaften in Verbands- und Kreisliga im Einsatz."},
+    {"id": "smm2", "title": "SMM – 2. Runde", "date": "2026-09-27", "time": "", "description": "Saarländische Mannschaftsmeisterschaft, 2. Runde."},
+    {"id": "smm3", "title": "SMM – 3. Runde", "date": "2026-10-18", "time": "", "description": "Saarländische Mannschaftsmeisterschaft, 3. Runde."},
+    {"id": "smm4", "title": "SMM – 4. Runde", "date": "2026-11-08", "time": "", "description": "Saarländische Mannschaftsmeisterschaft, 4. Runde."},
+    {"id": "smm5", "title": "SMM – 5. Runde", "date": "2026-11-22", "time": "", "description": "Saarländische Mannschaftsmeisterschaft, 5. Runde."},
+    {"id": "smm6", "title": "SMM – 6. Runde", "date": "2026-12-06", "time": "", "description": "Saarländische Mannschaftsmeisterschaft, 6. Runde."},
+    {"id": "smm7", "title": "SMM – 7. Runde", "date": "2027-01-17", "time": "", "description": "Saarländische Mannschaftsmeisterschaft, 7. Runde."},
+    {"id": "smm8", "title": "SMM – 8. Runde", "date": "2027-01-31", "time": "", "description": "Saarländische Mannschaftsmeisterschaft, 8. Runde."},
+    {"id": "smm9", "title": "SMM – 9. Runde", "date": "2027-02-21", "time": "", "description": "Saarländische Mannschaftsmeisterschaft, 9. Runde."},
+    {"id": "sbmm27", "title": "SBMM 2027", "date": "2027-03-20", "time": "", "description": "Saarländische Blitzschach-Mannschaftsmeisterschaft."},
+    {"id": "sbem27", "title": "SBEM 2027", "date": "2027-04-03", "time": "", "description": "Saarländische Blitzschach-Einzelmeisterschaft."},
+    {"id": "ssem27", "title": "SSEM 2027", "date": "2027-04-17", "time": "", "description": "Saarländische Schnellschach-Einzelmeisterschaft."},
+    {"id": "gvssv27", "title": "Generalversammlung SSV", "date": "2027-04-24", "time": "", "description": "Generalversammlung des Saarländischen Schachverbands."},
+    {"id": "ssmm27", "title": "SSMM 2027", "date": "2027-05-22", "time": "", "description": "Saarländische Schnellschach-Mannschaftsmeisterschaft."},
+    {"id": "spmm27", "title": "SPMM – 1. Runde", "date": "2027-06-12", "time": "", "description": "Saarländische Pokal-Mannschaftsmeisterschaft, 1. Runde."}
   ],
   "teams": [
     {
