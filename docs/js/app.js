@@ -82,9 +82,12 @@ window.SCO = (function () {
     const upcoming = [...events]
       .filter(e => new Date(e.date) >= now)
       .sort((a, b) => new Date(a.date) - new Date(b.date));
-    const toRender = upcoming.length > 0 ? upcoming : [...events].sort((a, b) => new Date(b.date) - new Date(a.date));
+    if (upcoming.length === 0) {
+      container.innerHTML = '<p style="color:var(--text-muted)">Keine anstehenden Termine.</p>';
+      return;
+    }
 
-    container.innerHTML = toRender.map(item => {
+    container.innerHTML = upcoming.map(item => {
       const d = parseDate(item.date);
       return `
         <div class="event-item fade-in">
@@ -855,21 +858,6 @@ window.SCO = (function () {
     buildViewer();
   }
 
-  // ===== Sub-Tabs (Schach page) =====
-
-  function initSubTabs() {
-    document.querySelectorAll('.sub-tab').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const target = btn.dataset.sub;
-        document.querySelectorAll('.sub-tab').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.sub-panel').forEach(p => p.classList.remove('active'));
-        btn.classList.add('active');
-        const panel = document.getElementById('sub-' + target);
-        if (panel) panel.classList.add('active');
-      });
-    });
-  }
-
   // ===== E-Mail-Schutz =====
   // E-Mail-Adressen sind in content.json rückwärts gespeichert und werden nur
   // optisch (CSS bidi-override) richtig herum angezeigt. So steht die echte
@@ -901,6 +889,14 @@ window.SCO = (function () {
     if (!form) return;
     // Formular-Ziel erst zur Laufzeit setzen, damit die Adresse nicht im HTML steht
     if (form.dataset.fs) form.action = 'https://formsubmit.co/' + revEmail(form.dataset.fs);
+    // Rückkehr von FormSubmit: Erfolgsmeldung anzeigen
+    if (new URLSearchParams(window.location.search).get('gesendet') === '1') {
+      const statusEl = document.getElementById('form-status');
+      if (statusEl) {
+        statusEl.textContent = 'Vielen Dank! Deine Nachricht wurde gesendet.';
+        statusEl.style.color = 'var(--accent-green)';
+      }
+    }
     form.addEventListener('submit', function (e) {
       const statusEl = document.getElementById('form-status');
       // Let formsubmit.co handle it – just show a message
@@ -946,7 +942,6 @@ window.SCO = (function () {
     renderContacts,
     renderImpressum,
     renderPGNViewer,
-    initSubTabs,
     initContactForm
   };
 
