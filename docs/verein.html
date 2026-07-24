@@ -85,12 +85,12 @@
 
       <div class="map-section">
         <div class="venue-grid">
-          <div class="club-photo" role="img" aria-label="Unser Vereinsheim in der Kuseler Straße 8, Niederkirchen"></div>
+          <div class="club-photo protected-img" role="img" aria-label="Unser Vereinsheim in der Kuseler Straße 8, Niederkirchen"></div>
           <div class="map-wrapper">
           <iframe
             src="https://maps.google.com/maps?q=Kuseler+Str.+8%2C+66606+St.+Wendel&output=embed&z=15"
             width="100%"
-            height="420"
+            height="380"
             style="border:0;"
             allowfullscreen=""
             loading="lazy"
@@ -110,9 +110,6 @@
     </div>
   </footer>
   <script src="js/app.js"></script>
-  <script>
-    SCO.load().then(d => SCO.renderClubInfo(d));
-    document.querySelector('.club-photo')?.addEventListener('contextmenu', e => e.preventDefault());
-  </script>
+  <script>SCO.load().then(d => SCO.renderClubInfo(d));</script>
 </body>
 </html>

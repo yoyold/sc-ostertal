@@ -460,8 +460,8 @@ var admin = (function () {
     await saveAndRefresh('Mannschaft gelöscht');
   }
 
-  // E-Mail-Adressen werden in content.json rückwärts gespeichert (Spam-Schutz).
-  // Im Admin-Panel werden sie normal angezeigt und beim Speichern wieder gedreht.
+  // Email addresses are stored reversed in content.json (spam protection).
+  // The admin panel shows them normally and reverses them again on save.
   function revEmail(s) { return (s || '').split('').reverse().join(''); }
 
   async function saveClubInfo() {

@@ -1,8 +1,8 @@
-name: DWZ-Liste aktualisieren
+name: Update DWZ list
 
 on:
   schedule:
-    # Jeden Montag um 04:00 UTC
+    # Every Monday at 04:00 UTC
     - cron: '0 4 * * 1'
   workflow_dispatch:
 
@@ -19,18 +19,18 @@ jobs:
         with:
           node-version: 20
 
-      - name: DWZ-Daten vom Schachbund abrufen
+      - name: Fetch DWZ data from the chess federation
         run: node scripts/update-dwz.mjs
 
-      - name: Änderungen committen
+      - name: Commit changes
         run: |
           if git diff --quiet docs/content.json; then
-            echo "Keine Änderungen an der DWZ-Liste."
+            echo "No changes to the DWZ list."
           else
             git config user.name "github-actions[bot]"
             git config user.email "41898024+github-actions[bot]@users.noreply.github.com"
             git add docs/content.json
-            git commit -m "Update DWZ-Liste vom Schachbund (DeWIS)"
+            git commit -m "Update DWZ list from the chess federation (DeWIS)"
             git pull --rebase origin main
             git push
           fi

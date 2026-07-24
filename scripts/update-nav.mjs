@@ -1,5 +1,5 @@
-// Schreibt die Hauptnavigation in alle HTML-Seiten unter docs/.
-// Menüpunkte hier zentral pflegen, dann: node scripts/update-nav.mjs
+// Writes the main navigation into every HTML page under docs/.
+// Maintain the menu here, then run: node scripts/update-nav.mjs
 import { readFile, writeFile, readdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
@@ -32,7 +32,7 @@ const MENU = [
   { href: 'admin.html', label: 'Admin', cls: 'nav-admin' },
 ];
 
-// Seiten ohne Standard-Nav
+// Pages that don't carry the standard nav
 const SKIP = new Set(['admin.html', 'turniere.html']);
 
 function buildNav(page) {
@@ -56,7 +56,7 @@ function buildNav(page) {
   return lines.join('\n');
 }
 
-// Findet den kompletten nav-links-Block inkl. verschachtelter <ul> (Balance-Zählung)
+// Finds the whole nav-links block including nested <ul> by balance counting
 function findNavBlock(html) {
   const start = html.indexOf('<ul class="nav-links">');
   if (start === -1) return null;
@@ -77,12 +77,12 @@ for (const file of (await readdir(DOCS)).filter(f => f.endsWith('.html'))) {
   const path = join(DOCS, file);
   const html = await readFile(path, 'utf8');
   const block = findNavBlock(html);
-  if (!block) { console.warn(`Kein Nav-Block: ${file}`); continue; }
+  if (!block) { console.warn(`No nav block: ${file}`); continue; }
   const updated = html.slice(0, block.start) + buildNav(file) + html.slice(block.end);
   if (updated !== html) {
     await writeFile(path, updated, 'utf8');
-    console.log(`Aktualisiert: ${file}`);
+    console.log(`Updated: ${file}`);
     changed++;
   }
 }
-console.log(changed === 0 ? 'Alles aktuell — keine Änderungen.' : `${changed} Datei(en) aktualisiert.`);
+console.log(changed === 0 ? 'Everything up to date — no changes.' : `Updated ${changed} file(s).`);

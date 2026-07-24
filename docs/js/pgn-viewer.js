@@ -1,6 +1,6 @@
-/* ===== SC Ostertal – PGN-Viewer =====
-   Eigenständiges Modul, wird nur auf partien.html geladen.
-   Erweitert window.SCO um renderPGNViewer(data). */
+/* ===== SC Ostertal – PGN Viewer =====
+   Standalone module, loaded only on partien.html.
+   Extends window.SCO with renderPGNViewer(data). */
 
 (function () {
   'use strict';
@@ -86,7 +86,7 @@
         return { board:nb, from:{r,c:4}, to:{r,c:isQ?2:6} };
       }
 
-      // Umwandlung: sowohl "e8=Q" als auch Kurzform "e8Q"
+      // Promotion: accept both "e8=Q" and the short form "e8Q"
       let promo=null; const pm=t.match(/=?([QRBN])$/);
       if(pm&&t.length>2){promo=pm[1];t=t.slice(0,pm.index);}
       let pieceType='P';
@@ -95,8 +95,8 @@
       t=t.substring(0,t.length-2).replace('x','');
       let fromFile=null,fromRank=null;
       for(const ch of t){if(ch>='a'&&ch<='h')fromFile=ch.charCodeAt(0)-97;else if(ch>='1'&&ch<='8')fromRank=8-parseInt(ch);}
-      // Bauernzüge ohne Schlag bleiben immer auf ihrer Linie — sonst kann die
-      // Suche fälschlich einen Nachbarbauern (Diagonal-Geometrie) auswählen
+      // Non-capture pawn moves never leave their file; without this the search
+      // can pick a neighbouring pawn via the diagonal (capture) geometry
       if(pieceType==='P'&&!san.includes('x')) fromFile=tc;
 
       const src=findPiece(nb,pieceType,turn,fromFile,fromRank,tr,tc);
@@ -210,8 +210,8 @@
 
     // ---- Responsive Board Renderer ----
     function renderBoard(board, move) {
-      // Site-themed board colors — dark squares deutlich heller als der
-      // Seitenhintergrund, damit sich das Brett und schwarze Figuren abheben
+      // Site-themed board colors — dark squares are kept well above the page
+      // background so the board and the black pieces stand out
       const lightSq='#e8dfd0', darkSq='#6b83ad';   // cream / medium blue
       const lightHl='#d9c98c', darkHl='#a8935a';    // gold highlight for last move
       const arrowColor='rgba(196,92,92,0.88)';      // accent-red for arrow

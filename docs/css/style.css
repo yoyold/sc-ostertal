@@ -32,7 +32,7 @@
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; scroll-padding-top: 88px; zoom: 1.25; }
-/* Auf kleinen Bildschirmen nicht hochskalieren — dort ist der Platz knapp */
+/* No upscaling on small screens, where space is already tight */
 @media (max-width: 900px) { html { zoom: 1; } }
 body { font-family: var(--font-body); background: var(--bg-primary); color: var(--text-primary); line-height: 1.75; font-size: 1.08rem; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23e8dfd0' fill-opacity='0.015'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); pointer-events: none; z-index: 0; }
@@ -54,7 +54,7 @@ body::before { content: ''; position: fixed; inset: 0; background-image: url("da
 .nav-admin:hover { background: var(--navy-light); color: var(--cream-light); }
 .nav-toggle { display: none; background: none; border: none; color: var(--text-primary); font-size: 1.5rem; cursor: pointer; padding: 4px; }
 
-/* Dropdown-Menüs */
+/* Dropdown menus */
 .nav-dropdown { position: relative; display: flex; align-items: center; height: 80px; }
 .nav-sub { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: rgba(11,18,32,0.97); backdrop-filter: blur(20px); border: 1px solid var(--border); border-top: none; border-radius: 0 0 var(--radius) var(--radius); padding: 0.6rem 0; min-width: 230px; list-style: none; }
 .nav-dropdown:hover .nav-sub, .nav-dropdown:focus-within .nav-sub { display: block; }
@@ -62,8 +62,8 @@ body::before { content: ''; position: fixed; inset: 0; background-image: url("da
 .nav-sub li a::after { display: none; }
 .nav-sub li a:hover { background: var(--navy-dark); }
 
-/* E-Mail-Schutz: rückwärts gespeicherter Text wird optisch umgedreht,
-   Auswahl/Kopieren ist gesperrt */
+/* Email protection: the reversed stored text is flipped back visually,
+   selection and copying are blocked */
 .email-guard { unicode-bidi: bidi-override; direction: rtl; display: inline-block; user-select: none; -webkit-user-select: none; cursor: pointer; color: var(--accent-blue-light); white-space: nowrap; }
 .email-guard:hover { text-decoration: underline; }
 
@@ -137,11 +137,15 @@ section { position: relative; z-index: 1; padding: 6rem 2rem; }
 .map-label { font-family: var(--font-display); font-style: italic; font-size: 1.05rem; letter-spacing: 0; text-transform: none; color: var(--accent-blue); margin-bottom: 1rem; }
 .map-wrapper { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
 .map-wrapper iframe { display: block; }
-.venue-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: stretch; }
-.club-photo { background: url('../img/vereinsheim.jpg') center/cover no-repeat; border: 1px solid var(--border); border-radius: var(--radius); min-height: 420px; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+/* Image protection: background instead of <img>, not selectable or draggable */
+.protected-img { user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; -webkit-user-drag: none; }
+/* Column ratio matched to the photo's aspect ratio so cover-cropping
+   drops nothing of substance */
+.venue-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 1.5rem; align-items: stretch; }
+.club-photo { background: var(--bg-card) url('../img/vereinsheim.jpg') center/cover no-repeat; border: 1px solid var(--border); border-radius: var(--radius); min-height: 380px; }
 @media (max-width: 1125px) {
   .venue-grid { grid-template-columns: 1fr; }
-  .club-photo { min-height: 0; aspect-ratio: 4 / 3; }
+  .club-photo { min-height: 0; aspect-ratio: 1500 / 1167; }
 }
 
 /* ===== Page Layout ===== */
@@ -258,7 +262,7 @@ section { position: relative; z-index: 1; padding: 6rem 2rem; }
 .tournament-archive-winner { color:var(--accent-blue);font-size:0.85rem;font-family:var(--font-mono); }
 .tournament-archive-body { padding:0 1.5rem 1.25rem; }
 
-/* Tipps-Box für Schach-Lernen */
+/* Tips box on the chess basics page */
 .learn-tips-box { background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;margin-bottom:2.5rem; }
 .learn-tips-title { font-family:var(--font-display);font-size:1.5rem;margin-bottom:1rem; }
 .learn-tips-intro { color:var(--text-secondary);font-size:1.05rem;margin-bottom:1.25rem;line-height:1.8; }
@@ -350,7 +354,7 @@ section { position: relative; z-index: 1; padding: 6rem 2rem; }
   .page-inner { padding: 2rem 1.25rem 3rem; }
   .learn-grid, .resources-grid { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
-  /* Tabellen horizontal scrollbar statt das Layout zu sprengen */
+  /* Scroll tables horizontally instead of breaking the layout */
   .tournament-table { display:block; overflow-x:auto; -webkit-overflow-scrolling:touch; white-space:nowrap; font-size:0.85rem; }
   .tournament-table th, .tournament-table td { padding:6px 8px; }
 }
@@ -371,12 +375,12 @@ section { position: relative; z-index: 1; padding: 6rem 2rem; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 @media (max-width: 1125px) { .about-grid, .teams-grid, .news-grid { grid-template-columns: 1fr; } }
-/* Nav: Abstände im Zwischenbereich reduzieren, damit alle Punkte in eine Zeile passen */
+/* Nav: tighten gaps at intermediate widths so every item fits on one line */
 @media (max-width: 1700px) {
   .nav-links { gap: 1.1rem; }
 }
-/* Nav: unterhalb dieser Breite auf Burger-Menü umschalten — die Dropdown-Punkte
-   brauchen mehr Platz als die alte flache Liste */
+/* Nav: switch to the burger menu below this width — the dropdown items need
+   more room than the old flat list */
 @media (max-width: 1350px) {
   .nav-links { display: none; }
   .nav-toggle { display: block; }

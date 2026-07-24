@@ -444,11 +444,10 @@ window.SCO = (function () {
     `;
   }
 
-  // ===== E-Mail-Schutz =====
-  // E-Mail-Adressen sind in content.json rückwärts gespeichert und werden nur
-  // optisch (CSS bidi-override) richtig herum angezeigt. So steht die echte
-  // Adresse nie im Quelltext/DOM und ist für Harvester nicht lesbar. Der
-  // Mailto-Link wird erst beim Klick zusammengebaut.
+  // ===== Email Protection =====
+  // Addresses are stored reversed in content.json and only flipped visually
+  // (CSS bidi-override), so the real address never appears in the source or
+  // DOM where harvesters could read it. The mailto link is built on click.
 
   function revEmail(s) { return (s || '').split('').reverse().join(''); }
 
@@ -468,14 +467,26 @@ window.SCO = (function () {
     }
   });
 
+  // ===== Image Protection =====
+  // Protected images are CSS backgrounds (.protected-img) rather than <img>,
+  // so the context menu offers no "save image as". Right-click and dragging
+  // are blocked on top of that. Screenshots remain possible either way.
+
+  document.addEventListener('contextmenu', (e) => {
+    if (e.target.closest && e.target.closest('.protected-img')) e.preventDefault();
+  });
+  document.addEventListener('dragstart', (e) => {
+    if (e.target.closest && e.target.closest('.protected-img')) e.preventDefault();
+  });
+
   // ===== Contact Form =====
 
   function initContactForm() {
     const form = document.getElementById('contact-form');
     if (!form) return;
-    // Formular-Ziel erst zur Laufzeit setzen, damit die Adresse nicht im HTML steht
+    // Set the target at runtime so the address stays out of the HTML source
     if (form.dataset.fs) form.action = 'https://formsubmit.co/' + revEmail(form.dataset.fs);
-    // Rückkehr von FormSubmit: Erfolgsmeldung anzeigen
+    // Returning from FormSubmit: show the confirmation
     if (new URLSearchParams(window.location.search).get('gesendet') === '1') {
       const statusEl = document.getElementById('form-status');
       if (statusEl) {
@@ -526,7 +537,7 @@ window.SCO = (function () {
     renderClubInfo,
     renderTournaments,
     renderContacts,
-    renderImpressum,
+    renderImpressum,
     initContactForm
   };
 
