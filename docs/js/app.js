@@ -217,7 +217,7 @@ window.SCO = (function () {
         </tbody>
       </table>
       <p style="margin-top:0.75rem;font-size:0.82rem;color:var(--text-muted);">
-        Quelle: <a href="https://www.schachbund.de/verein/90034.html" target="_blank" style="color:var(--accent-blue-light);text-decoration:none;">Deutscher Schachbund – Vereinsseite SC Ostertal</a>
+        Quelle: <a href="https://www.schachbund.de/dwz-vereine/90034.html" target="_blank" style="color:var(--accent-blue-light);text-decoration:none;">Deutscher Schachbund – Vereinsseite SC Ostertal</a>
       </p>`;
     requestAnimationFrame(initScrollAnimations);
   }

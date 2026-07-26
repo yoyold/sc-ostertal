@@ -212,7 +212,7 @@ var admin = (function () {
         <div class="item-info">
           <h3>${esc(t.name)}</h3>
           <div class="meta">${esc(t.league)} · ${t.players.length} Spieler</div>
-          <div class="preview">${t.players.map(esc).join(', ')}</div>
+          <div class="preview">${t.players.map(p => esc(playerName(p))).join(', ')}</div>
         </div>
         <div class="item-actions">
           <button class="btn btn-ghost btn-sm" onclick="admin.openTeamEditor(${i})">Bearbeiten</button>
@@ -421,8 +421,8 @@ var admin = (function () {
         </div>
       </div>
       <div class="form-group">
-        <label>Spieler (einer pro Zeile)</label>
-        <textarea id="ed-team-players" rows="10" placeholder="FM Max Mustermann (Br. 1)&#10;Anna Beispiel (Br. 2)&#10;...">${item ? item.players.join('\n') : ''}</textarea>
+        <label>Spieler (einer pro Zeile, Reihenfolge = Brettnummer)</label>
+        <textarea id="ed-team-players" rows="10" placeholder="Mustermann, Max&#10;Beispiel, Anna&#10;...">${item ? item.players.map(p => esc(playerName(p))).join('\n') : ''}</textarea>
       </div>
       <div class="modal-footer">
         <button class="btn btn-ghost btn-sm" onclick="admin.closeModal()">Abbrechen</button>
@@ -435,7 +435,11 @@ var admin = (function () {
     const name = document.getElementById('ed-team-name').value.trim();
     const league = document.getElementById('ed-team-league').value.trim();
     const playersRaw = document.getElementById('ed-team-players').value.trim();
-    const players = playersRaw.split('\n').map(p => p.trim()).filter(Boolean);
+    // Board number comes from the line order, matching the roster format
+    const players = playersRaw.split('\n')
+      .map(p => p.trim())
+      .filter(Boolean)
+      .map((playerName, i) => ({ board: i + 1, name: playerName }));
 
     if (!name || !league) {
       toast('Bitte Name und Liga ausfüllen.', 'error');
@@ -445,7 +449,8 @@ var admin = (function () {
     if (!state.content.teams) state.content.teams = [];
 
     if (idx >= 0) {
-      state.content.teams[idx] = { name, league, players };
+      // Keep fields the editor doesn't cover (e.g. season_url)
+      state.content.teams[idx] = { ...state.content.teams[idx], name, league, players };
     } else {
       state.content.teams.push({ name, league, players });
     }
@@ -866,6 +871,12 @@ var admin = (function () {
     const div = document.createElement('div');
     div.textContent = str;
     return div.innerHTML;
+  }
+
+  // Roster entries are { board, name } objects; plain strings are still
+  // accepted so older data keeps working.
+  function playerName(p) {
+    return typeof p === 'string' ? p : (p?.name ?? '');
   }
 
   // ===== Init =====
