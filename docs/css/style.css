@@ -137,6 +137,19 @@ section { position: relative; z-index: 1; padding: 6rem 2rem; }
 .map-label { font-family: var(--font-display); font-style: italic; font-size: 1.05rem; letter-spacing: 0; text-transform: none; color: var(--accent-blue); margin-bottom: 1rem; }
 .map-wrapper { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
 .map-wrapper iframe { display: block; }
+/* Champion gallery: photos use "contain" so portrait and landscape shots are
+   shown in full rather than cropped to a common box ratio */
+.champion-section { margin-bottom: 2.5rem; }
+.champion-title { font-family: var(--font-display); font-size: 1.4rem; margin-bottom: 1rem; }
+.champion-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.champion-figure { margin: 0; }
+.champion-photo { background-color: var(--bg-card); background-position: center; background-repeat: no-repeat; background-size: contain; border: 1px solid var(--border); border-radius: var(--radius); height: 420px; }
+.champion-figure figcaption { color: var(--text-secondary); font-size: 0.92rem; margin-top: 0.6rem; text-align: center; }
+@media (max-width: 1125px) {
+  .champion-gallery { grid-template-columns: 1fr; }
+  .champion-photo { height: 340px; }
+}
+
 /* Image protection: background instead of <img>, not selectable or draggable */
 .protected-img { user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; -webkit-user-drag: none; }
 /* Column ratio matched to the photo's aspect ratio so cover-cropping
