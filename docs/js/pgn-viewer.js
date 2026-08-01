@@ -326,7 +326,9 @@
     }
 
     // ---- Viewer state ----
-    let currentGame=0, currentNodeId=0, parsed=null;
+    // focusMode hides the notation and annotations so only the board remains,
+    // for playing through a game and working the moves out yourself.
+    let currentGame=0, currentNodeId=0, parsed=null, focusMode=false;
 
     function buildViewer() {
       const game=games[currentGame];
@@ -339,18 +341,31 @@
             ${games.map((g,i)=>`<option value="${i}"${i===currentGame?' selected':''}>${g.title} (${g.result})</option>`).join('')}
           </select>
         </div>
-        <div class="pgn-viewer-card">
+        <div class="pgn-viewer-card${focusMode?' pgn-focus':''}">
           <div class="pgn-player-bar">
             <div><span class="pgn-player-white">⬜ ${game.white}</span>
               <span class="pgn-vs">vs</span>
               <span class="pgn-player-black">⬛ ${game.black}</span></div>
-            <span class="pgn-result">${game.result}</span>
+            <div class="pgn-bar-right">
+              <button class="pgn-focus-btn${focusMode?' active':''}" id="pgn-focus-toggle"
+                      aria-pressed="${focusMode}" title="Notation und Anmerkungen aus-/einblenden">Fokus</button>
+              <span class="pgn-result">${game.result}</span>
+            </div>
           </div>
           <div id="pgn-board-area" class="pgn-layout"></div>
         </div>`;
       updateBoard();
 
       document.getElementById('pgn-game-select').addEventListener('change',function(){currentGame=parseInt(this.value);buildViewer();});
+
+      const card=container.querySelector('.pgn-viewer-card');
+      const focusBtn=document.getElementById('pgn-focus-toggle');
+      focusBtn.addEventListener('click',()=>{
+        focusMode=!focusMode;
+        card.classList.toggle('pgn-focus',focusMode);
+        focusBtn.classList.toggle('active',focusMode);
+        focusBtn.setAttribute('aria-pressed',String(focusMode));
+      });
     }
 
     function updateBoard() {
