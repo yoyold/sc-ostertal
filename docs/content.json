@@ -10,6 +10,20 @@
   },
   "news": [
     {
+      "id": "2",
+      "title": "Saisonstart am 13. September: die Paarungen der 1. Runde",
+      "date": "2026-09-04",
+      "content": "Der Saarländische Schachverband hat die Ansetzungen für die Mannschaftssaison 2026/27 veröffentlicht. Los geht es für beide Ostertaler Teams am <strong>Sonntag, 13. September 2026 um 14:00 Uhr</strong> – und beide starten auswärts: Unsere <strong>1. Mannschaft</strong> tritt in der Saarlandliga bei <strong>Illingen I</strong> an, die <strong>2. Mannschaft</strong> spielt in der Kreisliga bei <strong>Eppelborn III</strong>. Alle Paarungen, Tabellen und Ergebnisse der Saison gibt es im <a href=\"https://ssv1921ev.de/ergebnisdienst?view=runde&amp;saison=5&amp;liga=43&amp;runde=1&amp;dg=1&amp;typeid=22\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--accent-blue-light);text-decoration:none;\">Ergebnisdienst des SSV</a>. Wir wünschen beiden Mannschaften einen guten Saisonstart!",
+      "author": "Vorstand"
+    },
+    {
+      "id": "3",
+      "title": "Ostertal I rückt in die Saarlandliga auf",
+      "date": "2026-09-04",
+      "content": "Unsere <strong>1. Mannschaft</strong> spielt in der Saison 2026/27 eine Klasse höher: Weil die vor uns platzierten Mannschaften auf den Aufstieg verzichtet haben, rückt Ostertal I aus der Verbandsliga in die <strong>Saarlandliga</strong> nach – die höchste Spielklasse des Saarländischen Schachverbands. In der abgelaufenen Saison hatte die Erste die Verbandsliga auf Rang vier abgeschlossen. Im Oberhaus wartet nun eine sportlich deutlich anspruchsvollere Runde – wir gratulieren der Mannschaft und wünschen viel Erfolg!",
+      "author": "Vorstand"
+    },
+    {
       "id": "1",
       "title": "Neustart für die DWZ: Großes Update der Wertungszahl 2026",
       "date": "2026-06-29",
@@ -44,8 +58,8 @@
   "teams": [
     {
       "name": "1. Mannschaft",
-      "league": "Verbandsliga",
-      "season_url": "https://ssv1921ev.de/index.php/ergebnisdienst?view=mannschaft&saison=2&liga=15&tlnr=5",
+      "league": "Saarlandliga",
+      "season_url": "https://ssv1921ev.de/ergebnisdienst?view=mannschaft&saison=5&liga=40&tlnr=7&typeid=22",
       "players": [
         {"board": 1, "name": "Fernschild, Daniel"},
         {"board": 2, "name": "Agne, Marcel"},
@@ -61,7 +75,7 @@
     {
       "name": "2. Mannschaft",
       "league": "Kreisliga",
-      "season_url": "https://ssv1921ev.de/index.php/ergebnisdienst?view=mannschaft&saison=2&liga=17&tlnr=3",
+      "season_url": "https://ssv1921ev.de/ergebnisdienst?view=mannschaft&saison=5&liga=43&tlnr=5&typeid=22",
       "players": [
         {"board": 1, "name": "Cullmann, Lothar"},
         {"board": 2, "name": "Klischat, Armin"},
@@ -160,20 +174,20 @@
         "date_range": "März – Mai 2026",
         "external_url": "",
         "standings": [
-          {"rank": 1,  "player": "Weber, Michael",       "points": "4.5", "games": 5},
-          {"rank": 2,  "player": "Kraushaar, Martin",    "points": "3.5", "games": 5},
-          {"rank": 2,  "player": "Cullmann, Lothar",     "points": "3.5", "games": 5},
-          {"rank": 2,  "player": "Ballof, Wolfgang",      "points": "3.5", "games": 5},
-          {"rank": 2,  "player": "Steinmetz, Jürgen",    "points": "3.5", "games": 5},
-          {"rank": 6,  "player": "Morgenstern, Martin",  "points": "2.5", "games": 5},
-          {"rank": 6,  "player": "Dony, Lukas",           "points": "2.5", "games": 5},
-          {"rank": 6,  "player": "Buttgereit, Lilly",    "points": "2.5", "games": 5},
-          {"rank": 6,  "player": "Henning, Jan Philipp", "points": "2.5", "games": 5},
-          {"rank": 10, "player": "Weber, Andrea",         "points": "2.0", "games": 5},
-          {"rank": 10, "player": "Buttgereit, Dirk",     "points": "2.0", "games": 5},
-          {"rank": 12, "player": "Weyrich, Peter",        "points": "1.5", "games": 5},
-          {"rank": 13, "player": "Stieler, Ulrich",      "points": "1.0", "games": 5},
-          {"rank": 14, "player": "Cullmann, Claus Kurt", "points": "0.0", "games": 5}
+          {"rank": 1 , "player": "Weber, Michael",         "points": "5.5", "games": 6},
+          {"rank": 2 , "player": "Cullmann, Lothar",       "points": "4.5", "games": 6},
+          {"rank": 3 , "player": "Kraushaar, Martin",      "points": "4.0", "games": 6},
+          {"rank": 4 , "player": "Dony, Lukas",            "points": "3.5", "games": 6},
+          {"rank": 4 , "player": "Ballof, Wolfgang",       "points": "3.5", "games": 6},
+          {"rank": 4 , "player": "Steinmetz, Jürgen",      "points": "3.5", "games": 6},
+          {"rank": 7 , "player": "Morgenstern, Martin",    "points": "3.0", "games": 6},
+          {"rank": 7 , "player": "Buttgereit, Lilly",      "points": "3.0", "games": 6},
+          {"rank": 7 , "player": "Henning, Jan Philipp",   "points": "3.0", "games": 6},
+          {"rank": 10, "player": "Weyrich, Peter",         "points": "2.5", "games": 6},
+          {"rank": 11, "player": "Weber, Andrea",          "points": "2.0", "games": 6},
+          {"rank": 11, "player": "Stieler, Ulrich",        "points": "2.0", "games": 6},
+          {"rank": 11, "player": "Buttgereit, Dirk",       "points": "2.0", "games": 6},
+          {"rank": 14, "player": "Cullmann, Claus Kurt",   "points": "0.0", "games": 6}
         ],
         "rounds": [
           {
@@ -238,15 +252,61 @@
           },
           {
             "round": 6,
+            "games": [
+              {"white": "Weber, Michael",       "result": "1-0", "black": "Ballof, Wolfgang"},
+              {"white": "Steinmetz, Jürgen",    "result": "0-1", "black": "Cullmann, Lothar"},
+              {"white": "Kraushaar, Martin",    "result": "½-½", "black": "Morgenstern, Martin"},
+              {"white": "Buttgereit, Lilly",    "result": "½-½", "black": "Henning, Jan Philipp"},
+              {"white": "Dony, Lukas",           "result": "1-0", "black": "Cullmann, Claus Kurt"},
+              {"white": "Buttgereit, Dirk",     "result": "0-1", "black": "Weyrich, Peter"},
+              {"white": "Stieler, Ulrich",      "result": "1-0", "black": "Weber, Andrea"}
+            ]
+          },
+          {
+            "round": 7,
             "date": "ausstehend",
             "games": [
-              {"white": "Weber, Michael",       "result": "–", "black": "Ballof, Wolfgang"},
-              {"white": "Steinmetz, Jürgen",    "result": "–", "black": "Cullmann, Lothar"},
-              {"white": "Kraushaar, Martin",    "result": "–", "black": "Morgenstern, Martin"},
-              {"white": "Buttgereit, Lilly",    "result": "–", "black": "Henning, Jan Philipp"},
-              {"white": "Dony, Lukas",           "result": "–", "black": "Cullmann, Claus Kurt"},
-              {"white": "Buttgereit, Dirk",     "result": "–", "black": "Weyrich, Peter"},
-              {"white": "Stieler, Ulrich",      "result": "–", "black": "Weber, Andrea"}
+              {"white": "Henning, Jan Philipp", "result": "–", "black": "Weber, Michael"},
+              {"white": "Cullmann, Lothar",     "result": "–", "black": "Dony, Lukas"},
+              {"white": "Ballof, Wolfgang",     "result": "–", "black": "Kraushaar, Martin"},
+              {"white": "Steinmetz, Jürgen",    "result": "–", "black": "Buttgereit, Dirk"},
+              {"white": "Morgenstern, Martin",  "result": "–", "black": "Stieler, Ulrich"},
+              {"white": "Weber, Andrea",         "result": "–", "black": "Buttgereit, Lilly"},
+              {"white": "Cullmann, Claus Kurt", "result": "–", "black": "Weyrich, Peter"}
+            ]
+          }
+        ]
+      },
+      {
+        "id": "t2",
+        "name": "Vereinspokal 2026",
+        "type": "K.-o.-System",
+        "date_range": "Juli – Oktober 2026",
+        "external_url": "",
+        "standings": [],
+        "rounds": [
+          {
+            "round": 1,
+            "date": "Auslosung 13.07.2026",
+            "games": [
+              {"white": "Henning, Jan Philipp", "result": "1-0", "black": "Weyrich, Peter"},
+              {"white": "Steinmetz, Jürgen",    "result": "1-0", "black": "Stieler, Ulrich"},
+              {"white": "Weber, Andrea",         "result": "0-1", "black": "Weber, Michael"},
+              {"white": "Burgardt, Sabrina",    "result": "1-0", "black": "Buttgereit, Lilly"},
+              {"white": "Müller, Frank",         "result": "1-0", "black": "Cullmann, Lothar"},
+              {"white": "Dony, Lukas",           "result": "½-½ (Blitz 0,5:2,5)", "black": "Kraushaar, Martin"},
+              {"white": "Cullmann, Claus Kurt", "result": "0-1", "black": "Morgenstern, Martin"},
+              {"white": "Ballof, Wolfgang",     "result": "–", "black": "Buttgereit, Dirk"}
+            ]
+          },
+          {
+            "round": 2,
+            "date": "Auslosung 28.08.2026 · Spielfrist 02.10.2026",
+            "games": [
+              {"white": "Müller, Frank",         "result": "–", "black": "Steinmetz, Jürgen"},
+              {"white": "Weber, Michael",       "result": "–", "black": "Sieger Partie 8"},
+              {"white": "Kraushaar, Martin",    "result": "–", "black": "Henning, Jan Philipp"},
+              {"white": "Burgardt, Sabrina",    "result": "–", "black": "Morgenstern, Martin"}
             ]
           }
         ]
