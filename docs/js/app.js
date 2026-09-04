@@ -25,7 +25,11 @@ window.SCO = (function () {
 
   async function load() {
     if (_dataCache) return _dataCache;
-    const response = await fetch('content.json');
+    // 'no-cache' forces a revalidation (If-None-Match) instead of silently
+    // serving from the browser cache. GitHub Pages sends max-age=600, so
+    // without this visitors could see content up to 10 minutes stale. When
+    // the file is unchanged the server answers 304, so this stays cheap.
+    const response = await fetch('content.json', { cache: 'no-cache' });
     if (!response.ok) throw new Error('Content not found');
     _dataCache = await response.json();
     return _dataCache;
