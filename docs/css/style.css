@@ -36,7 +36,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 88px; zoom: 1.25; }
 /* No upscaling on small screens, where space is already tight */
 @media (max-width: 900px) { html { zoom: 1; } }
 body { font-family: var(--font-body); background: var(--bg-primary); color: var(--text-primary); line-height: 1.75; font-size: 1.08rem; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
-body::before { content: ''; position: fixed; inset: 0; background-image: repeating-conic-gradient(rgba(236,227,212,0.030) 0% 25%, transparent 0% 50%); background-size: 128px 128px; background-position: center top; pointer-events: none; z-index: 0; }
+body::before { content: ''; position: fixed; inset: 0; background-image: repeating-conic-gradient(rgba(236,227,212,0.018) 0% 25%, transparent 0% 50%); background-size: 128px 128px; background-position: center top; pointer-events: none; z-index: 0; }
 ::selection { background: var(--navy-light); color: var(--cream-light); }
 
 .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(7,13,24,0.94); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-light); }
@@ -69,9 +69,10 @@ body::before { content: ''; position: fixed; inset: 0; background-image: repeati
 .email-guard:hover { text-decoration: underline; }
 
 .hero { position: relative; min-height: 84vh; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; z-index: 1; padding: 7rem 2rem 4rem; }
-.hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 38%, rgba(30,48,84,0.18) 0%, transparent 62%); z-index: 0; }
+/* Scrim behind the hero text: keeps the board pattern from cutting through it */
+.hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 60% at 50% 46%, rgba(7,13,24,0.94) 0%, rgba(7,13,24,0.78) 45%, rgba(7,13,24,0) 78%); z-index: 0; }
 /* Flat board edge along the bottom of the hero */
-.hero-chess-bg { position: absolute; left: 0; right: 0; bottom: 0; height: 96px; opacity: 0.09; background-image: repeating-conic-gradient(var(--cream) 0% 25%, transparent 0% 50%); background-size: 48px 48px; -webkit-mask-image: linear-gradient(90deg, transparent, #000 25%, #000 75%, transparent); mask-image: linear-gradient(90deg, transparent, #000 25%, #000 75%, transparent); }
+.hero-chess-bg { position: absolute; left: 0; right: 0; bottom: 0; height: 96px; opacity: 0.06; background-image: repeating-conic-gradient(var(--cream) 0% 25%, transparent 0% 50%); background-size: 48px 48px; -webkit-mask-image: linear-gradient(90deg, transparent, #000 25%, #000 75%, transparent); mask-image: linear-gradient(90deg, transparent, #000 25%, #000 75%, transparent); }
 .hero-content { position: relative; z-index: 2; max-width: 780px; padding: 2rem; }
 .hero-logo { width: 184px; height: 184px; object-fit: contain; margin: 0 auto 1.75rem; display: block; }
 .hero-badge { display: inline-block; font-family: var(--font-body); font-size: 0.9rem; color: var(--cream-dim); border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light); padding: 7px 20px; margin-bottom: 1.75rem; }
