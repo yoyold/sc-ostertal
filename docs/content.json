@@ -149,7 +149,7 @@
     }
   ],
   "dwz_list": [
-    {"rank": 1, "name": "Agne, Marcel", "dwz": 2066, "elo": 2020},
+    {"rank": 1, "name": "Agne, Marcel", "dwz": 2061, "elo": 2020},
     {"rank": 2, "name": "Fernschild, Daniel", "dwz": 2034, "elo": 1984},
     {"rank": 3, "name": "Weber, Michael", "dwz": 1991, "elo": 1934},
     {"rank": 4, "name": "Morgenstern, Martin", "dwz": 1964, "elo": 1994},
@@ -160,24 +160,23 @@
     {"rank": 9, "name": "Dessbesell, Tobias", "dwz": 1804, "elo": null},
     {"rank": 10, "name": "Klischat, Armin", "dwz": 1788, "elo": null},
     {"rank": 11, "name": "Burgardt, Sabrina", "dwz": 1767, "elo": 1874},
-    {"rank": 12, "name": "Dony, Lukas", "dwz": 1745, "elo": 1692},
+    {"rank": 12, "name": "Dony, Lukas", "dwz": 1754, "elo": 1687},
     {"rank": 13, "name": "Kornmann, Karina", "dwz": 1685, "elo": null},
     {"rank": 14, "name": "Cullmann, Lothar", "dwz": 1679, "elo": 1797},
     {"rank": 15, "name": "Buttgereit, Vincent", "dwz": 1672, "elo": null},
-    {"rank": 16, "name": "Birtel, Dr. Simon", "dwz": 1668, "elo": null},
+    {"rank": 16, "name": "Birtel, Simon", "dwz": 1668, "elo": null},
     {"rank": 17, "name": "Ballof, Wolfgang", "dwz": 1667, "elo": null},
     {"rank": 18, "name": "Weber, Andrea", "dwz": 1637, "elo": null},
     {"rank": 19, "name": "Steinmetz, Jürgen", "dwz": 1622, "elo": null},
-    {"rank": 20, "name": "Buttgereit, Lilly", "dwz": 1621, "elo": null},
-    {"rank": 21, "name": "Henning, Jan Philipp", "dwz": 1591, "elo": null},
+    {"rank": 20, "name": "Henning, Jan Philipp", "dwz": 1597, "elo": 1632},
+    {"rank": 21, "name": "Buttgereit, Lilly", "dwz": 1594, "elo": 1482},
     {"rank": 22, "name": "Kölsch, Lukas", "dwz": 1561, "elo": null},
     {"rank": 23, "name": "Buttgereit, Dirk", "dwz": 1516, "elo": null},
     {"rank": 24, "name": "Stieler, Ulrich", "dwz": 1492, "elo": null},
     {"rank": 25, "name": "Weyrich, Peter", "dwz": 1412, "elo": null},
     {"rank": 26, "name": "Buttgereit, Yannik", "dwz": 1323, "elo": null},
     {"rank": 27, "name": "Buttgereit, Barbara", "dwz": 1250, "elo": null},
-    {"rank": 28, "name": "Cullmann, Claus Kurt", "dwz": 1189, "elo": null},
-    {"rank": 29, "name": "Rieth, Nicola", "dwz": null, "elo": null}
+    {"rank": 28, "name": "Cullmann, Claus Kurt", "dwz": 1189, "elo": null}
   ],
   "tournaments": {
     "current": [
