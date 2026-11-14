@@ -10,10 +10,17 @@
   },
   "news": [
     {
-      "id": "4",
-      "title": "Zwischenbilanz nach vier Runden – und ein vorzeitiger Vereinsmeister",
+      "id": "5",
+      "title": "Michael Weber ist Vereinsmeister 2026",
       "date": "2026-11-14",
-      "content": "Vier Runden der Mannschaftssaison 2026/27 sind gespielt. In der <strong>Saarlandliga</strong> muss sich unsere <strong>1. Mannschaft</strong> an das höhere Niveau noch gewöhnen: Nach dem 2:6 in Illingen, dem 2,5:5,5 gegen die SG Schwalbach/Ensdorf und dem 2:6 in Riegelsberg war das knappe 3,5:4,5 bei Caissa Homburg II die bislang engste Partie. Damit steht die Erste mit 4 Mannschaftspunkten auf Rang zehn – der Abstand nach oben ist aber gering, schon Platz acht liegt nur drei Punkte entfernt. Besser läuft es für die <strong>2. Mannschaft</strong> in der <strong>Kreisliga</strong>: Nach Niederlagen in Eppelborn (3:5) und Illingen (3:5) gab es zwei deutliche Siege gegen Rochade Saarlouis III (6:2) und in Schwalbach/Ensdorf (6,5:1,5) – Platz drei mit 7 Punkten. Am <strong>22. November</strong> haben beide Teams Heimrecht: Die Erste empfängt <strong>Saarbrücken I</strong>, die Zweite <strong>Riegelsberg IV</strong>.<br><br>In der <strong>Vereinsmeisterschaft</strong> ist die Entscheidung bereits gefallen: Mit 7,5 Punkten aus 8 Partien ist <strong>Michael Weber</strong> eine Runde vor Schluss nicht mehr einzuholen – herzlichen Glückwunsch zum Titel! Spannend bleibt der Kampf um die weiteren Podestplätze zwischen Martin Kraushaar (6) und Lothar Cullmann (5,5), die in der Schlussrunde gegen Lukas Dony bzw. Wolfgang Ballof antreten. Für die Überraschung der 8. Runde sorgte Peter Weyrich mit seinem Sieg gegen Lothar Cullmann. Alle Tabellen und Paarungen gibt es unter <a href=\"mannschaftsmeisterschaft.html\" style=\"color:var(--accent-blue-light);text-decoration:none;\">Mannschaftsmeisterschaft</a> und <a href=\"vereinsturnier.html\" style=\"color:var(--accent-blue-light);text-decoration:none;\">Vereinsturnier</a>.",
+      "content": "Die <strong>Vereinsmeisterschaft 2026</strong> ist eine Runde vor Schluss entschieden: Mit 7,5 Punkten aus 8 Partien ist <strong>Michael Weber</strong> nicht mehr einzuholen und steht vorzeitig als Vereinsmeister fest – herzlichen Glückwunsch zum Titel! Spannend bleibt der Kampf um die weiteren Podestplätze zwischen Martin Kraushaar (6 Punkte) und Lothar Cullmann (5,5), die in der Schlussrunde gegen Lukas Dony bzw. Wolfgang Ballof antreten. Für die Überraschung der 8. Runde sorgte Peter Weyrich mit seinem Sieg gegen Lothar Cullmann.<br><br>Auch im <strong>Vereinspokal</strong> ist Michael Weber noch im Rennen: Gemeinsam mit Frank Müller, Martin Kraushaar und Martin Morgenstern hat er das Halbfinale erreicht. Dort treffen Martin Kraushaar und Frank Müller sowie Martin Morgenstern und Michael Weber aufeinander. Tabelle, Paarungen und Ergebnisse gibt es unter <a href=\"vereinsturnier.html\" style=\"color:var(--accent-blue-light);text-decoration:none;\">Vereinsturnier</a>.",
+      "author": "Vorstand"
+    },
+    {
+      "id": "4",
+      "title": "Zwischenbilanz nach vier Runden in Saarlandliga und Kreisliga",
+      "date": "2026-11-14",
+      "content": "Vier Runden der Mannschaftssaison 2026/27 sind gespielt. In der <strong>Saarlandliga</strong> muss sich unsere <strong>1. Mannschaft</strong> an das höhere Niveau noch gewöhnen: Nach dem 2:6 in Illingen, dem 2,5:5,5 gegen die SG Schwalbach/Ensdorf und dem 2:6 in Riegelsberg war das knappe 3,5:4,5 bei Caissa Homburg II die bislang engste Partie. Damit steht die Erste mit 4 Mannschaftspunkten auf Rang zehn – der Abstand nach oben ist aber gering, schon Platz acht liegt nur drei Punkte entfernt. Besser läuft es für die <strong>2. Mannschaft</strong> in der <strong>Kreisliga</strong>: Nach Niederlagen in Eppelborn (3:5) und Illingen (3:5) gab es zwei deutliche Siege gegen Rochade Saarlouis III (6:2) und in Schwalbach/Ensdorf (6,5:1,5) – Platz drei mit 7 Punkten. Am <strong>22. November</strong> haben beide Teams Heimrecht: Die Erste empfängt <strong>Saarbrücken I</strong>, die Zweite <strong>Riegelsberg IV</strong>. Alle Tabellen gibt es unter <a href=\"mannschaftsmeisterschaft.html\" style=\"color:var(--accent-blue-light);text-decoration:none;\">Mannschaftsmeisterschaft</a>.",
       "author": "Vorstand"
     },
     {
@@ -312,7 +319,7 @@
         "id": "t2",
         "name": "Vereinspokal 2026",
         "type": "K.-o.-System",
-        "date_range": "Juli – Oktober 2026",
+        "date_range": "Juli – November 2026",
         "external_url": "",
         "standings": [],
         "rounds": [
@@ -327,17 +334,25 @@
               {"white": "Müller, Frank",         "result": "1-0", "black": "Cullmann, Lothar"},
               {"white": "Dony, Lukas",           "result": "½-½ (Blitz 0,5:2,5)", "black": "Kraushaar, Martin"},
               {"white": "Cullmann, Claus Kurt", "result": "0-1", "black": "Morgenstern, Martin"},
-              {"white": "Ballof, Wolfgang",     "result": "–", "black": "Buttgereit, Dirk"}
+              {"white": "Ballof, Wolfgang",     "result": "1-0", "black": "Buttgereit, Dirk"}
             ]
           },
           {
             "round": 2,
             "date": "Auslosung 28.08.2026 · Spielfrist 02.10.2026",
             "games": [
-              {"white": "Müller, Frank",         "result": "–", "black": "Steinmetz, Jürgen"},
-              {"white": "Weber, Michael",       "result": "–", "black": "Sieger Partie 8"},
-              {"white": "Kraushaar, Martin",    "result": "–", "black": "Henning, Jan Philipp"},
-              {"white": "Burgardt, Sabrina",    "result": "–", "black": "Morgenstern, Martin"}
+              {"white": "Müller, Frank",     "result": "1-0", "black": "Steinmetz, Jürgen"},
+              {"white": "Weber, Michael",    "result": "1-0", "black": "Ballof, Wolfgang"},
+              {"white": "Kraushaar, Martin", "result": "1-0", "black": "Henning, Jan Philipp"},
+              {"white": "Burgardt, Sabrina", "result": "0-1", "black": "Morgenstern, Martin"}
+            ]
+          },
+          {
+            "round": 3,
+            "date": "Auslosung 09.10.2026 · Spielfrist 06.11.2026",
+            "games": [
+              {"white": "Kraushaar, Martin",   "result": "–", "black": "Müller, Frank"},
+              {"white": "Morgenstern, Martin", "result": "–", "black": "Weber, Michael"}
             ]
           }
         ]
