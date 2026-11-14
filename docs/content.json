@@ -10,6 +10,13 @@
   },
   "news": [
     {
+      "id": "4",
+      "title": "Zwischenbilanz nach vier Runden – und ein vorzeitiger Vereinsmeister",
+      "date": "2026-11-14",
+      "content": "Vier Runden der Mannschaftssaison 2026/27 sind gespielt. In der <strong>Saarlandliga</strong> muss sich unsere <strong>1. Mannschaft</strong> an das höhere Niveau noch gewöhnen: Nach dem 2:6 in Illingen, dem 2,5:5,5 gegen die SG Schwalbach/Ensdorf und dem 2:6 in Riegelsberg war das knappe 3,5:4,5 bei Caissa Homburg II die bislang engste Partie. Damit steht die Erste mit 4 Mannschaftspunkten auf Rang zehn – der Abstand nach oben ist aber gering, schon Platz acht liegt nur drei Punkte entfernt. Besser läuft es für die <strong>2. Mannschaft</strong> in der <strong>Kreisliga</strong>: Nach Niederlagen in Eppelborn (3:5) und Illingen (3:5) gab es zwei deutliche Siege gegen Rochade Saarlouis III (6:2) und in Schwalbach/Ensdorf (6,5:1,5) – Platz drei mit 7 Punkten. Am <strong>22. November</strong> haben beide Teams Heimrecht: Die Erste empfängt <strong>Saarbrücken I</strong>, die Zweite <strong>Riegelsberg IV</strong>.<br><br>In der <strong>Vereinsmeisterschaft</strong> ist die Entscheidung bereits gefallen: Mit 7,5 Punkten aus 8 Partien ist <strong>Michael Weber</strong> eine Runde vor Schluss nicht mehr einzuholen – herzlichen Glückwunsch zum Titel! Spannend bleibt der Kampf um die weiteren Podestplätze zwischen Martin Kraushaar (6) und Lothar Cullmann (5,5), die in der Schlussrunde gegen Lukas Dony bzw. Wolfgang Ballof antreten. Für die Überraschung der 8. Runde sorgte Peter Weyrich mit seinem Sieg gegen Lothar Cullmann. Alle Tabellen und Paarungen gibt es unter <a href=\"mannschaftsmeisterschaft.html\" style=\"color:var(--accent-blue-light);text-decoration:none;\">Mannschaftsmeisterschaft</a> und <a href=\"vereinsturnier.html\" style=\"color:var(--accent-blue-light);text-decoration:none;\">Vereinsturnier</a>.",
+      "author": "Vorstand"
+    },
+    {
       "id": "2",
       "title": "Saisonstart am 13. September: die Paarungen der 1. Runde",
       "date": "2026-09-04",
@@ -101,36 +108,36 @@
   "leagues": [
     {
       "id": "l1",
-      "name": "Verbandsliga",
-      "season": "2025/2026",
-      "our_team": "Ostertal I",
-      "external_url": "https://ssv1921ev.de/index.php/ergebnisdienst?view=tabelle&saison=2&liga=15&typeid=21",
+      "name": "Saarlandliga",
+      "season": "2026/2027",
+      "our_team": "SC Ostertal 1",
+      "external_url": "https://ssv1921ev.de/ergebnisdienst?view=tabelle&saison=5&liga=40&typeid=22",
       "standings": [
-        {"rank": 1,  "team": "Riegelsberg I",       "games": 9, "wins": 9, "draws": 0, "losses": 0, "mp": 27, "bp": "51.5", "our_team": false},
-        {"rank": 2,  "team": "Saarbrücken II",      "games": 9, "wins": 8, "draws": 0, "losses": 1, "mp": 23, "bp": "44.0", "our_team": false},
-        {"rank": 3,  "team": "Bliestal/Kirkel I",   "games": 9, "wins": 5, "draws": 1, "losses": 3, "mp": 20, "bp": "35.0", "our_team": false},
-        {"rank": 4,  "team": "Ostertal I",           "games": 9, "wins": 5, "draws": 0, "losses": 4, "mp": 19, "bp": "37.0", "our_team": true},
-        {"rank": 5,  "team": "Turm Siersburg",       "games": 9, "wins": 5, "draws": 0, "losses": 4, "mp": 18, "bp": "43.5", "our_team": false},
-        {"rank": 6,  "team": "Emmersweiler I",       "games": 9, "wins": 5, "draws": 0, "losses": 4, "mp": 18, "bp": "33.5", "our_team": false},
-        {"rank": 7,  "team": "Bexbach I",            "games": 9, "wins": 3, "draws": 1, "losses": 5, "mp": 16, "bp": "30.5", "our_team": false},
-        {"rank": 8,  "team": "Rochade Saarlouis I",  "games": 9, "wins": 2, "draws": 0, "losses": 7, "mp": 10, "bp": "32.0", "our_team": false},
-        {"rank": 9,  "team": "St.Ingbert I",         "games": 9, "wins": 1, "draws": 0, "losses": 8, "mp": 10, "bp": "22.0", "our_team": false},
-        {"rank": 10, "team": "Fischbach I",           "games": 9, "wins": 1, "draws": 0, "losses": 7, "mp": 9,  "bp": "29.0", "our_team": false}
+        {"rank": 1,  "team": "Caissa Homburg I",        "games": 4, "wins": 3, "draws": 1, "losses": 0, "mp": 11, "bp": "19.0", "our_team": false},
+        {"rank": 2,  "team": "Illingen I",              "games": 4, "wins": 3, "draws": 0, "losses": 1, "mp": 10, "bp": "19.0", "our_team": false},
+        {"rank": 3,  "team": "Eppelborn I",             "games": 4, "wins": 2, "draws": 1, "losses": 1, "mp": 9,  "bp": "17.0", "our_team": false},
+        {"rank": 4,  "team": "Riegelsberg I",           "games": 4, "wins": 2, "draws": 0, "losses": 2, "mp": 8,  "bp": "18.5", "our_team": false},
+        {"rank": 5,  "team": "SG Schwalbach/Ensdorf I", "games": 4, "wins": 2, "draws": 0, "losses": 2, "mp": 8,  "bp": "17.5", "our_team": false},
+        {"rank": 6,  "team": "Winterbach I",            "games": 4, "wins": 2, "draws": 0, "losses": 2, "mp": 8,  "bp": "17.0", "our_team": false},
+        {"rank": 7,  "team": "SF WaDi I",               "games": 4, "wins": 2, "draws": 0, "losses": 2, "mp": 8,  "bp": "15.0", "our_team": false},
+        {"rank": 8,  "team": "Saarbrücken I",           "games": 4, "wins": 2, "draws": 0, "losses": 2, "mp": 7,  "bp": "15.5", "our_team": false},
+        {"rank": 9,  "team": "Caissa Homburg II",       "games": 4, "wins": 1, "draws": 0, "losses": 3, "mp": 6,  "bp": "11.5", "our_team": false},
+        {"rank": 10, "team": "SC Ostertal 1",           "games": 4, "wins": 0, "draws": 0, "losses": 4, "mp": 4,  "bp": "10.0", "our_team": true}
       ]
     },
     {
       "id": "l2",
       "name": "Kreisliga",
-      "season": "2025/2026",
-      "our_team": "Ostertal II",
-      "external_url": "https://ssv1921ev.de/index.php/ergebnisdienst?view=tabelle&saison=2&liga=17&typeid=21",
+      "season": "2026/2027",
+      "our_team": "SC Ostertal II",
+      "external_url": "https://ssv1921ev.de/ergebnisdienst?view=tabelle&saison=5&liga=43&typeid=22",
       "standings": [
-        {"rank": 1, "team": "Merchweiler",          "games": 9, "wins": 8, "draws": 0, "losses": 1, "mp": 25, "bp": "50.5", "our_team": false},
-        {"rank": 2, "team": "Ostertal II",           "games": 9, "wins": 6, "draws": 1, "losses": 2, "mp": 21, "bp": "48.0", "our_team": true},
-        {"rank": 3, "team": "Illingen III",          "games": 9, "wins": 6, "draws": 0, "losses": 3, "mp": 21, "bp": "47.0", "our_team": false},
-        {"rank": 4, "team": "Riegelsberg III",       "games": 9, "wins": 2, "draws": 2, "losses": 5, "mp": 14, "bp": "28.5", "our_team": false},
-        {"rank": 5, "team": "Rochade Saarlouis III", "games": 9, "wins": 1, "draws": 1, "losses": 7, "mp": 12, "bp": "19.5", "our_team": false},
-        {"rank": 6, "team": "Rochade Saarlouis IV",  "games": 9, "wins": 1, "draws": 2, "losses": 6, "mp": 11, "bp": "22.5", "our_team": false}
+        {"rank": 1, "team": "Illingen II",              "games": 4, "wins": 4, "draws": 0, "losses": 0, "mp": 12, "bp": "25.5", "our_team": false},
+        {"rank": 2, "team": "Eppelborn III",            "games": 4, "wins": 4, "draws": 0, "losses": 0, "mp": 11, "bp": "24.0", "our_team": false},
+        {"rank": 3, "team": "SC Ostertal II",           "games": 4, "wins": 2, "draws": 0, "losses": 2, "mp": 7,  "bp": "18.5", "our_team": true},
+        {"rank": 4, "team": "SG Schwalbach/Ensdorf IV", "games": 4, "wins": 1, "draws": 0, "losses": 3, "mp": 6,  "bp": "9.0",  "our_team": false},
+        {"rank": 5, "team": "Rochade Saarlouis III",    "games": 4, "wins": 1, "draws": 0, "losses": 3, "mp": 6,  "bp": "7.0",  "our_team": false},
+        {"rank": 6, "team": "Riegelsberg IV",           "games": 4, "wins": 0, "draws": 0, "losses": 4, "mp": 4,  "bp": "12.0", "our_team": false}
       ]
     }
   ],
@@ -170,24 +177,24 @@
       {
         "id": "t1",
         "name": "Vereinsmeisterschaft 2026",
-        "type": "Schweizer System, 7 Runden",
+        "type": "Schweizer System, 9 Runden",
         "date_range": "März – Mai 2026",
         "external_url": "",
         "standings": [
-          {"rank": 1 , "player": "Weber, Michael",         "points": "5.5", "games": 6},
-          {"rank": 2 , "player": "Cullmann, Lothar",       "points": "4.5", "games": 6},
-          {"rank": 3 , "player": "Kraushaar, Martin",      "points": "4.0", "games": 6},
-          {"rank": 4 , "player": "Dony, Lukas",            "points": "3.5", "games": 6},
-          {"rank": 4 , "player": "Ballof, Wolfgang",       "points": "3.5", "games": 6},
-          {"rank": 4 , "player": "Steinmetz, Jürgen",      "points": "3.5", "games": 6},
-          {"rank": 7 , "player": "Morgenstern, Martin",    "points": "3.0", "games": 6},
-          {"rank": 7 , "player": "Buttgereit, Lilly",      "points": "3.0", "games": 6},
-          {"rank": 7 , "player": "Henning, Jan Philipp",   "points": "3.0", "games": 6},
-          {"rank": 10, "player": "Weyrich, Peter",         "points": "2.5", "games": 6},
-          {"rank": 11, "player": "Weber, Andrea",          "points": "2.0", "games": 6},
-          {"rank": 11, "player": "Stieler, Ulrich",        "points": "2.0", "games": 6},
-          {"rank": 11, "player": "Buttgereit, Dirk",       "points": "2.0", "games": 6},
-          {"rank": 14, "player": "Cullmann, Claus Kurt",   "points": "0.0", "games": 6}
+          {"rank": 1,  "player": "Weber, Michael",       "points": "7.5", "games": 8},
+          {"rank": 2,  "player": "Kraushaar, Martin",    "points": "6.0", "games": 8},
+          {"rank": 3,  "player": "Cullmann, Lothar",     "points": "5.5", "games": 8},
+          {"rank": 4,  "player": "Steinmetz, Jürgen",    "points": "4.5", "games": 8},
+          {"rank": 4,  "player": "Morgenstern, Martin",  "points": "4.5", "games": 8},
+          {"rank": 4,  "player": "Ballof, Wolfgang",     "points": "4.5", "games": 8},
+          {"rank": 4,  "player": "Weyrich, Peter",       "points": "4.5", "games": 8},
+          {"rank": 8,  "player": "Henning, Jan Philipp", "points": "4.0", "games": 8},
+          {"rank": 8,  "player": "Dony, Lukas",          "points": "4.0", "games": 8},
+          {"rank": 10, "player": "Buttgereit, Lilly",    "points": "3.5", "games": 8},
+          {"rank": 11, "player": "Weber, Andrea",        "points": "3.0", "games": 8},
+          {"rank": 12, "player": "Stieler, Ulrich",      "points": "2.5", "games": 8},
+          {"rank": 13, "player": "Buttgereit, Dirk",     "points": "2.0", "games": 8},
+          {"rank": 14, "player": "Cullmann, Claus Kurt", "points": "0.0", "games": 8}
         ],
         "rounds": [
           {
@@ -264,15 +271,39 @@
           },
           {
             "round": 7,
+            "games": [
+              {"white": "Henning, Jan Philipp", "result": "0-1", "black": "Weber, Michael"},
+              {"white": "Cullmann, Lothar",     "result": "1-0", "black": "Dony, Lukas"},
+              {"white": "Ballof, Wolfgang",     "result": "0-1", "black": "Kraushaar, Martin"},
+              {"white": "Steinmetz, Jürgen",    "result": "1-0", "black": "Buttgereit, Dirk"},
+              {"white": "Morgenstern, Martin",  "result": "1-0", "black": "Stieler, Ulrich"},
+              {"white": "Weber, Andrea",        "result": "½-½", "black": "Buttgereit, Lilly"},
+              {"white": "Cullmann, Claus Kurt", "result": "0-1", "black": "Weyrich, Peter"}
+            ]
+          },
+          {
+            "round": 8,
+            "games": [
+              {"white": "Buttgereit, Lilly",    "result": "0-1", "black": "Weber, Michael"},
+              {"white": "Weyrich, Peter",       "result": "1-0", "black": "Cullmann, Lothar"},
+              {"white": "Kraushaar, Martin",    "result": "1-0", "black": "Steinmetz, Jürgen"},
+              {"white": "Weber, Andrea",        "result": "½-½", "black": "Morgenstern, Martin"},
+              {"white": "Dony, Lukas",          "result": "½-½", "black": "Stieler, Ulrich"},
+              {"white": "Cullmann, Claus Kurt", "result": "0-1", "black": "Ballof, Wolfgang"},
+              {"white": "Buttgereit, Dirk",     "result": "0-1", "black": "Henning, Jan Philipp"}
+            ]
+          },
+          {
+            "round": 9,
             "date": "ausstehend",
             "games": [
-              {"white": "Henning, Jan Philipp", "result": "–", "black": "Weber, Michael"},
-              {"white": "Cullmann, Lothar",     "result": "–", "black": "Dony, Lukas"},
-              {"white": "Ballof, Wolfgang",     "result": "–", "black": "Kraushaar, Martin"},
-              {"white": "Steinmetz, Jürgen",    "result": "–", "black": "Buttgereit, Dirk"},
-              {"white": "Morgenstern, Martin",  "result": "–", "black": "Stieler, Ulrich"},
-              {"white": "Weber, Andrea",         "result": "–", "black": "Buttgereit, Lilly"},
-              {"white": "Cullmann, Claus Kurt", "result": "–", "black": "Weyrich, Peter"}
+              {"white": "Weber, Michael",       "result": "–", "black": "Weyrich, Peter"},
+              {"white": "Dony, Lukas",          "result": "–", "black": "Kraushaar, Martin"},
+              {"white": "Ballof, Wolfgang",     "result": "–", "black": "Cullmann, Lothar"},
+              {"white": "Morgenstern, Martin",  "result": "–", "black": "Buttgereit, Dirk"},
+              {"white": "Steinmetz, Jürgen",    "result": "–", "black": "Cullmann, Claus Kurt"},
+              {"white": "Henning, Jan Philipp", "result": "–", "black": "Weber, Andrea"},
+              {"white": "Stieler, Ulrich",      "result": "–", "black": "Buttgereit, Lilly"}
             ]
           }
         ]
