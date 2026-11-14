@@ -13,13 +13,15 @@ jobs:
   update-dwz:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
-          node-version: 20
+          node-version: 22
 
       - name: Fetch DWZ data from the chess federation
+        env:
+          DSB_API_TOKEN: ${{ secrets.DSB_API_TOKEN }}
         run: node scripts/update-dwz.mjs
 
       - name: Commit changes
@@ -30,7 +32,7 @@ jobs:
             git config user.name "github-actions[bot]"
             git config user.email "41898024+github-actions[bot]@users.noreply.github.com"
             git add docs/content.json
-            git commit -m "Update DWZ list from the chess federation (DeWIS)"
+            git commit -m "Update DWZ list from the chess federation (Wertungsportal)"
             git pull --rebase origin main
             git push
           fi
