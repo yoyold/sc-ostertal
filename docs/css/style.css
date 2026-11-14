@@ -50,8 +50,6 @@ body::before { content: ''; position: fixed; inset: 0; background-image: repeati
 .nav-links a:hover::after { width: 100%; }
 .nav-links a.active { color: var(--cream); }
 .nav-links a.active::after { width: 100%; }
-.nav-admin { background: transparent; border: 1px solid var(--navy-light); color: var(--cream-dim); padding: 6px 16px; border-radius: var(--radius); font-size: 0.92rem; font-weight: 600; letter-spacing: 0; cursor: pointer; transition: var(--transition); text-decoration: none; }
-.nav-admin:hover { background: var(--navy-light); color: var(--cream-light); }
 .nav-toggle { display: none; background: none; border: none; color: var(--text-primary); font-size: 1.5rem; cursor: pointer; padding: 4px; }
 
 /* Dropdown menus */
@@ -388,6 +386,8 @@ section { position: relative; z-index: 1; padding: 6rem 2rem; }
 .footer-inner { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
 .footer a { color: var(--navy-light); text-decoration: none; }
 .footer a:hover { color: var(--accent-blue); }
+.footer .footer-admin { margin-left: 0.75rem; font-size: 0.75rem; color: var(--text-muted); opacity: 0.5; }
+.footer .footer-admin:hover { opacity: 1; color: var(--text-muted); }
 
 .fade-in { opacity: 0; transition: opacity 0.45s ease-out; }
 .fade-in.visible { opacity: 1; }

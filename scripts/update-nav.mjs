@@ -29,7 +29,6 @@ const MENU = [
     ['chronik.html', 'Chronik'],
   ]},
   { href: 'kontakt.html', label: 'Kontakt' },
-  { href: 'admin.html', label: 'Admin', cls: 'nav-admin' },
 ];
 
 // Pages that don't carry the standard nav
