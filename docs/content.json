@@ -185,7 +185,7 @@
         "id": "t1",
         "name": "Vereinsmeisterschaft 2026",
         "type": "Schweizer System, 9 Runden",
-        "date_range": "März – Mai 2026",
+        "date_range": "März – November 2026",
         "external_url": "",
         "standings": [
           {"rank": 1,  "player": "Weber, Michael",       "points": "7.5", "games": 8},
