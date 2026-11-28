@@ -124,7 +124,7 @@ window.SCO = (function () {
         return `<li><span class="team-player-board">Brett ${p.board}</span><span class="team-player-name">${p.name}</span></li>`;
       }).join('');
       const linkHtml = team.season_url
-        ? `<a href="${team.season_url}" target="_blank" class="tournament-ext-link" style="margin-top:0.75rem;display:inline-block;">↗ Aufstellung beim SSV</a>`
+        ? `<a href="${team.season_url}" target="_blank" rel="noopener noreferrer" class="tournament-ext-link" style="margin-top:0.75rem;display:inline-block;">↗ Aufstellung beim SSV</a>`
         : '';
       return `
         <div class="team-card fade-in">
@@ -156,7 +156,7 @@ window.SCO = (function () {
             <h3 class="tournament-card-title">${league.name} – ${league.our_team}</h3>
             <p class="tournament-card-type">Saison ${league.season}</p>
           </div>
-          ${league.external_url ? `<div class="tournament-links"><a href="${league.external_url}" target="_blank" class="tournament-ext-link">↗ Tabelle beim SSV</a></div>` : ''}
+          ${league.external_url ? `<div class="tournament-links"><a href="${league.external_url}" target="_blank" rel="noopener noreferrer" class="tournament-ext-link">↗ Tabelle beim SSV</a></div>` : ''}
         </div>
         <table class="tournament-table">
           <thead>
@@ -221,7 +221,7 @@ window.SCO = (function () {
         </tbody>
       </table>
       <p style="margin-top:0.75rem;font-size:0.82rem;color:var(--text-muted);">
-        Quelle: <a href="https://www.schachbund.de/dwz-vereine/90034.html" target="_blank" style="color:var(--accent-blue-light);text-decoration:none;">Deutscher Schachbund – Vereinsseite SC Ostertal</a>
+        Quelle: <a href="https://www.schachbund.de/dwz-vereine/90034.html" target="_blank" rel="noopener noreferrer" style="color:var(--accent-blue-light);text-decoration:none;">Deutscher Schachbund – Vereinsseite SC Ostertal</a>
       </p>`;
     requestAnimationFrame(initScrollAnimations);
   }
@@ -289,7 +289,7 @@ window.SCO = (function () {
           <h4 class="tournament-screenshots-title">Impressionen</h4>
           <div class="tournament-screenshots-grid">
             ${screenshots.map(s => `
-              <a href="${s.url}" target="_blank" class="tournament-screenshot-link">
+              <a href="${s.url}" target="_blank" rel="noopener noreferrer" class="tournament-screenshot-link">
                 <img src="${s.url}" alt="${s.caption || 'Turnierbild'}" class="tournament-screenshot-img" loading="lazy">
                 ${s.caption ? `<span class="tournament-screenshot-caption">${s.caption}</span>` : ''}
               </a>
@@ -306,7 +306,7 @@ window.SCO = (function () {
       if (links.length === 0) return '';
       return `
         <div class="tournament-links">
-          ${links.map(l => `<a href="${l.url}" target="_blank" class="tournament-ext-link">↗ ${l.label}</a>`).join('')}
+          ${links.map(l => `<a href="${l.url}" target="_blank" rel="noopener noreferrer" class="tournament-ext-link">↗ ${l.label}</a>`).join('')}
         </div>`;
     }
 
