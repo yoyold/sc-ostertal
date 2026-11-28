@@ -483,30 +483,27 @@ window.SCO = (function () {
     if (e.target.closest && e.target.closest('.protected-img')) e.preventDefault();
   });
 
-  // ===== Contact Form =====
+  // ===== Embed Consent =====
+  // Third-party iframes (Google Maps, Lichess) are built only after an
+  // explicit click, so merely opening a page transfers no IP address to the
+  // provider. The embed URL lives in data-embed-src on the placeholder, which
+  // the iframe then replaces. Delegated, so no per-page wiring is needed.
 
-  function initContactForm() {
-    const form = document.getElementById('contact-form');
-    if (!form) return;
-    // Set the target at runtime so the address stays out of the HTML source
-    if (form.dataset.fs) form.action = 'https://formsubmit.co/' + revEmail(form.dataset.fs);
-    // Returning from FormSubmit: show the confirmation
-    if (new URLSearchParams(window.location.search).get('gesendet') === '1') {
-      const statusEl = document.getElementById('form-status');
-      if (statusEl) {
-        statusEl.textContent = 'Vielen Dank! Deine Nachricht wurde gesendet.';
-        statusEl.style.color = 'var(--accent-green)';
-      }
-    }
-    form.addEventListener('submit', function (e) {
-      const statusEl = document.getElementById('form-status');
-      // Let formsubmit.co handle it – just show a message
-      if (statusEl) {
-        statusEl.textContent = 'Nachricht wird gesendet…';
-        statusEl.style.color = 'var(--accent-blue)';
-      }
-    });
-  }
+  document.addEventListener('click', (e) => {
+    const button = e.target.closest && e.target.closest('.embed-consent-btn');
+    if (!button) return;
+    const box = button.closest('.embed-consent');
+    if (!box || !box.dataset.embedSrc) return;
+    const frame = document.createElement('iframe');
+    frame.src = box.dataset.embedSrc;
+    frame.title = box.dataset.embedTitle || '';
+    frame.width = '100%';
+    frame.height = box.dataset.embedHeight || '380';
+    frame.loading = 'lazy';
+    frame.referrerPolicy = 'no-referrer';
+    frame.allowFullscreen = true;
+    box.replaceWith(frame);
+  });
 
   // ===== Mobile Nav Toggle =====
 
@@ -541,8 +538,7 @@ window.SCO = (function () {
     renderClubInfo,
     renderTournaments,
     renderContacts,
-    renderImpressum,
-    initContactForm
+    renderImpressum
   };
 
 })();
