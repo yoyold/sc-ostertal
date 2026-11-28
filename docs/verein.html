@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/style.css?v=302313d3">
+  <link rel="stylesheet" href="css/style.css?v=70ee8da4">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%231e3054'/><text x='50%25' y='56%25' text-anchor='middle' dominant-baseline='middle' font-size='20' font-weight='900' font-family='serif' fill='%23e8dfd0'>♞</text></svg>">
   <title>Über uns – SC Ostertal</title>
 </head>
@@ -86,16 +86,14 @@
         <div class="venue-grid">
           <div class="club-photo protected-img" role="img" aria-label="Unser Vereinsheim in der Kuseler Straße 8, Niederkirchen"></div>
           <div class="map-wrapper">
-          <iframe
-            src="https://maps.google.com/maps?q=Kuseler+Str.+8%2C+66606+St.+Wendel&output=embed&z=15"
-            width="100%"
-            height="380"
-            style="border:0;"
-            allowfullscreen=""
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-            title="Vereinsheim SC Ostertal">
-          </iframe>
+            <div class="embed-consent"
+                 data-embed-src="https://maps.google.com/maps?q=Kuseler+Str.+8%2C+66606+St.+Wendel&amp;output=embed&amp;z=15"
+                 data-embed-title="Vereinsheim SC Ostertal">
+              <p class="embed-consent-title">Karte von Google Maps</p>
+              <p class="embed-consent-text">Die Karte wird erst auf Klick geladen. Dabei wird eine Verbindung zu Google aufgebaut und deine IP-Adresse an Google übertragen.</p>
+              <button type="button" class="btn btn-primary embed-consent-btn">Karte laden</button>
+              <p class="embed-consent-alt"><a href="https://www.openstreetmap.org/search?query=Kuseler%20Stra%C3%9Fe%208%2C%2066606%20St.%20Wendel" target="_blank" rel="noopener noreferrer">Alternativ in OpenStreetMap ansehen</a></p>
+            </div>
           </div>
         </div>
       </div>
@@ -108,7 +106,7 @@
       <span style="color:var(--text-muted)">Niederkirchen im Ostertal</span>
     </div>
   </footer>
-  <script src="js/app.js?v=b6b3f86e"></script>
+  <script src="js/app.js?v=9ae55573"></script>
   <script>SCO.load().then(d => SCO.renderClubInfo(d));</script>
 </body>
 </html>

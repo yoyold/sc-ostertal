@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/style.css?v=302313d3">
+  <link rel="stylesheet" href="css/style.css?v=70ee8da4">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%231e3054'/><text x='50%25' y='56%25' text-anchor='middle' dominant-baseline='middle' font-size='20' font-weight='900' font-family='serif' fill='%23e8dfd0'>♞</text></svg>">
   <title>Aufgabe des Tages – SC Ostertal</title>
 </head>
@@ -59,9 +59,16 @@
       </div>
       <p style="color:var(--text-secondary);margin-bottom:1.5rem;">Löse jeden Tag eine neue Schachaufgabe – direkt hier auf der Seite.</p>
       <div class="puzzle-wrap">
-        <iframe src="https://lichess.org/training/frame?theme=brown&bg=dark" title="Lichess Schachaufgabe des Tages" loading="lazy"></iframe>
+        <div class="embed-consent"
+             data-embed-src="https://lichess.org/training/frame?theme=brown&amp;bg=dark"
+             data-embed-title="Lichess Schachaufgabe des Tages">
+          <p class="embed-consent-title">Schachaufgabe von Lichess</p>
+          <p class="embed-consent-text">Die Aufgabe wird erst auf Klick geladen. Dabei wird eine Verbindung zu lichess.org aufgebaut und deine IP-Adresse an Lichess übertragen.</p>
+          <button type="button" class="btn btn-primary embed-consent-btn">Aufgabe laden</button>
+          <p class="embed-consent-alt"><a href="https://lichess.org/training" target="_blank" rel="noopener noreferrer">Alternativ direkt bei Lichess lösen</a></p>
+        </div>
       </div>
-      <p style="color:var(--text-muted);font-size:0.82rem;margin-top:0.75rem;text-align:center;">Bereitgestellt von <a href="https://lichess.org" target="_blank">lichess.org</a></p>
+      <p style="color:var(--text-muted);font-size:0.82rem;margin-top:0.75rem;text-align:center;">Bereitgestellt von <a href="https://lichess.org" target="_blank" rel="noopener noreferrer">lichess.org</a></p>
     </div>
   </main>
 
@@ -71,6 +78,6 @@
       <span style="color:var(--text-muted)">Niederkirchen im Ostertal</span>
     </div>
   </footer>
-  <script src="js/app.js?v=b6b3f86e"></script>
+  <script src="js/app.js?v=9ae55573"></script>
 </body>
 </html>

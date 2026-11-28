@@ -135,7 +135,17 @@ section { position: relative; z-index: 1; padding: 6rem 2rem; }
 .map-section { margin-top: 3.5rem; }
 .map-label { font-family: var(--font-display); font-style: italic; font-size: 1.05rem; letter-spacing: 0; text-transform: none; color: var(--accent-blue); margin-bottom: 1rem; }
 .map-wrapper { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
-.map-wrapper iframe { display: block; }
+.map-wrapper iframe { display: block; border: 0; }
+/* Placeholder shown until the visitor asks for a third-party embed. The
+   wrapper around it supplies the size, so this only fills what it is given. */
+.embed-consent { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; padding: 2.5rem 1.5rem; text-align: center; background: var(--bg-card); }
+.embed-consent-title { font-family: var(--font-display); font-size: 1.25rem; color: var(--text-primary); }
+.embed-consent-text { max-width: 46ch; color: var(--text-secondary); font-size: 0.98rem; line-height: 1.6; }
+.embed-consent-btn { padding: 12px 28px; font-size: 1rem; }
+.embed-consent-alt { font-size: 0.92rem; }
+.embed-consent-alt a { color: var(--accent-blue-light); text-decoration: none; }
+.embed-consent-alt a:hover { color: var(--cream); text-decoration: underline; }
+.map-wrapper .embed-consent { min-height: 380px; }
 /* Champion gallery: column widths and box ratios follow the two photos'
    own aspect ratios, so they sit at equal height with neither cropping nor
    empty margins. Adjust both if the photos are ever replaced. */
@@ -183,7 +193,8 @@ section { position: relative; z-index: 1; padding: 6rem 2rem; }
 
 /* ===== Chess Puzzle ===== */
 .puzzle-wrap { position: relative; width: 100%; max-width: 600px; margin: 0 auto; aspect-ratio: 400 / 444; }
-.puzzle-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 1px solid var(--border); border-radius: var(--radius); }
+.puzzle-wrap iframe,
+.puzzle-wrap .embed-consent { position: absolute; inset: 0; width: 100%; height: 100%; border: 1px solid var(--border); border-radius: var(--radius); }
 
 /* ===== Resources Grid ===== */
 .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
@@ -196,20 +207,8 @@ section { position: relative; z-index: 1; padding: 6rem 2rem; }
 /* ===== Contacts Grid ===== */
 .contacts-grid { margin-bottom: 3rem; }
 
-/* ===== Contact Form ===== */
-.contact-form-wrap { max-width: 780px; margin: 0 auto; }
-.contact-form-title { font-family: var(--font-display); font-size: 1.6rem; margin-bottom: 1.5rem; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-.form-group { margin-bottom: 1.25rem; }
-.form-group label { display: block; font-size: 0.98rem; font-weight: 600; letter-spacing: 0; color: var(--text-secondary); margin-bottom: 0.5rem; }
-.form-group input,
-.form-group textarea,
-.form-group select { width: 100%; padding: 14px 16px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text-primary); font-family: var(--font-body); font-size: 1.05rem; transition: var(--transition); outline: none; }
-.form-group input:focus,
-.form-group textarea:focus { border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(90,138,191,0.12); }
-.form-group textarea { min-height: 120px; resize: vertical; line-height: 1.6; }
-.form-submit { margin-top: 0.5rem; }
-.form-status { margin-top: 1rem; font-size: 0.9rem; }
+/* ===== Contact Note ===== */
+.contact-note { max-width: 56ch; margin: 0 auto; text-align: center; color: var(--text-secondary); font-size: 1.08rem; line-height: 1.7; }
 
 /* ===== Tournaments ===== */
 .tournament-section { margin-bottom: 3rem; }
@@ -376,7 +375,6 @@ section { position: relative; z-index: 1; padding: 6rem 2rem; }
 @media (max-width: 960px) {
   .page-inner { padding: 2rem 1.25rem 3rem; }
   .learn-grid, .resources-grid { grid-template-columns: 1fr; }
-  .form-row { grid-template-columns: 1fr; }
   /* Scroll tables horizontally instead of breaking the layout */
   .tournament-table { display:block; overflow-x:auto; -webkit-overflow-scrolling:touch; white-space:nowrap; font-size:0.85rem; }
   .tournament-table th, .tournament-table td { padding:6px 8px; }

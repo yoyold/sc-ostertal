@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/style.css?v=302313d3">
+  <link rel="stylesheet" href="css/style.css?v=70ee8da4">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%231e3054'/><text x='50%25' y='56%25' text-anchor='middle' dominant-baseline='middle' font-size='20' font-weight='900' font-family='serif' fill='%23e8dfd0'>♞</text></svg>">
   <title>Kontakt – SC Ostertal</title>
 </head>
@@ -53,46 +53,18 @@
 
     <div class="contacts-grid" id="contacts-container"><div class="loading-spinner"></div></div>
 
-    <div class="contact-form-wrap">
-      <h2 class="contact-form-title">Schreib uns eine Nachricht</h2>
-      <form id="contact-form" action="#" data-fs="ed.bew@ynod.sakul" method="POST">
-        <input type="hidden" name="_subject" value="Kontaktformular SC Ostertal">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_next" value="https://sc-ostertal.de/kontakt.html?gesendet=1">
-        <input type="text" name="_honey" style="display:none">
-        <div class="form-row">
-          <div class="form-group">
-            <label for="cf-name">Name *</label>
-            <input type="text" id="cf-name" name="name" required placeholder="Dein Name">
-          </div>
-          <div class="form-group">
-            <label for="cf-email">E-Mail *</label>
-            <input type="email" id="cf-email" name="email" required placeholder="deine@email.de">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="cf-subject">Betreff</label>
-          <input type="text" id="cf-subject" name="_subject" placeholder="Worum geht es?">
-        </div>
-        <div class="form-group">
-          <label for="cf-message">Nachricht *</label>
-          <textarea id="cf-message" name="message" required placeholder="Deine Nachricht an uns…"></textarea>
-        </div>
-        <div class="form-submit">
-          <button type="submit" class="btn btn-primary" style="width:auto;padding:14px 40px;">Nachricht senden</button>
-        </div>
-        <div class="form-status" id="form-status"></div>
-      </form>
-    </div>
+    <p class="contact-note">
+      Schreib uns am einfachsten direkt per E-Mail &ndash; klick dazu auf die
+      Adresse beim passenden Ansprechpartner.
+    </p>
 
   </div></main>
   <footer class="footer"><div class="footer-inner">
     <span>&copy; 2026 Schachclub Ostertal e.V. &middot; <a href="impressum.html">Impressum</a><a href="admin.html" class="footer-admin">Admin</a></span>
     <span style="color:var(--text-muted)">Niederkirchen im Ostertal</span>
   </div></footer>
-  <script src="js/app.js?v=b6b3f86e"></script>
+  <script src="js/app.js?v=9ae55573"></script>
   <script>
     SCO.load().then(d => SCO.renderContacts(d));
-    SCO.initContactForm();
   </script>
 </body></html>
